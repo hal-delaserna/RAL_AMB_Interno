@@ -1,0 +1,142 @@
+---          
+title: ""
+output:
+  pagedown::html_paged:
+    # change to true for a self-contained document, but it'll be a litte slower for Pandoc to render
+    css:
+      - anm_identidade_visual.css
+      - default-page
+      - default
+    toc: true
+    number-lines: true
+    self_contained: true
+# Produce HTML and PDF in RStudio:
+#knit: pagedown::chrome_print
+editor_options: 
+  chunk_output_type: inline
+---
+
+```{r setup, include=FALSE}
+#       rm(list = ls())
+
+library(tidyverse)
+library(rmarkdown)
+library(kableExtra)
+options(editor = 'notepad')
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r carregamento, include=FALSE}
+# ________ Bases
+# source('D:/Users/humberto.serna/Documents/D_Lake/Dados_Abertos_ANM/AMB_Dados_Abertos.R')
+# source('D:/Users/humberto.serna/Documents/D_Lake/CBO.R')
+# source('D:/Users/humberto.serna/Documents/D_Lake/CNAE.R')
+# source('D:/Users/humberto.serna/Documents/D_Lake/geocod.R')
+
+# source('D:/Users/humberto.serna/Documents/D_Lake/Dados_Abertos_ANM/SCM_Microdados_CadMIN.R')
+# cfem <- read_rds('D:/Users/humberto.serna/Documents/D_Lake/CFEM_Dados_Abertos.RDATA')
+processos_SCM <- read_rds('D:/Users/humberto.serna/Documents/D_Lake/Processos_ANM_Dados_Abertos.RDATA')
+
+# ________ Funções
+source('D:/Users/humberto.serna/Desktop/Anuario_Mineral_Brasileiro/Funcoes_de_Formatacao_Estilo/Funcoes_de_Formatacao_Estilo.R')
+# source('D:/Users/humberto.serna/Desktop/Anuario_Mineral_Brasileiro/Funcoes_de_Formatacao_Estilo/Compatibilizacao_processos_CADMIN_SIGMINE.R')
+
+```
+
+
+
+<div class="titulo_secao"> Lorem Ipsum </div>
+
+<br />
+
+<div class="titulo_subsecao"> 1&nbsp;&nbsp;&nbsp;The standard Lorem Ipsum passage </div>
+<p>
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
+
+</p>
+
+<table class = "tabela_frontao"><tr><th class = "tabela_frontao_numero"> TABELA 1 </th><th class="tabela_frontao_titulo"> TÍTULO DA TABELA 1  </th></tr></table>
+```{r RESERVA_PRODUÇÃO_MUNDIAL_A, eval=A, echo=FALSE, message=FALSE, warning=FALSE}
+
+
+processos_SCM <- 
+  separate(processos_SCM, col = CPF.CNPJ.do.titular, into = c("CNPJ_Raíz", "UF_CNPJ"), sep = "/")
+
+processos_SCM$CNPJ_Raíz |> gsub(pattern = "*", replacement = "") |> table()
+
+gsub(pattern = )
+
+kableExtra::kable(
+  Producao_Reserva_PAIS[, c(2, 8, 3:5)],
+  format.args = c(big.mark = ".", decimal.mark = ","),
+  digits = 1, align = c("l","c","c","c","c"),
+  col.names = c(" País", "2019", ANO - 2, ANO - 1, ANO)
+)  %>%
+  kable_styling(htmltable_class = "tabela_sumario") %>%
+  add_header_above(c(" ", "Reserva (t)" = 1, "Produção (t)" = 3), 
+  extra_css = "white-space: nowrap; padding: 6px; border-bottom: 2px solid #ffffff;", line = FALSE)
+
+```
+
+```{r RESERVA_PRODUÇÃO_MUNDIAL_B, eval=B, echo=FALSE, message=FALSE, warning=FALSE}
+kableExtra::kable(
+  Producao_Reserva_PAIS[, c(2, 8, 3:5)],
+  format.args = c(big.mark = ".", decimal.mark = ","),
+  digits = 1, align = c("l","c","c","c","c"),
+  col.names = c(" País", "2019", ANO - 2, ANO - 1, ANO)
+)  %>%
+  kable_styling(htmltable_class = "tabela_sumario") %>%
+  add_header_above(c(" ", "Reserva (10³ t)" = 1, "Produção (10³ t)" = 3), 
+  extra_css = "white-space: nowrap; padding: 6px; border-bottom: 2px solid #ffffff;", line = FALSE)
+
+```
+
+```{r RESERVA_PRODUÇÃO_MUNDIAL_C, eval=C, echo=FALSE, message=FALSE, warning=FALSE}
+kableExtra::kable(
+  Producao_Reserva_PAIS[, c(2, 3:5)],
+  format.args = c(big.mark = ".", decimal.mark = ","),
+  digits = 1, align = c("l","c","c", "c"),
+  col.names = c(" País", ANO - 2, ANO - 1, ANO)
+)  %>%
+  kable_styling(htmltable_class = "tabela_sumario") %>%
+  add_header_above(c(" ", "Produção (10³ t)" = 3), 
+  extra_css = "white-space: nowrap; padding: 6px; border-bottom: 2px solid #ffffff;", line = FALSE)
+
+```
+<br />
+
+<p>
+`r paste0("No Brasil as reservas de ",SUBS," atingiram ", format(round(ReservaMedida,1), big.mark = ".", decimal.mark = ",", scientific = FALSE), " ", escala_ReservaMedida, " t em ", ANO, " representando ",ifelse(VariacaoReservaMedida > 0, yes = "um aumento de ", no = "uma queda de "),format(round(Mod(VariacaoReservaMedida),1),big.mark = ".",decimal.mark = ","),"% em relação ao ano anterior (",format(ReservaMedida_Ano_Anterior,big.mark = ".",decimal.mark = ",",scientific = FALSE, digits = 1), " ", escala_ReservaMedida_Ano_Anterior," t","). ",ifelse(is.na(ReservaMedida_UF[2, 1]),yes = paste0("Os maiores jazimentos estão em ",ReservaMedida_UF[1, 1]," (",format(round(ReservaMedida_UF[1, 2], digits = 1),big.mark = ".",decimal.mark = ",",scientific = FALSE)," ", escala_ReservaMedida_UF, " t).",ifelse(is.na(ReservaMedida_MUN[2, 1]),no = paste0(ReservaMedida_MUN[1, 1]," (",format(round(ReservaMedida_MUN[1, 2], digits = 1),big.mark = ".",decimal.mark = ",",scientific = FALSE)," ", escala_ReservaMedida_UF, " t) e ",ReservaMedida_MUN[2, 1]," (",format(round(ReservaMedida_MUN[2, 2], digits = 1),big.mark = ".",decimal.mark = ",",scientific = FALSE)," ", escala_ReservaMedida_UF, " t). "),yes = paste0("Estão concentrados no município de ",ReservaMedida_MUN[1, 1]," (",format(round(ReservaMedida_MUN[1, 2], digits = 1),big.mark = ".",decimal.mark = ",",scientific = FALSE)," ", escala_ReservaMedida_UF, " t)."))),no = paste0("Os maiores jazimentos estão em ",ReservaMedida_UF[1, 1]," (",format(round(ReservaMedida_UF[1, 2], digits = 1),big.mark = ".",decimal.mark = ",",scientific = FALSE)," ", escala_ReservaMedida_UF, " t) e ",ReservaMedida_UF[2, 1]," (",format(round(ReservaMedida_UF[2, 2], digits = 1),big.mark = ".",decimal.mark = ",",scientific = FALSE)," ", escala_ReservaMedida_UF, " t). Entre os municípios são destaques ",ReservaMedida_MUN[1, 1]," (",format(round(ReservaMedida_MUN[1, 2], digits = 1),big.mark = ".",decimal.mark = ",",scientific = FALSE)," ", escala_ReservaMedida_UF, " t) e ",ReservaMedida_MUN[2, 1]," (",format(round(ReservaMedida_MUN[2, 2], digits = 1),big.mark = ".",decimal.mark = ",",scientific = FALSE)," ", escala_ReservaMedida_UF, " t).")))`
+</p>
+\newpage
+<div class="titulo_subsecao"> 2&nbsp;&nbsp;&nbsp;De Finibus Bonorum et Malorum </div>
+<p>
+Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
+</p>
+<table class = "tabela_frontao"><tr><th class = "tabela_frontao_numero"> Tabela 3 </th><th class="tabela_frontao_titulo"> Principais Estados Produtores de `r SUBS` - (`r paste0(ifelse(escala_ProducaoBENEFICIADA =="mil","10³ "," "), unidade_ProducaoBENEFICIADA)`) </th></tr></table>
+```{r ProducaoBENEFICIADA_UF, echo=FALSE, warning=FALSE}
+kableExtra::kable(
+  head(ProducaoBENEFICIADA_UF, 5),
+  format.args = c(big.mark = ".", decimal.mark = ","),
+  digits = 1, align = c("l","c","c"),
+  col.names = c("Estado", "Quantidade", "Participação (%)")
+) %>% kable_styling(htmltable_class = "tabela_sumario")
+```
+<br />
+<p>
+Recentemente a produção apresentou o comportamento a seguir indicado:
+</p>
+<table class = "tabela_frontao"><tr><th class = "tabela_frontao_numero"> Tabela 4 </th><th class="tabela_frontao_titulo"> Produção Brasileira de `r SUBS` - (`r paste0(ifelse(escala_ProducaoBENEFICIADA =="mil","10³ "," "), unidade_ProducaoBENEFICIADA)`)</th></tr></table>
+```{r ProducaoBENEFICIADA_ANO, echo=FALSE, warning=FALSE}
+kable(
+  ProducaoBENEFICIADA_ANO,
+  format.args = c(big.mark = ".", decimal.mark = ","),
+  digits = 1, align = c("l","c"),
+  col.names = c("Ano", "Quantidade")
+) %>%
+  kable_styling(htmltable_class = "tabela_sumario")
+```
+<br />
+\newpage
+
