@@ -7,57 +7,52 @@ library(tidyverse)
 reserva_AMB <-
   read.table(
     "./data/DBAMB_Reserva.csv",
-    header = TRUE,
-    sep = "\t",    dec = ",",
-    stringsAsFactors = FALSE,
-    encoding = 'UTF-8',
-    fill = TRUE,
-    quote = "")
+      header = TRUE, sep = ";",dec = ",",
+      encoding = 'latin1',fill = TRUE, quote = "")
 
-
-colnames(reserva_AMB) <-
-  colnames(reserva_AMB) %>% iconv(from = "UTF-8", to = "ASCII//TRANSLIT")
+ colnames(reserva_AMB) <-
+   colnames(reserva_AMB) |> iconv(from = "UTF-8", to = "ASCII//TRANSLIT")
 
 
 reserva_AMB$Municipio.Mina <-
-  reserva_AMB$Municipio.Mina %>% iconv(from = "UTF-8", to = "ASCII//TRANSLIT") %>% tolower()
+  reserva_AMB$Municipio.Mina |> iconv(from = "latin1", to = "ASCII//TRANSLIT") |> tolower()
 
 reserva_AMB$Substancia.AMB <-
-  reserva_AMB$Substancia.AMB %>% iconv(from = "UTF-8", to = "ASCII//TRANSLIT") %>% tolower()
+  reserva_AMB$Substancia.AMB |> iconv(from = "latin1", to = "ASCII//TRANSLIT") |> tolower()
 
 reserva_AMB$Substancia.RAL <-
-  reserva_AMB$Substancia.RAL %>% iconv(from = "UTF-8", to = "ASCII//TRANSLIT")
+  reserva_AMB$Substancia.RAL |> iconv(from = "latin1", to = "ASCII//TRANSLIT")
 
 reserva_AMB$Minerio <-
-  reserva_AMB$Minerio %>% iconv(from = "UTF-8", to = "ASCII//TRANSLIT") 
+  reserva_AMB$Minerio |> iconv(from = "latin1", to = "ASCII//TRANSLIT") 
 
 reserva_AMB$Nome.Mina <-
-  reserva_AMB$Nome.Mina %>% iconv(from = "UTF-8", to = "ASCII//TRANSLIT") %>% tolower() %>% stringr::str_squish()
+  reserva_AMB$Nome.Mina |> iconv(from = "latin1", to = "ASCII//TRANSLIT") |> tolower() |> stringr::str_squish()
 
-reserva_AMB$municipio <-
-  gsub(reserva_AMB$municipio,
+reserva_AMB$Municipio.Mina <-
+  gsub(reserva_AMB$Municipio.Mina,
        pattern = "sao luiz do paraitinga",
        replacement = "sao luis do paraitinga")
 
 
 #_____acrescentando percentil de reserva ----
 reserva_AMB$id_subs.ano <-
-  paste(reserva_AMB$Substancia.AMB, reserva_AMB$ano, sep = "_")
+  paste(reserva_AMB$Substancia.AMB, reserva_AMB$Ano.Base.Ral, sep = "_")
 
 reserva_AMB <-
   left_join(
     reserva_AMB,
-    select(reserva_AMB, ano, id_subs.ano, massa.medida) %>%
-      group_by(id_subs.ano) %>%
+    select(reserva_AMB, Ano.Base.Ral, id_subs.ano, Massa.Medida) |>
+      group_by(id_subs.ano) |>
       summarise("percentil_80" = quantile(
-        massa.medida, probs = 0.8, na.rm = TRUE
+        Massa.Medida, probs = 0.8, na.rm = TRUE
       )),by = "id_subs.ano")
 
  # valores > 80%, pareto = 1
 reserva_AMB$pareto <- 0
 for (i in 1:nrow(reserva_AMB)) {
   
-  if (reserva_AMB$massa.medida[i] > reserva_AMB$percentil_80[i]) {
+  if (reserva_AMB$Massa.Medida[i] > reserva_AMB$percentil_80[i]) {
     reserva_AMB$pareto[i] <- 1   
   }} 
 
@@ -70,56 +65,51 @@ for (i in 1:nrow(reserva_AMB)) {
 producaoBRUTA <-
   read.table(
     "./data/DBAMB_MovimentacaoProducaoBruta.csv",
-    header = TRUE,
-    sep = "\t",dec = ",",
-    stringsAsFactors = FALSE,
-    encoding = 'UTF-8',
-    fill = TRUE,
-    quote = ""
-  )
+    header = TRUE, sep = ";",dec = ",",
+    encoding = 'latin1',fill = TRUE, quote = "")
 
 
 colnames(producaoBRUTA) <-
-  colnames(producaoBRUTA) %>% iconv(from = "UTF-8", to = "ASCII//TRANSLIT")
+  colnames(producaoBRUTA) |> iconv(from = "UTF-8", to = "ASCII//TRANSLIT")
 
 
-producaoBRUTA$municipio <-
-  producaoBRUTA$municipio %>% iconv(from = "UTF-8", to = "ASCII//TRANSLIT") %>% tolower()
+producaoBRUTA$Municipio.Mina <-
+  producaoBRUTA$Municipio.Mina |> iconv(from = "Latin1", to = "ASCII//TRANSLIT") |> tolower()
 
 
 producaoBRUTA$Substancia.AMB <-
-  producaoBRUTA$Substancia.AMB %>% iconv(from = "UTF-8", to = "ASCII//TRANSLIT") %>% tolower()
+  producaoBRUTA$Substancia.AMB |> iconv(from = "Latin1", to = "ASCII//TRANSLIT") |> tolower()
 
 producaoBRUTA$Nome.Mina <-
-  producaoBRUTA$Nome.Mina %>% iconv(from = "UTF-8", to = "ASCII//TRANSLIT") %>% tolower() %>% stringr::str_squish()
+  producaoBRUTA$Nome.Mina |> iconv(from = "Latin1", to = "ASCII//TRANSLIT") |> tolower() |> stringr::str_squish()
 
 
 
 #_____acrescentando percentil de produção ----
 producaoBRUTA$id_subs.ano <-
-  paste(producaoBRUTA$Substancia.AMB, producaoBRUTA$ano, sep = "_")
+  paste(producaoBRUTA$Substancia.AMB, producaoBRUTA$Ano.Base.Ral, sep = "_")
 
 producaoBRUTA <-
   left_join(
     producaoBRUTA,
-    select(producaoBRUTA, ano, id_subs.ano, quantidade.producao.ajuste) %>%
-      group_by(id_subs.ano) %>%
+    select(producaoBRUTA, Ano.Base.Ral, id_subs.ano, Quantidade.Producao.Com.Ajuste) |>
+      group_by(id_subs.ano) |>
       summarise("percentil_80" = quantile(
-        quantidade.producao.ajuste, probs = 0.8, na.rm = TRUE
+        Quantidade.Producao.Com.Ajuste, probs = 0.8, na.rm = TRUE
       )),by = "id_subs.ano")
 
 # valores > 80%, pareto = 1
 producaoBRUTA$pareto <- 0
 for (i in 1:nrow(producaoBRUTA)) {
   
-  if (producaoBRUTA$quantidade.producao.ajuste[i] > producaoBRUTA$percentil_80[i]) {
+  if (producaoBRUTA$Quantidade.Producao.Com.Ajuste[i] > producaoBRUTA$percentil_80[i]) {
     producaoBRUTA$pareto[i] <- 1   
   }} 
 
 # Valor Unitário de Venda
 producaoBRUTA$preco <-
-  round(producaoBRUTA$valor.venda.substancia.ajuste / 
-          producaoBRUTA$quantidade.venda.substancia.ajuste, digits = 1)
+  round(producaoBRUTA$Valor.Venda.com.Ajuste.por.Substancia / 
+          producaoBRUTA$Quantidade.Venda.com.Ajuste, digits = 1)
 
 
 
@@ -130,74 +120,77 @@ producaoBENEFICIADA <-
   read.table(
     "./data/DBAMB_MovimentacaoProducaoBeneficiada.csv",
     header = TRUE,
-    sep = "\t",
+    sep = ";",
     dec = ",",
     stringsAsFactors = FALSE,
-    encoding = 'UTF-8',
+    encoding = 'latin1',
     fill = TRUE,quote = ""
   )
 
+colnames(producaoBENEFICIADA) <- 
+  colnames(producaoBENEFICIADA) |> iconv(from = "UTF-8",  to = "ASCII//TRANSLIT")
+
 
 # minusculas
-producaoBENEFICIADA$municipio <-
-  producaoBENEFICIADA$municipio %>% iconv(from = "UTF-8", to = "ASCII//TRANSLIT") %>% tolower()
+producaoBENEFICIADA$Municipio.Usina <-
+  producaoBENEFICIADA$Municipio.Usina |> iconv(from = "Latin1", to = "ASCII//TRANSLIT") |> tolower()
 
 producaoBENEFICIADA$Substancia.AMB <-
-  producaoBENEFICIADA$Substancia.AMB %>% iconv(from = "UTF-8", to = "ASCII//TRANSLIT") %>% tolower()
+  producaoBENEFICIADA$Substancia.AMB |> iconv(from = "Latin1", to = "ASCII//TRANSLIT") |> tolower()
 
-producaoBENEFICIADA$usina <-
-  producaoBENEFICIADA$usina %>% iconv(from = "UTF-8", to = "ASCII//TRANSLIT") %>% tolower() %>% stringr::str_squish()
+producaoBENEFICIADA$Nome.Usina <-
+  producaoBENEFICIADA$Nome.Usina |> iconv(from = "Latin1", to = "ASCII//TRANSLIT") |> tolower() |> stringr::str_squish()
 
 # ID cpf/cnpj- USINA
 
 producaoBENEFICIADA$id_cpfcnpj.usina <- 
-  paste(producaoBENEFICIADA$cpfcnpj, producaoBENEFICIADA$usina, sep = "_")
+  paste(producaoBENEFICIADA$CPF.CNPJ.Titular, producaoBENEFICIADA$Nome.Usina, sep = "_")
 
-# ID cpf/cnpj- municipio
+# ID cpf/cnpj- Municipio
 
 producaoBENEFICIADA$id_cpfcnpj.municipio <- 
-  paste(producaoBENEFICIADA$cpfcnpj, producaoBENEFICIADA$municipio, sep = "_")
+  paste(producaoBENEFICIADA$CPF.CNPJ.Titular, producaoBENEFICIADA$Municipio.Usina, sep = "_")
 
 
 #_____acrescentando percentil de produção ----
 producaoBENEFICIADA$id_subs.ano <-
-  paste(producaoBENEFICIADA$Substancia.AMB, producaoBENEFICIADA$ano, sep = "_")
+  paste(producaoBENEFICIADA$Substancia.AMB, producaoBENEFICIADA$Ano.Base.Ral, sep = "_")
 
 producaoBENEFICIADA <-
   left_join(
     producaoBENEFICIADA,
-    select(producaoBENEFICIADA, ano, id_subs.ano, quantidade.producao.ajuste) %>%
-      group_by(id_subs.ano) %>%
+    select(producaoBENEFICIADA, Ano.Base.Ral, id_subs.ano, Quantidade.Producao.Com.Ajuste) |>
+      group_by(id_subs.ano) |>
       summarise("percentil_80" = quantile(
-        quantidade.producao.ajuste, probs = 0.8, na.rm = TRUE
+        Quantidade.Producao.Com.Ajuste, probs = 0.8, na.rm = TRUE
       )),by = "id_subs.ano")
 
 # valores > 80%, pareto = 1
 producaoBENEFICIADA$pareto <- 0
 for (i in 1:nrow(producaoBENEFICIADA)) {
   
-  if (producaoBENEFICIADA$quantidade.producao.ajuste[i] > producaoBENEFICIADA$percentil_80[i]) {
+  if (producaoBENEFICIADA$Quantidade.Producao.Com.Ajuste[i] > producaoBENEFICIADA$percentil_80[i]) {
     producaoBENEFICIADA$pareto[i] <- 1   
   }} 
 
 
 # Valor Unit?rio de Venda
 producaoBENEFICIADA$preco <-
-  round(producaoBENEFICIADA$valor.venda.ajuste.por.substancia / 
-          producaoBENEFICIADA$quantidade.venda.substancia.ajuste, digits = 1)
+  round(producaoBENEFICIADA$Valor.Venda.com.Ajuste.por.Substancia / 
+          producaoBENEFICIADA$Quantidade.Venda.Substancia.com.Ajuste, digits = 1)
 
 # excluindo usinas sem produção (inclusive as usinas autom?ticas criadas redundantemente)
 linhas <- list()
 for (i in 1:nrow(producaoBENEFICIADA)) {
   if (sum(
     producaoBENEFICIADA[i, c(
-      "quantidade.producao.substancia.ajuste",
-      "contido.substancia",
-      "quantidade.venda.substancia.ajuste",
-      "valor.venda.ajuste.por.substancia",
-      "quantidade.producao.ajuste",
-      "quantidade.venda.ajuste",
-      "valor.venda.ajuste.por.produto.pre.beneficiado.valor"
+      "Quantidade.Producao.Substancia.com.Ajuste",
+      "Contido.Substancia",
+      "Quantidade.Venda.Substancia.com.Ajuste",
+      "Valor.Venda.com.Ajuste.por.Substancia",
+      "Quantidade.Producao.Com.Ajuste",
+      "Quantidade.Venda.com.Ajuste",
+      "Valor.Venda.com.Ajuste.por.Produto.Pre.beneficiado...Valor"
     )], na.rm = TRUE) == 0) {
     linhas[i] <- i
   }
@@ -208,62 +201,34 @@ linhas <- do.call(what = 'rbind',args = linhas)
 producaoBENEFICIADA <-
   producaoBENEFICIADA[-linhas, ]
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 # CARREGANDO Produção QUANTIDADE_E_VALOR_DA_PRODU??O_COMERCIALIZADA ----
 
 VPM_QuantidadeValorCOMERCIALIZADO <-
   read.table(
-    "D:/Users/humberto.serna/Documents/D_Lake/DBAMB_QuantidadeEhValordaProducaoMineralComercializada.csv",
-    header = TRUE,
-    sep = ";",
-    dec = ",",
-    stringsAsFactors = FALSE,
-    encoding = 'latin1',
-    fill = TRUE,
-    quote = ""
-  )
+    "./data/DBAMB_QuantidadeEhValordaProducaoMineralComercializada.csv",
+    header = TRUE, sep = "\t",dec = ",",
+    encoding = 'Latin1',fill = TRUE, quote = "")
 
 
 colnames(VPM_QuantidadeValorCOMERCIALIZADO) <-
-  colnames(VPM_QuantidadeValorCOMERCIALIZADO) %>% iconv(from = "UTF-8", to = "ASCII//TRANSLIT")
-colnames(VPM_QuantidadeValorCOMERCIALIZADO) <-
-  c("Ano", "CPFCNPJ", "unidade", "Titular", 
-    "tipo", "Municipio", "uf", "Substancia.AMB", "Substancia.RAL", "produto", 
-    "Quantidade.Producao.Comercializada.Substancia", "Valor.Producao.Comercializada.Substancia.AMB", 
-    "Quantidade.Producao.Comercializada.Produto", "Valor.Producao.Comercializada.Produto"
-  ) %>% tolower()
+  colnames(VPM_QuantidadeValorCOMERCIALIZADO) |> iconv(from = "UTF-8", to = "ASCII//TRANSLIT")
+
 
 
 VPM_QuantidadeValorCOMERCIALIZADO$Substancia.RAL <- 
-  VPM_QuantidadeValorCOMERCIALIZADO$Substancia.RAL %>% iconv(from = "UTF-8", to = "ASCII//TRANSLIT")
+  VPM_QuantidadeValorCOMERCIALIZADO$Substancia.RAL |> iconv(from = "Latin1", to = "ASCII//TRANSLIT")
 
-VPM_QuantidadeValorCOMERCIALIZADO$municipio <-
-  VPM_QuantidadeValorCOMERCIALIZADO$municipio %>% iconv(from = "UTF-8", to = "ASCII//TRANSLIT") %>% tolower()
-
-VPM_QuantidadeValorCOMERCIALIZADO$titular <-
-  VPM_QuantidadeValorCOMERCIALIZADO$titular %>% iconv(from = "UTF-8", to = "ASCII//TRANSLIT") %>% tolower()
+VPM_QuantidadeValorCOMERCIALIZADO$Municipio.Mina <-
+  VPM_QuantidadeValorCOMERCIALIZADO$Municipio |> iconv(from = "UTF-8", to = "ASCII//TRANSLIT") |> tolower()
 
 VPM_QuantidadeValorCOMERCIALIZADO$Substancia.AMB <-
-  VPM_QuantidadeValorCOMERCIALIZADO$Substancia.AMB %>% iconv(from = "UTF-8", to = "ASCII//TRANSLIT") %>% tolower()
+  VPM_QuantidadeValorCOMERCIALIZADO$Substancia.AMB |> iconv(from = "Latin1", to = "ASCII//TRANSLIT") |> tolower()
 
 VPM_QuantidadeValorCOMERCIALIZADO$produto <-
-  VPM_QuantidadeValorCOMERCIALIZADO$produto %>% iconv(from = "UTF-8", to = "ASCII//TRANSLIT") %>% tolower()
+  VPM_QuantidadeValorCOMERCIALIZADO$ |> iconv(from = "Latin1", to = "ASCII//TRANSLIT") |> tolower()
 
 VPM_QuantidadeValorCOMERCIALIZADO$tipo <-
-  VPM_QuantidadeValorCOMERCIALIZADO$tipo %>% iconv(from = "UTF-8", to = "ASCII//TRANSLIT") %>% tolower()
+  VPM_QuantidadeValorCOMERCIALIZADO$tipo |> iconv(from = "Latin1", to = "ASCII//TRANSLIT") |> tolower()
 
 
 
@@ -286,40 +251,40 @@ consumidoresMINA <-
 
 
 colnames(consumidoresMINA) <-
-  colnames(consumidoresMINA) %>% iconv(from = "UTF-8", to = "ASCII//TRANSLIT") 
+  colnames(consumidoresMINA) |> iconv(from = "Latin1", to = "ASCII//TRANSLIT") 
 colnames(consumidoresMINA) <-
   c(
     "ano",
     "titular",
     "cpfcnpj",
     "Nome.Mina",
-    "municipio",
+    "Municipio.Mina",
     "uf",
     "substancias.amb.Nome.Mina",
     "Minerio",
     "nome.comprador",
     "uso.destinacao",
-    "municipio.comprador",
+    "Municipio.Mina.comprador",
     "uf.comprador",
     "quantidade.compra",
     "valor.compra"
-  ) %>% tolower()
+  ) |> tolower()
 
 
-consumidoresMINA$municipio <-
-  consumidoresMINA$municipio %>% iconv(from = "UTF-8", to = "ASCII//TRANSLIT") %>% tolower()
+consumidoresMINA$Municipio.Mina <-
+  consumidoresMINA$Municipio.Mina |> iconv(from = "Latin1", to = "ASCII//TRANSLIT") |> tolower()
 
 consumidoresMINA$titular <-
-  consumidoresMINA$titular %>% iconv(from = "UTF-8", to = "ASCII//TRANSLIT") %>% tolower()
+  consumidoresMINA$titular |> iconv(from = "Latin1", to = "ASCII//TRANSLIT") |> tolower()
 
 consumidoresMINA$substancias.amb.Nome.Mina <-
-  consumidoresMINA$substancias.amb.Nome.Mina %>% iconv(from = "UTF-8", to = "ASCII//TRANSLIT") %>% tolower() %>% stringr::str_squish()
+  consumidoresMINA$substancias.amb.Nome.Mina |> iconv(from = "Latin1", to = "ASCII//TRANSLIT") |> tolower() |> stringr::str_squish()
 
 consumidoresMINA$Minerio <-
-  consumidoresMINA$Minerio %>% iconv(from = "UTF-8", to = "ASCII//TRANSLIT") %>% tolower() %>% stringr::str_squish()
+  consumidoresMINA$Minerio |> iconv(from = "Latin1", to = "ASCII//TRANSLIT") |> tolower() |> stringr::str_squish()
 
 consumidoresMINA$Nome.Mina <-
-  consumidoresMINA$Nome.Mina %>% iconv(from = "UTF-8", to = "ASCII//TRANSLIT") %>% tolower() %>% stringr::str_squish()
+  consumidoresMINA$Nome.Mina |> iconv(from = "Latin1", to = "ASCII//TRANSLIT") |> tolower() |> stringr::str_squish()
 
 consumidoresMINA$preco <-
   round(consumidoresMINA$valor.compra / consumidoresMINA$quantidade.compra,
@@ -341,7 +306,7 @@ consumidoresUSINA <-
     )
 
 colnames(consumidoresUSINA) <-
-  colnames(consumidoresUSINA) %>% iconv(from = "UTF-8", to = "ASCII//TRANSLIT")
+  colnames(consumidoresUSINA) |> iconv(from = "Latin1", to = "ASCII//TRANSLIT")
 colnames(consumidoresUSINA) <-
   c(
     "ano",
@@ -356,24 +321,24 @@ colnames(consumidoresUSINA) <-
     "uso.destinacao",
     "quantidade.compra",
     "valor.compra"
-  ) %>% tolower()
+  ) |> tolower()
 
 
 consumidoresUSINA$municipio <-
-  consumidoresUSINA$municipio %>% iconv(from = "UTF-8", to = "ASCII//TRANSLIT") %>% tolower()
+  consumidoresUSINA$municipio |> iconv(from = "Latin1", to = "ASCII//TRANSLIT") |> tolower()
 
 
 consumidoresUSINA$titular <-
-  consumidoresUSINA$titular %>% iconv(from = "UTF-8", to = "ASCII//TRANSLIT") %>% tolower()
+  consumidoresUSINA$titular |> iconv(from = "Latin1", to = "ASCII//TRANSLIT") |> tolower()
 
 consumidoresUSINA$substancias.amb.usina <-
-  consumidoresUSINA$substancias.amb.usina %>% iconv(from = "UTF-8", to = "ASCII//TRANSLIT") %>% tolower() %>% stringr::str_squish()
+  consumidoresUSINA$substancias.amb.usina |> iconv(from = "Latin1", to = "ASCII//TRANSLIT") |> tolower() |> stringr::str_squish()
 
 consumidoresUSINA$usina <-
-  consumidoresUSINA$usina %>% iconv(from = "UTF-8", to = "ASCII//TRANSLIT") %>% tolower() %>% stringr::str_squish()
+  consumidoresUSINA$usina |> iconv(from = "Latin1", to = "ASCII//TRANSLIT") |> tolower() |> stringr::str_squish()
 
 consumidoresUSINA$produto.beneficiado <-
-  consumidoresUSINA$produto.beneficiado %>% iconv(from = "UTF-8", to = "ASCII//TRANSLIT") %>% tolower() %>% stringr::str_squish()
+  consumidoresUSINA$produto.beneficiado |> iconv(from = "Latin1", to = "ASCII//TRANSLIT") |> tolower() |> stringr::str_squish()
 
 consumidoresUSINA$preco <- round(
   consumidoresUSINA$valor.compra / consumidoresUSINA$quantidade.compra,
@@ -451,7 +416,7 @@ geocod <-
 
 
 geocod$NM_MUNICIP_STRING <- 
-  geocod$NM_MUNICIP_STRING %>% iconv(from = "UTF-8", to = "ASCII//TRANSLIT") %>% tolower()
+  geocod$NM_MUNICIP_STRING |> iconv(from = "Latin1", to = "ASCII//TRANSLIT") |> tolower()
 
 geocod <- geocod[,c(1,2)]
 colnames(geocod) <- c("municipio", "geocod")
