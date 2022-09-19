@@ -1,97 +1,97 @@
-# Funções PRODUÇÃO BRUTA ----
+# Fun??es PRODU??O BRUTA ----
 
 
 
 FUNA_visao_PRODUCAO_BRUTA <-
-  function(processo = '.',
-           cpfcnpj = '.',
-           mina = '.',
-           subsAMB = '.') {
+  function(Processo = '.',
+           CPF.CNPJ.Titular = '.',
+           Nome.Mina = '.',
+           Substancia.AMB = '.') {
     producaoBRUTA_groupBY_SUBSTANCIA.AMB(
-      processo = processo,
-      cpfcnpj = cpfcnpj,
-      mina = mina,
-      subsAMB = subsAMB
+      Processo = Processo,
+      CPF.CNPJ.Titular = CPF.CNPJ.Titular,
+      Nome.Mina = Nome.Mina,
+      Substancia.AMB = Substancia.AMB
     ) %>%
       #FUNA_numerosFormatados() %>%
       print()
     producaoBRUTA_groupBY_MINA(
-      processo = processo,
-      cpfcnpj = cpfcnpj,
-      mina = mina,
-      subsAMB = subsAMB
+      Processo = Processo,
+      CPF.CNPJ.Titular = CPF.CNPJ.Titular,
+      Nome.Mina = Nome.Mina,
+      Substancia.AMB = Substancia.AMB
     ) %>%
       #FUNA_numerosFormatados() %>%
       print()
     producaoBRUTA_groupBY_PROCESSO(
-      processo = processo,
-      cpfcnpj = cpfcnpj,
-      mina = mina,
-      subsAMB = subsAMB
+      Processo = Processo,
+      CPF.CNPJ.Titular = CPF.CNPJ.Titular,
+      Nome.Mina = Nome.Mina,
+      Substancia.AMB = Substancia.AMB
     ) %>%
       #FUNA_numerosFormatados() %>%
       print()
     producaoBRUTA_groupBY_MUNICIPIO(
-      processo = processo,
-      cpfcnpj = cpfcnpj,
-      mina = mina,
-      subsAMB = subsAMB
+      Processo = Processo,
+      CPF.CNPJ.Titular = CPF.CNPJ.Titular,
+      Nome.Mina = Nome.Mina,
+      Substancia.AMB = Substancia.AMB
     ) %>%
       #FUNA_numerosFormatados() %>%
       print()
     producaoBRUTA_groupBY_TITULAR(
-      processo = processo,
-      cpfcnpj = cpfcnpj,
-      mina = mina,
-      subsAMB = subsAMB
+      Processo = Processo,
+      CPF.CNPJ.Titular = CPF.CNPJ.Titular,
+      Nome.Mina = Nome.Mina,
+      Substancia.AMB = Substancia.AMB
     ) %>%
       #FUNA_numerosFormatados() %>%
       print()
     a <-
-      paste("producaoBRUTA ", paste(processo, paste(cpfcnpj, paste(mina, subsAMB)))) # título do gráfico
+      paste("producaoBRUTA ", paste(Processo, paste(CPF.CNPJ.Titular, paste(Nome.Mina, Substancia.AMB)))) # t?tulo do gr?fico
     producaoBRUTA_GERAL(
-      processo = processo,
-      cpfcnpj = cpfcnpj,
-      mina = mina,
-      subsAMB = subsAMB
+      Processo = Processo,
+      CPF.CNPJ.Titular = CPF.CNPJ.Titular,
+      Nome.Mina = Nome.Mina,
+      Substancia.AMB = Substancia.AMB
     ) %>% as.matrix() %>% barplot(main = a)
     # Reserva
     reserva_groupBY_SUBSTANCIA.AMB(
-      processo = processo,
-      cpfcnpj = cpfcnpj,
-      mina = mina,
-      subsAMB = subsAMB
+      Processo = Processo,
+      CPF.CNPJ.Titular = CPF.CNPJ.Titular,
+      Nome.Mina = Nome.Mina,
+      Substancia.AMB = Substancia.AMB
     ) %>%
       #FUNA_numerosFormatados() %>%
       print()
     #eventos
-    if (processo != ".") {
-      FUNA_Eventos_RRR_RFP(processo = processo) %>% print()
+    if (Processo != ".") {
+      FUNA_Eventos_RRR_RFP(Processo = Processo) %>% print()
     }
   }
 
 
 #_____producaoBRUTA_GERAL
 producaoBRUTA_GERAL <-
-  function(subsAMB = ".",
-           subsRAL = ".",
-           cpfcnpj = ".",
-           municipio = ".",
-           mina = ".",
-           processo = ".",
+  function(Substancia.AMB = ".",
+           Substancia.RAL = ".",
+           CPF.CNPJ.Titular = ".",
+           Municipio.Mina = ".",
+           Nome.Mina = ".",
+           Processo = ".",
            volume = "rom") {
     if (volume == "rom") {
       x <-
         spread(
-          select(producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = subsAMB) == TRUE &
-                                 grepl(producaoBRUTA$Substancia.RAL, pattern = subsRAL) == TRUE &
-                                 grepl(producaoBRUTA$cpfcnpj, pattern = cpfcnpj) == TRUE &
-                                 grepl(producaoBRUTA$Municipio, pattern = municipio) == TRUE &
-                                 grepl(producaoBRUTA$Processo, pattern = processo) == TRUE &
-                                 grepl(producaoBRUTA$Nome.da.Mina, pattern = mina) == TRUE,], everything()) %>%
-            group_by(Ano.Base) %>%
-            summarise(soma = sum(quantidade.producao.ajuste)),
-          key = ano,
+          select(producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
+                                 grepl(producaoBRUTA$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
+                                 grepl(producaoBRUTA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
+                                 grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                 grepl(producaoBRUTA$Processo, pattern = Processo) == TRUE &
+                                 grepl(producaoBRUTA$Nome.da.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
+            group_by(Ano.Base.Ral) %>%
+            summarise(soma = sum(Quantidade.Producao.Com.Ajuste)),
+          key = Ano.Base.Ral,
           value = soma
         )
       
@@ -101,15 +101,15 @@ producaoBRUTA_GERAL <-
       if (volume == "venda") {
         x <-
           spread(
-            select(producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = subsAMB) == TRUE &
-                                   grepl(producaoBRUTA$Substancia.RAL, pattern = subsRAL) == TRUE &
-                                   grepl(producaoBRUTA$cpfcnpj, pattern = cpfcnpj) == TRUE &
-                                   grepl(producaoBRUTA$Municipio, pattern = municipio) == TRUE &
-                                   grepl(producaoBRUTA$Processo, pattern = processo) == TRUE &
-                                   grepl(producaoBRUTA$Nome.da.Mina, pattern = mina) == TRUE,], everything()) %>%
-              group_by(Ano.Base) %>%
-              summarise(soma = sum(quantidade.venda.ajuste)),
-            key = ano,
+            select(producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
+                                   grepl(producaoBRUTA$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
+                                   grepl(producaoBRUTA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
+                                   grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                   grepl(producaoBRUTA$Processo, pattern = Processo) == TRUE &
+                                   grepl(producaoBRUTA$Nome.da.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
+              group_by(Ano.Base.Ral) %>%
+              summarise(soma = sum(Quantidade.Venda.com.Ajuste)),
+            key = Ano.Base.Ral,
             value = soma
           )
         
@@ -118,17 +118,17 @@ producaoBRUTA_GERAL <-
         if (volume == "producao.substancia") {
           x <-
             spread(
-              select(producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = subsAMB) == TRUE &
-                                     grepl(producaoBRUTA$Substancia.RAL, pattern = subsRAL) == TRUE &
-                                     grepl(producaoBRUTA$cpfcnpj, pattern = cpfcnpj) == TRUE &
-                                     grepl(producaoBRUTA$Municipio, pattern = municipio) == TRUE &
-                                     grepl(producaoBRUTA$Processo, pattern = processo) == TRUE &
-                                     grepl(producaoBRUTA$Nome.da.Mina, pattern = mina) == TRUE,], everything()) %>%
-                group_by(Ano.Base) %>%
+              select(producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
+                                     grepl(producaoBRUTA$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
+                                     grepl(producaoBRUTA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
+                                     grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                     grepl(producaoBRUTA$Processo, pattern = Processo) == TRUE &
+                                     grepl(producaoBRUTA$Nome.da.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
+                group_by(Ano.Base.Ral) %>%
                 summarise(soma = sum(
-                  quantidade.producao.substancia.ajuste
+                  Quantidade.Producao.Substancia.com.Ajuste
                 )),
-              key = ano,
+              key = Ano.Base.Ral,
               value = soma
             )
           
@@ -137,17 +137,17 @@ producaoBRUTA_GERAL <-
           if (volume == "venda.substancia") {
             x <-
               spread(
-                select(producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = subsAMB) == TRUE &
-                                       grepl(producaoBRUTA$Substancia.RAL, pattern = subsRAL) == TRUE &
-                                       grepl(producaoBRUTA$cpfcnpj, pattern = cpfcnpj) == TRUE &
-                                       grepl(producaoBRUTA$Municipio, pattern = municipio) == TRUE &
-                                       grepl(producaoBRUTA$Processo, pattern = processo) == TRUE &
-                                       grepl(producaoBRUTA$Nome.da.Mina, pattern = mina) == TRUE,], everything()) %>%
-                  group_by(Ano.Base) %>%
+                select(producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
+                                       grepl(producaoBRUTA$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
+                                       grepl(producaoBRUTA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
+                                       grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                       grepl(producaoBRUTA$Processo, pattern = Processo) == TRUE &
+                                       grepl(producaoBRUTA$Nome.da.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
+                  group_by(Ano.Base.Ral) %>%
                   summarise(soma = sum(
-                    quantidade.venda.substancia.ajuste
+                    Quantidade.Venda.com.Ajuste
                   )),
-                key = ano,
+                key = Ano.Base.Ral,
                 value = soma
               )
             
@@ -161,25 +161,25 @@ producaoBRUTA_GERAL <-
 
 #_____producaoBRUTA_groupBY_MINA
 producaoBRUTA_groupBY_MINA <-
-  function(subsAMB = ".",
-           subsRAL = ".",
-           cpfcnpj = ".",
-           municipio = ".",
-           mina = ".",
-           processo = ".",
+  function(Substancia.AMB = ".",
+           Substancia.RAL = ".",
+           CPF.CNPJ.Titular = ".",
+           Municipio.Mina = ".",
+           Nome.Mina = ".",
+           Processo = ".",
            volume = "rom") {
     if (volume == "rom") {
       x <-
         spread(
-          select(producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = subsAMB) == TRUE &
-                                 grepl(producaoBRUTA$Substancia.RAL, pattern = subsRAL) == TRUE &
-                                 grepl(producaoBRUTA$cpfcnpj, pattern = cpfcnpj) == TRUE &
-                                 grepl(producaoBRUTA$Municipio, pattern = municipio) == TRUE &
-                                 grepl(producaoBRUTA$Processo, pattern = processo) == TRUE &
-                                 grepl(producaoBRUTA$Nome.da.Mina, pattern = mina) == TRUE,], everything()) %>%
-            group_by(Ano.Base, mina) %>%
-            summarise(soma = sum(quantidade.producao.ajuste)),
-          key = ano,
+          select(producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
+                                 grepl(producaoBRUTA$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
+                                 grepl(producaoBRUTA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
+                                 grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                 grepl(producaoBRUTA$Processo, pattern = Processo) == TRUE &
+                                 grepl(producaoBRUTA$Nome.da.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
+            group_by(Ano.Base.Ral, Nome.Mina) %>%
+            summarise(soma = sum(Quantidade.Producao.Com.Ajuste)),
+          key = Ano.Base.Ral,
           value = soma
         )
       
@@ -189,15 +189,15 @@ producaoBRUTA_groupBY_MINA <-
       if (volume == "venda") {
         x <-
           spread(
-            select(producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = subsAMB) == TRUE &
-                                   grepl(producaoBRUTA$Substancia.RAL, pattern = subsRAL) == TRUE &
-                                   grepl(producaoBRUTA$cpfcnpj, pattern = cpfcnpj) == TRUE &
-                                   grepl(producaoBRUTA$Municipio, pattern = municipio) == TRUE &
-                                   grepl(producaoBRUTA$Processo, pattern = processo) == TRUE &
-                                   grepl(producaoBRUTA$Nome.da.Mina, pattern = mina) == TRUE,], everything()) %>%
-              group_by(Ano.Base, mina) %>%
-              summarise(soma = sum(quantidade.venda.ajuste)),
-            key = ano,
+            select(producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
+                                   grepl(producaoBRUTA$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
+                                   grepl(producaoBRUTA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
+                                   grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                   grepl(producaoBRUTA$Processo, pattern = Processo) == TRUE &
+                                   grepl(producaoBRUTA$Nome.da.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
+              group_by(Ano.Base.Ral, Nome.Mina) %>%
+              summarise(soma = sum(Quantidade.Venda.com.Ajuste)),
+            key = Ano.Base.Ral,
             value = soma
           )
         
@@ -206,17 +206,17 @@ producaoBRUTA_groupBY_MINA <-
         if (volume == "producao.substancia") {
           x <-
             spread(
-              select(producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = subsAMB) == TRUE &
-                                     grepl(producaoBRUTA$Substancia.RAL, pattern = subsRAL) == TRUE &
-                                     grepl(producaoBRUTA$cpfcnpj, pattern = cpfcnpj) == TRUE &
-                                     grepl(producaoBRUTA$Municipio, pattern = municipio) == TRUE &
-                                     grepl(producaoBRUTA$Processo, pattern = processo) == TRUE &
-                                     grepl(producaoBRUTA$Nome.da.Mina, pattern = mina) == TRUE,], everything()) %>%
-                group_by(Ano.Base, mina) %>%
+              select(producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
+                                     grepl(producaoBRUTA$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
+                                     grepl(producaoBRUTA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
+                                     grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                     grepl(producaoBRUTA$Processo, pattern = Processo) == TRUE &
+                                     grepl(producaoBRUTA$Nome.da.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
+                group_by(Ano.Base.Ral, Nome.Mina) %>%
                 summarise(soma = sum(
-                  quantidade.producao.substancia.ajuste
+                  Quantidade.Producao.Substancia.com.Ajuste
                 )),
-              key = ano,
+              key = Ano.Base.Ral,
               value = soma
             )
           
@@ -225,17 +225,17 @@ producaoBRUTA_groupBY_MINA <-
           if (volume == "venda.substancia") {
             x <-
               spread(
-                select(producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = subsAMB) == TRUE &
-                                       grepl(producaoBRUTA$Substancia.RAL, pattern = subsRAL) == TRUE &
-                                       grepl(producaoBRUTA$cpfcnpj, pattern = cpfcnpj) == TRUE &
-                                       grepl(producaoBRUTA$Municipio, pattern = municipio) == TRUE &
-                                       grepl(producaoBRUTA$Processo, pattern = processo) == TRUE &
-                                       grepl(producaoBRUTA$Nome.da.Mina, pattern = mina) == TRUE,], everything()) %>%
-                  group_by(Ano.Base, mina) %>%
+                select(producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
+                                       grepl(producaoBRUTA$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
+                                       grepl(producaoBRUTA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
+                                       grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                       grepl(producaoBRUTA$Processo, pattern = Processo) == TRUE &
+                                       grepl(producaoBRUTA$Nome.da.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
+                  group_by(Ano.Base.Ral, Nome.Mina) %>%
                   summarise(soma = sum(
-                    quantidade.venda.substancia.ajuste
+                    Quantidade.Venda.com.Ajuste
                   )),
-                key = ano,
+                key = Ano.Base.Ral,
                 value = soma
               )
             
@@ -251,25 +251,25 @@ producaoBRUTA_groupBY_MINA <-
 
 #_____producaoBRUTA_groupBY_MUNICIPIO
 producaoBRUTA_groupBY_MUNICIPIO <-
-  function(subsAMB = ".",
-           subsRAL = ".",
-           cpfcnpj = ".",
-           municipio = ".",
-           mina = ".",
-           processo = ".",
+  function(Substancia.AMB = ".",
+           Substancia.RAL = ".",
+           CPF.CNPJ.Titular = ".",
+           Municipio.Mina = ".",
+           Nome.Mina = ".",
+           Processo = ".",
            volume = "rom") {
     if (volume == "rom") {
       x <-
         spread(
-          select(producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = subsAMB) == TRUE &
-                                 grepl(producaoBRUTA$Substancia.RAL, pattern = subsRAL) == TRUE &
-                                 grepl(producaoBRUTA$cpfcnpj, pattern = cpfcnpj) == TRUE &
-                                 grepl(producaoBRUTA$Municipio, pattern = municipio) == TRUE &
-                                 grepl(producaoBRUTA$Processo, pattern = processo) == TRUE &
-                                 grepl(producaoBRUTA$Nome.da.Mina, pattern = mina) == TRUE,], everything()) %>%
-            group_by(Ano.Base, municipio) %>%
-            summarise(soma = sum(quantidade.producao.ajuste)),
-          key = ano,
+          select(producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
+                                 grepl(producaoBRUTA$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
+                                 grepl(producaoBRUTA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
+                                 grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                 grepl(producaoBRUTA$Processo, pattern = Processo) == TRUE &
+                                 grepl(producaoBRUTA$Nome.da.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
+            group_by(Ano.Base.Ral, Municipio.Mina) %>%
+            summarise(soma = sum(Quantidade.Producao.Com.Ajuste)),
+          key = Ano.Base.Ral,
           value = soma
         )
       
@@ -279,15 +279,15 @@ producaoBRUTA_groupBY_MUNICIPIO <-
       if (volume == "venda") {
         x <-
           spread(
-            select(producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = subsAMB) == TRUE &
-                                   grepl(producaoBRUTA$Substancia.RAL, pattern = subsRAL) == TRUE &
-                                   grepl(producaoBRUTA$cpfcnpj, pattern = cpfcnpj) == TRUE &
-                                   grepl(producaoBRUTA$Municipio, pattern = municipio) == TRUE &
-                                   grepl(producaoBRUTA$Processo, pattern = processo) == TRUE &
-                                   grepl(producaoBRUTA$Nome.da.Mina, pattern = mina) == TRUE,], everything()) %>%
-              group_by(Ano.Base, municipio) %>%
-              summarise(soma = sum(quantidade.venda.ajuste)),
-            key = ano,
+            select(producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
+                                   grepl(producaoBRUTA$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
+                                   grepl(producaoBRUTA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
+                                   grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                   grepl(producaoBRUTA$Processo, pattern = Processo) == TRUE &
+                                   grepl(producaoBRUTA$Nome.da.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
+              group_by(Ano.Base.Ral, Municipio.Mina) %>%
+              summarise(soma = sum(Quantidade.Venda.com.Ajuste)),
+            key = Ano.Base.Ral,
             value = soma
           )
         
@@ -296,17 +296,17 @@ producaoBRUTA_groupBY_MUNICIPIO <-
         if (volume == "producao.substancia") {
           x <-
             spread(
-              select(producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = subsAMB) == TRUE &
-                                     grepl(producaoBRUTA$Substancia.RAL, pattern = subsRAL) == TRUE &
-                                     grepl(producaoBRUTA$cpfcnpj, pattern = cpfcnpj) == TRUE &
-                                     grepl(producaoBRUTA$Municipio, pattern = municipio) == TRUE &
-                                     grepl(producaoBRUTA$Processo, pattern = processo) == TRUE &
-                                     grepl(producaoBRUTA$Nome.da.Mina, pattern = mina) == TRUE,], everything()) %>%
-                group_by(Ano.Base, municipio) %>%
+              select(producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
+                                     grepl(producaoBRUTA$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
+                                     grepl(producaoBRUTA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
+                                     grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                     grepl(producaoBRUTA$Processo, pattern = Processo) == TRUE &
+                                     grepl(producaoBRUTA$Nome.da.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
+                group_by(Ano.Base.Ral, Municipio.Mina) %>%
                 summarise(soma = sum(
-                  quantidade.producao.substancia.ajuste
+                  Quantidade.Producao.Substancia.com.Ajuste
                 )),
-              key = ano,
+              key = Ano.Base.Ral,
               value = soma
             )
           
@@ -315,17 +315,17 @@ producaoBRUTA_groupBY_MUNICIPIO <-
           if (volume == "venda.substancia") {
             x <-
               spread(
-                select(producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = subsAMB) == TRUE &
-                                       grepl(producaoBRUTA$Substancia.RAL, pattern = subsRAL) == TRUE &
-                                       grepl(producaoBRUTA$cpfcnpj, pattern = cpfcnpj) == TRUE &
-                                       grepl(producaoBRUTA$Municipio, pattern = municipio) == TRUE &
-                                       grepl(producaoBRUTA$Processo, pattern = processo) == TRUE &
-                                       grepl(producaoBRUTA$Nome.da.Mina, pattern = mina) == TRUE,], everything()) %>%
-                  group_by(Ano.Base, municipio) %>%
+                select(producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
+                                       grepl(producaoBRUTA$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
+                                       grepl(producaoBRUTA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
+                                       grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                       grepl(producaoBRUTA$Processo, pattern = Processo) == TRUE &
+                                       grepl(producaoBRUTA$Nome.da.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
+                  group_by(Ano.Base.Ral, Municipio.Mina) %>%
                   summarise(soma = sum(
-                    quantidade.venda.substancia.ajuste
+                    Quantidade.Venda.com.Ajuste
                   )),
-                key = ano,
+                key = Ano.Base.Ral,
                 value = soma
               )
             
@@ -340,25 +340,25 @@ producaoBRUTA_groupBY_MUNICIPIO <-
 
 #_____producaoBRUTA_groupBY_PROCESSO
 producaoBRUTA_groupBY_PROCESSO <-
-  function(subsAMB = ".",
-           subsRAL = ".",
-           cpfcnpj = ".",
-           municipio = ".",
-           mina = ".",
-           processo = ".",
+  function(Substancia.AMB = ".",
+           Substancia.RAL = ".",
+           CPF.CNPJ.Titular = ".",
+           Municipio.Mina = ".",
+           Nome.Mina = ".",
+           Processo = ".",
            volume = "rom") {
     if (volume == "rom") {
       x <-
         spread(
-          select(producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = subsAMB) == TRUE &
-                                 grepl(producaoBRUTA$Substancia.RAL, pattern = subsRAL) == TRUE &
-                                 grepl(producaoBRUTA$cpfcnpj, pattern = cpfcnpj) == TRUE &
-                                 grepl(producaoBRUTA$Municipio, pattern = municipio) == TRUE &
-                                 grepl(producaoBRUTA$Processo, pattern = processo) == TRUE &
-                                 grepl(producaoBRUTA$Nome.da.Mina, pattern = mina) == TRUE,], everything()) %>%
-            group_by(Ano.Base, processo) %>%
-            summarise(soma = sum(quantidade.producao.ajuste)),
-          key = ano,
+          select(producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
+                                 grepl(producaoBRUTA$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
+                                 grepl(producaoBRUTA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
+                                 grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                 grepl(producaoBRUTA$Processo, pattern = Processo) == TRUE &
+                                 grepl(producaoBRUTA$Nome.da.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
+            group_by(Ano.Base.Ral, Processo) %>%
+            summarise(soma = sum(Quantidade.Producao.Com.Ajuste)),
+          key = Ano.Base.Ral,
           value = soma
         )
       
@@ -368,15 +368,15 @@ producaoBRUTA_groupBY_PROCESSO <-
       if (volume == "venda") {
         x <-
           spread(
-            select(producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = subsAMB) == TRUE &
-                                   grepl(producaoBRUTA$Substancia.RAL, pattern = subsRAL) == TRUE &
-                                   grepl(producaoBRUTA$cpfcnpj, pattern = cpfcnpj) == TRUE &
-                                   grepl(producaoBRUTA$Municipio, pattern = municipio) == TRUE &
-                                   grepl(producaoBRUTA$Processo, pattern = processo) == TRUE &
-                                   grepl(producaoBRUTA$Nome.da.Mina, pattern = mina) == TRUE,], everything()) %>%
-              group_by(Ano.Base, processo) %>%
-              summarise(soma = sum(quantidade.venda.ajuste)),
-            key = ano,
+            select(producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
+                                   grepl(producaoBRUTA$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
+                                   grepl(producaoBRUTA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
+                                   grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                   grepl(producaoBRUTA$Processo, pattern = Processo) == TRUE &
+                                   grepl(producaoBRUTA$Nome.da.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
+              group_by(Ano.Base.Ral, Processo) %>%
+              summarise(soma = sum(Quantidade.Venda.com.Ajuste)),
+            key = Ano.Base.Ral,
             value = soma
           )
         
@@ -385,17 +385,17 @@ producaoBRUTA_groupBY_PROCESSO <-
         if (volume == "producao.substancia") {
           x <-
             spread(
-              select(producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = subsAMB) == TRUE &
-                                     grepl(producaoBRUTA$Substancia.RAL, pattern = subsRAL) == TRUE &
-                                     grepl(producaoBRUTA$cpfcnpj, pattern = cpfcnpj) == TRUE &
-                                     grepl(producaoBRUTA$Municipio, pattern = municipio) == TRUE &
-                                     grepl(producaoBRUTA$Processo, pattern = processo) == TRUE &
-                                     grepl(producaoBRUTA$Nome.da.Mina, pattern = mina) == TRUE,], everything()) %>%
-                group_by(Ano.Base, processo) %>%
+              select(producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
+                                     grepl(producaoBRUTA$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
+                                     grepl(producaoBRUTA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
+                                     grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                     grepl(producaoBRUTA$Processo, pattern = Processo) == TRUE &
+                                     grepl(producaoBRUTA$Nome.da.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
+                group_by(Ano.Base.Ral, Processo) %>%
                 summarise(soma = sum(
-                  quantidade.producao.substancia.ajuste
+                  Quantidade.Producao.Substancia.com.Ajuste
                 )),
-              key = ano,
+              key = Ano.Base.Ral,
               value = soma
             )
           
@@ -404,17 +404,17 @@ producaoBRUTA_groupBY_PROCESSO <-
           if (volume == "venda.substancia") {
             x <-
               spread(
-                select(producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = subsAMB) == TRUE &
-                                       grepl(producaoBRUTA$Substancia.RAL, pattern = subsRAL) == TRUE &
-                                       grepl(producaoBRUTA$cpfcnpj, pattern = cpfcnpj) == TRUE &
-                                       grepl(producaoBRUTA$Municipio, pattern = municipio) == TRUE &
-                                       grepl(producaoBRUTA$Processo, pattern = processo) == TRUE &
-                                       grepl(producaoBRUTA$Nome.da.Mina, pattern = mina) == TRUE,], everything()) %>%
-                  group_by(Ano.Base, processo) %>%
+                select(producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
+                                       grepl(producaoBRUTA$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
+                                       grepl(producaoBRUTA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
+                                       grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                       grepl(producaoBRUTA$Processo, pattern = Processo) == TRUE &
+                                       grepl(producaoBRUTA$Nome.da.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
+                  group_by(Ano.Base.Ral, Processo) %>%
                   summarise(soma = sum(
-                    quantidade.venda.substancia.ajuste
+                    Quantidade.Venda.com.Ajuste
                   )),
-                key = ano,
+                key = Ano.Base.Ral,
                 value = soma
               )
             
@@ -430,25 +430,25 @@ producaoBRUTA_groupBY_PROCESSO <-
 
 #_____producaoBRUTA_groupBY_SUBSTANCIA.AMB
 producaoBRUTA_groupBY_SUBSTANCIA.AMB <-
-  function(subsAMB = ".",
-           subsRAL = ".",
-           cpfcnpj = ".",
-           municipio = ".",
-           mina = ".",
-           processo = ".",
+  function(Substancia.AMB = ".",
+           Substancia.RAL = ".",
+           CPF.CNPJ.Titular = ".",
+           Municipio.Mina = ".",
+           Nome.Mina = ".",
+           Processo = ".",
            volume = "rom") {
     if (volume == "rom") {
       x <-
         spread(
-          select(producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = subsAMB) == TRUE &
-                                 grepl(producaoBRUTA$Substancia.RAL, pattern = subsRAL) == TRUE &
-                                 grepl(producaoBRUTA$cpfcnpj, pattern = cpfcnpj) == TRUE &
-                                 grepl(producaoBRUTA$Municipio, pattern = municipio) == TRUE &
-                                 grepl(producaoBRUTA$Processo, pattern = processo) == TRUE &
-                                 grepl(producaoBRUTA$Nome.da.Mina, pattern = mina) == TRUE,], everything()) %>%
-            group_by(Ano.Base, Substancia.AMB) %>%
-            summarise(soma = sum(quantidade.producao.ajuste)),
-          key = ano,
+          select(producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
+                                 grepl(producaoBRUTA$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
+                                 grepl(producaoBRUTA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
+                                 grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                 grepl(producaoBRUTA$Processo, pattern = Processo) == TRUE &
+                                 grepl(producaoBRUTA$Nome.da.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
+            group_by(Ano.Base.Ral, Substancia.AMB) %>%
+            summarise(soma = sum(Quantidade.Producao.Com.Ajuste)),
+          key = Ano.Base.Ral,
           value = soma
         )
       
@@ -458,15 +458,15 @@ producaoBRUTA_groupBY_SUBSTANCIA.AMB <-
       if (volume == "venda") {
         x <-
           spread(
-            select(producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = subsAMB) == TRUE &
-                                   grepl(producaoBRUTA$Substancia.RAL, pattern = subsRAL) == TRUE &
-                                   grepl(producaoBRUTA$cpfcnpj, pattern = cpfcnpj) == TRUE &
-                                   grepl(producaoBRUTA$Municipio, pattern = municipio) == TRUE &
-                                   grepl(producaoBRUTA$Processo, pattern = processo) == TRUE &
-                                   grepl(producaoBRUTA$Nome.da.Mina, pattern = mina) == TRUE,], everything()) %>%
-              group_by(Ano.Base, Substancia.AMB) %>%
-              summarise(soma = sum(quantidade.venda.ajuste)),
-            key = ano,
+            select(producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
+                                   grepl(producaoBRUTA$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
+                                   grepl(producaoBRUTA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
+                                   grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                   grepl(producaoBRUTA$Processo, pattern = Processo) == TRUE &
+                                   grepl(producaoBRUTA$Nome.da.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
+              group_by(Ano.Base.Ral, Substancia.AMB) %>%
+              summarise(soma = sum(Quantidade.Venda.com.Ajuste)),
+            key = Ano.Base.Ral,
             value = soma
           )
         
@@ -475,17 +475,17 @@ producaoBRUTA_groupBY_SUBSTANCIA.AMB <-
         if (volume == "producao.substancia") {
           x <-
             spread(
-              select(producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = subsAMB) == TRUE &
-                                     grepl(producaoBRUTA$Substancia.RAL, pattern = subsRAL) == TRUE &
-                                     grepl(producaoBRUTA$cpfcnpj, pattern = cpfcnpj) == TRUE &
-                                     grepl(producaoBRUTA$Municipio, pattern = municipio) == TRUE &
-                                     grepl(producaoBRUTA$Processo, pattern = processo) == TRUE &
-                                     grepl(producaoBRUTA$Nome.da.Mina, pattern = mina) == TRUE,], everything()) %>%
-                group_by(Ano.Base, Substancia.AMB) %>%
+              select(producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
+                                     grepl(producaoBRUTA$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
+                                     grepl(producaoBRUTA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
+                                     grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                     grepl(producaoBRUTA$Processo, pattern = Processo) == TRUE &
+                                     grepl(producaoBRUTA$Nome.da.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
+                group_by(Ano.Base.Ral, Substancia.AMB) %>%
                 summarise(soma = sum(
-                  quantidade.producao.substancia.ajuste
+                  Quantidade.Producao.Substancia.com.Ajuste
                 )),
-              key = ano,
+              key = Ano.Base.Ral,
               value = soma
             )
           
@@ -494,17 +494,17 @@ producaoBRUTA_groupBY_SUBSTANCIA.AMB <-
           if (volume == "venda.substancia") {
             x <-
               spread(
-                select(producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = subsAMB) == TRUE &
-                                       grepl(producaoBRUTA$Substancia.RAL, pattern = subsRAL) == TRUE &
-                                       grepl(producaoBRUTA$cpfcnpj, pattern = cpfcnpj) == TRUE &
-                                       grepl(producaoBRUTA$Municipio, pattern = municipio) == TRUE &
-                                       grepl(producaoBRUTA$Processo, pattern = processo) == TRUE &
-                                       grepl(producaoBRUTA$Nome.da.Mina, pattern = mina) == TRUE,], everything()) %>%
-                  group_by(Ano.Base, Substancia.AMB) %>%
+                select(producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
+                                       grepl(producaoBRUTA$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
+                                       grepl(producaoBRUTA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
+                                       grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                       grepl(producaoBRUTA$Processo, pattern = Processo) == TRUE &
+                                       grepl(producaoBRUTA$Nome.da.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
+                  group_by(Ano.Base.Ral, Substancia.AMB) %>%
                   summarise(soma = sum(
-                    quantidade.venda.substancia.ajuste
+                    Quantidade.Venda.com.Ajuste
                   )),
-                key = ano,
+                key = Ano.Base.Ral,
                 value = soma
               )
             
@@ -520,25 +520,25 @@ producaoBRUTA_groupBY_SUBSTANCIA.AMB <-
 
 #_____producaoBRUTA_groupBY_TITULAR
 producaoBRUTA_groupBY_TITULAR <-
-  function(subsAMB = ".",
-           subsRAL = ".",
-           cpfcnpj = ".",
-           municipio = ".",
-           mina = ".",
-           processo = ".",
+  function(Substancia.AMB = ".",
+           Substancia.RAL = ".",
+           CPF.CNPJ.Titular = ".",
+           Municipio.Mina = ".",
+           Nome.Mina = ".",
+           Processo = ".",
            volume = "rom") {
     if (volume == "rom") {
       x <-
         spread(
-          select(producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = subsAMB) == TRUE &
-                                 grepl(producaoBRUTA$Substancia.RAL, pattern = subsRAL) == TRUE &
-                                 grepl(producaoBRUTA$cpfcnpj, pattern = cpfcnpj) == TRUE &
-                                 grepl(producaoBRUTA$Municipio, pattern = municipio) == TRUE &
-                                 grepl(producaoBRUTA$Processo, pattern = processo) == TRUE &
-                                 grepl(producaoBRUTA$Nome.da.Mina, pattern = mina) == TRUE,], everything()) %>%
-            group_by(Ano.Base, cpfcnpj) %>%
-            summarise(soma = sum(quantidade.producao.ajuste)),
-          key = ano,
+          select(producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
+                                 grepl(producaoBRUTA$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
+                                 grepl(producaoBRUTA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
+                                 grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                 grepl(producaoBRUTA$Processo, pattern = Processo) == TRUE &
+                                 grepl(producaoBRUTA$Nome.da.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
+            group_by(Ano.Base.Ral, CPF.CNPJ.Titular) %>%
+            summarise(soma = sum(Quantidade.Producao.Com.Ajuste)),
+          key = Ano.Base.Ral,
           value = soma
         )
       
@@ -548,15 +548,15 @@ producaoBRUTA_groupBY_TITULAR <-
       if (volume == "venda") {
         x <-
           spread(
-            select(producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = subsAMB) == TRUE &
-                                   grepl(producaoBRUTA$Substancia.RAL, pattern = subsRAL) == TRUE &
-                                   grepl(producaoBRUTA$cpfcnpj, pattern = cpfcnpj) == TRUE &
-                                   grepl(producaoBRUTA$Municipio, pattern = municipio) == TRUE &
-                                   grepl(producaoBRUTA$Processo, pattern = processo) == TRUE &
-                                   grepl(producaoBRUTA$Nome.da.Mina, pattern = mina) == TRUE,], everything()) %>%
-              group_by(Ano.Base, cpfcnpj) %>%
-              summarise(soma = sum(quantidade.venda.ajuste)),
-            key = ano,
+            select(producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
+                                   grepl(producaoBRUTA$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
+                                   grepl(producaoBRUTA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
+                                   grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                   grepl(producaoBRUTA$Processo, pattern = Processo) == TRUE &
+                                   grepl(producaoBRUTA$Nome.da.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
+              group_by(Ano.Base.Ral, CPF.CNPJ.Titular) %>%
+              summarise(soma = sum(Quantidade.Venda.com.Ajuste)),
+            key = Ano.Base.Ral,
             value = soma
           )
         
@@ -565,17 +565,17 @@ producaoBRUTA_groupBY_TITULAR <-
         if (volume == "producao.substancia") {
           x <-
             spread(
-              select(producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = subsAMB) == TRUE &
-                                     grepl(producaoBRUTA$Substancia.RAL, pattern = subsRAL) == TRUE &
-                                     grepl(producaoBRUTA$cpfcnpj, pattern = cpfcnpj) == TRUE &
-                                     grepl(producaoBRUTA$Municipio, pattern = municipio) == TRUE &
-                                     grepl(producaoBRUTA$Processo, pattern = processo) == TRUE &
-                                     grepl(producaoBRUTA$Nome.da.Mina, pattern = mina) == TRUE,], everything()) %>%
-                group_by(Ano.Base, cpfcnpj) %>%
+              select(producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
+                                     grepl(producaoBRUTA$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
+                                     grepl(producaoBRUTA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
+                                     grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                     grepl(producaoBRUTA$Processo, pattern = Processo) == TRUE &
+                                     grepl(producaoBRUTA$Nome.da.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
+                group_by(Ano.Base.Ral, CPF.CNPJ.Titular) %>%
                 summarise(soma = sum(
-                  quantidade.producao.substancia.ajuste
+                  Quantidade.Producao.Substancia.com.Ajuste
                 )),
-              key = ano,
+              key = Ano.Base.Ral,
               value = soma
             )
           
@@ -584,17 +584,17 @@ producaoBRUTA_groupBY_TITULAR <-
           if (volume == "venda.substancia") {
             x <-
               spread(
-                select(producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = subsAMB) == TRUE &
-                                       grepl(producaoBRUTA$Substancia.RAL, pattern = subsRAL) == TRUE &
-                                       grepl(producaoBRUTA$cpfcnpj, pattern = cpfcnpj) == TRUE &
-                                       grepl(producaoBRUTA$Municipio, pattern = municipio) == TRUE &
-                                       grepl(producaoBRUTA$Processo, pattern = processo) == TRUE &
-                                       grepl(producaoBRUTA$Nome.da.Mina, pattern = mina) == TRUE,], everything()) %>%
-                  group_by(Ano.Base, cpfcnpj) %>%
+                select(producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
+                                       grepl(producaoBRUTA$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
+                                       grepl(producaoBRUTA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
+                                       grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                       grepl(producaoBRUTA$Processo, pattern = Processo) == TRUE &
+                                       grepl(producaoBRUTA$Nome.da.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
+                  group_by(Ano.Base.Ral, CPF.CNPJ.Titular) %>%
                   summarise(soma = sum(
-                    quantidade.venda.substancia.ajuste
+                    Quantidade.Venda.com.Ajuste
                   )),
-                key = ano,
+                key = Ano.Base.Ral,
                 value = soma
               )
             
@@ -607,69 +607,69 @@ producaoBRUTA_groupBY_TITULAR <-
   }
 
 
-# Funções PRODUÇÃO BENEFICIADA ----
+# Fun??es PRODU??O BENEFICIADA ----
 
 FUNA_visao_PRODUCAO_BENEFICIADA <-
-  function(cpfcnpj = '.',
+  function(CPF.CNPJ.Titular = '.',
            usina = '.',
-           subsAMB = '.',
+           Substancia.AMB = '.',
            produto = ".",
-           municipio = ".") {
+           Municipio.Mina = ".") {
     producaoBENEFICIADA_groupBY_SUBSTANCIA.AMB(
-      cpfcnpj = cpfcnpj,
+      CPF.CNPJ.Titular = CPF.CNPJ.Titular,
       usina = usina,
-      municipio = municipio,
-      subsAMB = subsAMB,
+      Municipio.Mina = Municipio.Mina,
+      Substancia.AMB = Substancia.AMB,
       #produto = produto
     ) %>%
       print()
     producaoBENEFICIADA_groupBY_USINA(
-      cpfcnpj = cpfcnpj,
-      subsAMB = subsAMB,
-      municipio = municipio,
+      CPF.CNPJ.Titular = CPF.CNPJ.Titular,
+      Substancia.AMB = Substancia.AMB,
+      Municipio.Mina = Municipio.Mina,
       usina = usina,
       #produto = produto
     ) %>%
       print()
     #producaoBENEFICIADA_groupBY_PRODUTO(
-    #  cpfcnpj = cpfcnpj,
+    #  CPF.CNPJ.Titular = CPF.CNPJ.Titular,
     #  usina = usina,
-    #  subsAMB = subsAMB,
-    #  municipio = municipio,
+    #  Substancia.AMB = Substancia.AMB,
+    #  Municipio.Mina = Municipio.Mina,
     #  produto = produto
     #) %>%
     #  print()
     producaoBENEFICIADA_groupBY_MUNICIPIO(
-      cpfcnpj = cpfcnpj,
+      CPF.CNPJ.Titular = CPF.CNPJ.Titular,
       usina = usina,
-      subsAMB = subsAMB,
-      municipio = municipio,
+      Substancia.AMB = Substancia.AMB,
+      Municipio.Mina = Municipio.Mina,
       #produto = produto
     ) %>%
       print()
     producaoBENEFICIADA_groupBY_TITULAR(
-      cpfcnpj = cpfcnpj,
+      CPF.CNPJ.Titular = CPF.CNPJ.Titular,
       usina = usina,
-      subsAMB = subsAMB,
-      municipio = municipio,
+      Substancia.AMB = Substancia.AMB,
+      Municipio.Mina = Municipio.Mina,
       #produto = produto
     ) %>%
       print()
     a <-
-      paste("producaoBENEFICIADA ", paste(paste(cpfcnpj, paste(usina, subsAMB)))) # título do gráfico
+      paste("producaoBENEFICIADA ", paste(paste(CPF.CNPJ.Titular, paste(usina, Substancia.AMB)))) # t?tulo do gr?fico
     producaoBENEFICIADA_GERAL(
-      cpfcnpj = cpfcnpj,
+      CPF.CNPJ.Titular = CPF.CNPJ.Titular,
       usina = usina,
-      subsAMB = subsAMB,
-      municipio = municipio,
+      Substancia.AMB = Substancia.AMB,
+      Municipio.Mina = Municipio.Mina,
       #produto = produto
     ) %>% as.matrix() %>% barplot(main = a)
     # Reserva
     reserva_groupBY_SUBSTANCIA.AMB(
-      municipio = municipio,
-      cpfcnpj = cpfcnpj,
-      mina = mina,
-      subsAMB = subsAMB
+      Municipio.Mina = Municipio.Mina,
+      CPF.CNPJ.Titular = CPF.CNPJ.Titular,
+      Nome.Mina = Nome.Mina,
+      Substancia.AMB = Substancia.AMB
     ) %>%
       print()
   }
@@ -677,23 +677,23 @@ FUNA_visao_PRODUCAO_BENEFICIADA <-
 
 #_____producaoBENEFICIADA_GERAL
 producaoBENEFICIADA_GERAL <-
-  function(subsAMB = ".",
-           cpfcnpj = ".",
-           municipio = ".",
+  function(Substancia.AMB = ".",
+           CPF.CNPJ.Titular = ".",
+           Municipio.Mina = ".",
            usina = ".",
            volume = "producao") {
     if (volume == "producao") {
       x <-
         spread(
-          select(producaoBENEFICIADA[grepl(producaoBENEFICIADA$Substancia.AMB, pattern = subsAMB) == TRUE &
-                                       #grepl(producaoBENEFICIADA$substancia.ral, pattern = subsRAL) == TRUE &
-                                       grepl(producaoBENEFICIADA$cpfcnpj, pattern = cpfcnpj) == TRUE &
-                                       grepl(producaoBENEFICIADA$Municipio, pattern = municipio) == TRUE &
+          select(producaoBENEFICIADA[grepl(producaoBENEFICIADA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
+                                       #grepl(producaoBENEFICIADA$substancia.ral, pattern = Substancia.RAL) == TRUE &
+                                       grepl(producaoBENEFICIADA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
+                                       grepl(producaoBENEFICIADA$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
                                        #grepl(producaoBENEFICIADA$produto.beneficiado, pattern = produto) == TRUE &
                                        grepl(producaoBENEFICIADA$Nome.da.Usina, pattern = Nome.da.Usina) == TRUE,], everything()) %>%
-            group_by(Ano.Base) %>%
-            summarise(soma = sum(quantidade.producao.ajuste)),
-          key = ano,
+            group_by(Ano.Base.Ral) %>%
+            summarise(soma = sum(Quantidade.Producao.Com.Ajuste)),
+          key = Ano.Base.Ral,
           value = soma
         )
       
@@ -703,15 +703,15 @@ producaoBENEFICIADA_GERAL <-
       if (volume == "venda") {
         x <-
           spread(
-            select(producaoBENEFICIADA[grepl(producaoBENEFICIADA$Substancia.AMB, pattern = subsAMB) == TRUE &
-                                         #grepl(producaoBENEFICIADA$substancia.ral, pattern = subsRAL) == TRUE &
-                                         grepl(producaoBENEFICIADA$cpfcnpj, pattern = cpfcnpj) == TRUE &
-                                         grepl(producaoBENEFICIADA$Municipio, pattern = municipio) == TRUE &
+            select(producaoBENEFICIADA[grepl(producaoBENEFICIADA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
+                                         #grepl(producaoBENEFICIADA$substancia.ral, pattern = Substancia.RAL) == TRUE &
+                                         grepl(producaoBENEFICIADA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
+                                         grepl(producaoBENEFICIADA$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
                                          #grepl(producaoBENEFICIADA$produto.beneficiado, pattern = produto) == TRUE &
                                          grepl(producaoBENEFICIADA$Nome.da.Usina, pattern = Nome.da.Usina) == TRUE,], everything()) %>%
-              group_by(Ano.Base) %>%
-              summarise(soma = sum(quantidade.venda.ajuste)),
-            key = ano,
+              group_by(Ano.Base.Ral) %>%
+              summarise(soma = sum(Quantidade.Venda.com.Ajuste)),
+            key = Ano.Base.Ral,
             value = soma
           )
         
@@ -720,17 +720,17 @@ producaoBENEFICIADA_GERAL <-
         if (volume == "producao.substancia") {
           x <-
             spread(
-              select(producaoBENEFICIADA[grepl(producaoBENEFICIADA$Substancia.AMB, pattern = subsAMB) == TRUE &
-                                           #grepl(producaoBENEFICIADA$substancia.ral, pattern = subsRAL) == TRUE &
-                                           grepl(producaoBENEFICIADA$cpfcnpj, pattern = cpfcnpj) == TRUE &
-                                           grepl(producaoBENEFICIADA$Municipio, pattern = municipio) == TRUE &
+              select(producaoBENEFICIADA[grepl(producaoBENEFICIADA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
+                                           #grepl(producaoBENEFICIADA$substancia.ral, pattern = Substancia.RAL) == TRUE &
+                                           grepl(producaoBENEFICIADA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
+                                           grepl(producaoBENEFICIADA$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
                                            #grepl(producaoBENEFICIADA$produto.beneficiado, pattern = produto) == TRUE &
                                            grepl(producaoBENEFICIADA$Nome.da.Usina, pattern = Nome.da.Usina) == TRUE,], everything()) %>%
-                group_by(Ano.Base) %>%
+                group_by(Ano.Base.Ral) %>%
                 summarise(soma = sum(
-                  quantidade.producao.substancia.ajuste
+                  Quantidade.Producao.Substancia.com.Ajuste
                 )),
-              key = ano,
+              key = Ano.Base.Ral,
               value = soma
             )
           
@@ -739,17 +739,17 @@ producaoBENEFICIADA_GERAL <-
           if (volume == "venda.substancia") {
             x <-
               spread(
-                select(producaoBENEFICIADA[grepl(producaoBENEFICIADA$Substancia.AMB, pattern = subsAMB) == TRUE &
-                                             #grepl(producaoBENEFICIADA$substancia.ral, pattern = subsRAL) == TRUE &
-                                             grepl(producaoBENEFICIADA$cpfcnpj, pattern = cpfcnpj) == TRUE &
-                                             grepl(producaoBENEFICIADA$Municipio, pattern = municipio) == TRUE &
+                select(producaoBENEFICIADA[grepl(producaoBENEFICIADA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
+                                             #grepl(producaoBENEFICIADA$substancia.ral, pattern = Substancia.RAL) == TRUE &
+                                             grepl(producaoBENEFICIADA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
+                                             grepl(producaoBENEFICIADA$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
                                              #grepl(producaoBENEFICIADA$produto.beneficiado, pattern = produto) == TRUE &
                                              grepl(producaoBENEFICIADA$Nome.da.Usina, pattern = Nome.da.Usina) == TRUE,], everything()) %>%
-                  group_by(Ano.Base) %>%
+                  group_by(Ano.Base.Ral) %>%
                   summarise(soma = sum(
-                    quantidade.venda.substancia.ajuste
+                    Quantidade.Venda.com.Ajuste
                   )),
-                key = ano,
+                key = Ano.Base.Ral,
                 value = soma
               )
             
@@ -763,25 +763,25 @@ producaoBENEFICIADA_GERAL <-
 
 #_____producaoBENEFICIADA_groupBY_USINA
 producaoBENEFICIADA_groupBY_USINA <-
-  function(subsAMB = ".",
-           #subsRAL = ".",
-           cpfcnpj = ".",
-           municipio = ".",
+  function(Substancia.AMB = ".",
+           #Substancia.RAL = ".",
+           CPF.CNPJ.Titular = ".",
+           Municipio.Mina = ".",
            usina = ".",
            #produto = ".",
            volume = "producao") {
     if (volume == "producao") {
       x <-
         spread(
-          select(producaoBENEFICIADA[grepl(producaoBENEFICIADA$Substancia.AMB, pattern = subsAMB) == TRUE &
-                                       #grepl(producaoBENEFICIADA$substancia.ral, pattern = subsRAL) == TRUE &
-                                       grepl(producaoBENEFICIADA$cpfcnpj, pattern = cpfcnpj) == TRUE &
-                                       grepl(producaoBENEFICIADA$Municipio, pattern = municipio) == TRUE &
+          select(producaoBENEFICIADA[grepl(producaoBENEFICIADA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
+                                       #grepl(producaoBENEFICIADA$substancia.ral, pattern = Substancia.RAL) == TRUE &
+                                       grepl(producaoBENEFICIADA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
+                                       grepl(producaoBENEFICIADA$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
                                        #grepl(producaoBENEFICIADA$produto.beneficiado, pattern = produto) == TRUE &
                                        grepl(producaoBENEFICIADA$Nome.da.Usina, pattern = Nome.da.Usina) == TRUE,], everything()) %>%
-            group_by(Ano.Base, Nome.da.Usina) %>%
-            summarise(soma = sum(quantidade.producao.ajuste)),
-          key = ano,
+            group_by(Ano.Base.Ral, Nome.da.Usina) %>%
+            summarise(soma = sum(Quantidade.Producao.Com.Ajuste)),
+          key = Ano.Base.Ral,
           value = soma
         )
       
@@ -791,15 +791,15 @@ producaoBENEFICIADA_groupBY_USINA <-
       if (volume == "venda") {
         x <-
           spread(
-            select(producaoBENEFICIADA[grepl(producaoBENEFICIADA$Substancia.AMB, pattern = subsAMB) == TRUE &
-                                         #grepl(producaoBENEFICIADA$substancia.ral, pattern = subsRAL) == TRUE &
-                                         grepl(producaoBENEFICIADA$cpfcnpj, pattern = cpfcnpj) == TRUE &
-                                         grepl(producaoBENEFICIADA$Municipio, pattern = municipio) == TRUE &
+            select(producaoBENEFICIADA[grepl(producaoBENEFICIADA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
+                                         #grepl(producaoBENEFICIADA$substancia.ral, pattern = Substancia.RAL) == TRUE &
+                                         grepl(producaoBENEFICIADA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
+                                         grepl(producaoBENEFICIADA$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
                                          #grepl(producaoBENEFICIADA$produto.beneficiado, pattern = produto) == TRUE &
                                          grepl(producaoBENEFICIADA$Nome.da.Usina, pattern = Nome.da.Usina) == TRUE,], everything()) %>%
-              group_by(Ano.Base, Nome.da.Usina) %>%
-              summarise(soma = sum(quantidade.venda.ajuste)),
-            key = ano,
+              group_by(Ano.Base.Ral, Nome.da.Usina) %>%
+              summarise(soma = sum(Quantidade.Venda.com.Ajuste)),
+            key = Ano.Base.Ral,
             value = soma
           )
         
@@ -808,17 +808,17 @@ producaoBENEFICIADA_groupBY_USINA <-
         if (volume == "producao.substancia") {
           x <-
             spread(
-              select(producaoBENEFICIADA[grepl(producaoBENEFICIADA$Substancia.AMB, pattern = subsAMB) == TRUE &
-                                           #grepl(producaoBENEFICIADA$substancia.ral, pattern = subsRAL) == TRUE &
-                                           grepl(producaoBENEFICIADA$cpfcnpj, pattern = cpfcnpj) == TRUE &
-                                           grepl(producaoBENEFICIADA$Municipio, pattern = municipio) == TRUE &
+              select(producaoBENEFICIADA[grepl(producaoBENEFICIADA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
+                                           #grepl(producaoBENEFICIADA$substancia.ral, pattern = Substancia.RAL) == TRUE &
+                                           grepl(producaoBENEFICIADA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
+                                           grepl(producaoBENEFICIADA$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
                                            #grepl(producaoBENEFICIADA$produto.beneficiado, pattern = produto) == TRUE &
                                            grepl(producaoBENEFICIADA$Nome.da.Usina, pattern = Nome.da.Usina) == TRUE,], everything()) %>%
-                group_by(Ano.Base, Nome.da.Usina) %>%
+                group_by(Ano.Base.Ral, Nome.da.Usina) %>%
                 summarise(soma = sum(
-                  quantidade.producao.substancia.ajuste
+                  Quantidade.Producao.Substancia.com.Ajuste
                 )),
-              key = ano,
+              key = Ano.Base.Ral,
               value = soma
             )
           
@@ -827,17 +827,17 @@ producaoBENEFICIADA_groupBY_USINA <-
           if (volume == "venda.substancia") {
             x <-
               spread(
-                select(producaoBENEFICIADA[grepl(producaoBENEFICIADA$Substancia.AMB, pattern = subsAMB) == TRUE &
-                                             #grepl(producaoBENEFICIADA$substancia.ral, pattern = subsRAL) == TRUE &
-                                             grepl(producaoBENEFICIADA$cpfcnpj, pattern = cpfcnpj) == TRUE &
-                                             grepl(producaoBENEFICIADA$Municipio, pattern = municipio) == TRUE &
+                select(producaoBENEFICIADA[grepl(producaoBENEFICIADA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
+                                             #grepl(producaoBENEFICIADA$substancia.ral, pattern = Substancia.RAL) == TRUE &
+                                             grepl(producaoBENEFICIADA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
+                                             grepl(producaoBENEFICIADA$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
                                              #grepl(producaoBENEFICIADA$produto.beneficiado, pattern = produto) == TRUE &
                                              grepl(producaoBENEFICIADA$Nome.da.Usina, pattern = Nome.da.Usina) == TRUE,], everything()) %>%
-                  group_by(Ano.Base, Nome.da.Usina) %>%
+                  group_by(Ano.Base.Ral, Nome.da.Usina) %>%
                   summarise(soma = sum(
-                    quantidade.venda.substancia.ajuste
+                    Quantidade.Venda.com.Ajuste
                   )),
-                key = ano,
+                key = Ano.Base.Ral,
                 value = soma
               )
             
@@ -853,25 +853,25 @@ producaoBENEFICIADA_groupBY_USINA <-
 
 #_____producaoBENEFICIADA_groupBY_MUNICIPIO
 producaoBENEFICIADA_groupBY_MUNICIPIO <-
-  function(subsAMB = ".",
-           #subsRAL = ".",
-           cpfcnpj = ".",
-           municipio = ".",
+  function(Substancia.AMB = ".",
+           #Substancia.RAL = ".",
+           CPF.CNPJ.Titular = ".",
+           Municipio.Mina = ".",
            usina = ".",
            #produto = ".",
            volume = "producao") {
     if (volume == "producao") {
       x <-
         spread(
-          select(producaoBENEFICIADA[grepl(producaoBENEFICIADA$Substancia.AMB, pattern = subsAMB) == TRUE &
-                                       #grepl(producaoBENEFICIADA$substancia.ral, pattern = subsRAL) == TRUE &
-                                       grepl(producaoBENEFICIADA$cpfcnpj, pattern = cpfcnpj) == TRUE &
-                                       grepl(producaoBENEFICIADA$Municipio, pattern = municipio) == TRUE &
+          select(producaoBENEFICIADA[grepl(producaoBENEFICIADA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
+                                       #grepl(producaoBENEFICIADA$substancia.ral, pattern = Substancia.RAL) == TRUE &
+                                       grepl(producaoBENEFICIADA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
+                                       grepl(producaoBENEFICIADA$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
                                        #grepl(producaoBENEFICIADA$produto.beneficiado, pattern = produto) == TRUE &
                                        grepl(producaoBENEFICIADA$Nome.da.Usina, pattern = Nome.da.Usina) == TRUE,], everything()) %>%
-            group_by(Ano.Base, municipio) %>%
-            summarise(soma = sum(quantidade.producao.ajuste)),
-          key = ano,
+            group_by(Ano.Base.Ral, Municipio.Mina) %>%
+            summarise(soma = sum(Quantidade.Producao.Com.Ajuste)),
+          key = Ano.Base.Ral,
           value = soma
         )
       
@@ -881,15 +881,15 @@ producaoBENEFICIADA_groupBY_MUNICIPIO <-
       if (volume == "venda") {
         x <-
           spread(
-            select(producaoBENEFICIADA[grepl(producaoBENEFICIADA$Substancia.AMB, pattern = subsAMB) == TRUE &
-                                         #grepl(producaoBENEFICIADA$substancia.ral, pattern = subsRAL) == TRUE &
-                                         grepl(producaoBENEFICIADA$cpfcnpj, pattern = cpfcnpj) == TRUE &
-                                         grepl(producaoBENEFICIADA$Municipio, pattern = municipio) == TRUE &
+            select(producaoBENEFICIADA[grepl(producaoBENEFICIADA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
+                                         #grepl(producaoBENEFICIADA$substancia.ral, pattern = Substancia.RAL) == TRUE &
+                                         grepl(producaoBENEFICIADA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
+                                         grepl(producaoBENEFICIADA$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
                                          #grepl(producaoBENEFICIADA$produto.beneficiado, pattern = produto) == TRUE &
                                          grepl(producaoBENEFICIADA$Nome.da.Usina, pattern = Nome.da.Usina) == TRUE,], everything()) %>%
-              group_by(Ano.Base, municipio) %>%
-              summarise(soma = sum(quantidade.venda.ajuste)),
-            key = ano,
+              group_by(Ano.Base.Ral, Municipio.Mina) %>%
+              summarise(soma = sum(Quantidade.Venda.com.Ajuste)),
+            key = Ano.Base.Ral,
             value = soma
           )
         
@@ -898,17 +898,17 @@ producaoBENEFICIADA_groupBY_MUNICIPIO <-
         if (volume == "producao.substancia") {
           x <-
             spread(
-              select(producaoBENEFICIADA[grepl(producaoBENEFICIADA$Substancia.AMB, pattern = subsAMB) == TRUE &
-                                           #grepl(producaoBENEFICIADA$substancia.ral, pattern = subsRAL) == TRUE &
-                                           grepl(producaoBENEFICIADA$cpfcnpj, pattern = cpfcnpj) == TRUE &
-                                           grepl(producaoBENEFICIADA$Municipio, pattern = municipio) == TRUE &
+              select(producaoBENEFICIADA[grepl(producaoBENEFICIADA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
+                                           #grepl(producaoBENEFICIADA$substancia.ral, pattern = Substancia.RAL) == TRUE &
+                                           grepl(producaoBENEFICIADA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
+                                           grepl(producaoBENEFICIADA$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
                                            #grepl(producaoBENEFICIADA$produto.beneficiado, pattern = produto) == TRUE &
                                            grepl(producaoBENEFICIADA$Nome.da.Usina, pattern = Nome.da.Usina) == TRUE,], everything()) %>%
-                group_by(Ano.Base, municipio) %>%
+                group_by(Ano.Base.Ral, Municipio.Mina) %>%
                 summarise(soma = sum(
-                  quantidade.producao.substancia.ajuste
+                  Quantidade.Producao.Substancia.com.Ajuste
                 )),
-              key = ano,
+              key = Ano.Base.Ral,
               value = soma
             )
           
@@ -917,17 +917,17 @@ producaoBENEFICIADA_groupBY_MUNICIPIO <-
           if (volume == "venda.substancia") {
             x <-
               spread(
-                select(producaoBENEFICIADA[grepl(producaoBENEFICIADA$Substancia.AMB, pattern = subsAMB) == TRUE &
-                                             #grepl(producaoBENEFICIADA$substancia.ral, pattern = subsRAL) == TRUE &
-                                             grepl(producaoBENEFICIADA$cpfcnpj, pattern = cpfcnpj) == TRUE &
-                                             grepl(producaoBENEFICIADA$Municipio, pattern = municipio) == TRUE &
+                select(producaoBENEFICIADA[grepl(producaoBENEFICIADA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
+                                             #grepl(producaoBENEFICIADA$substancia.ral, pattern = Substancia.RAL) == TRUE &
+                                             grepl(producaoBENEFICIADA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
+                                             grepl(producaoBENEFICIADA$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
                                              #grepl(producaoBENEFICIADA$produto.beneficiado, pattern = produto) == TRUE &
                                              grepl(producaoBENEFICIADA$Nome.da.Usina, pattern = Nome.da.Usina) == TRUE,], everything()) %>%
-                  group_by(Ano.Base, municipio) %>%
+                  group_by(Ano.Base.Ral, Municipio.Mina) %>%
                   summarise(soma = sum(
-                    quantidade.venda.substancia.ajuste
+                    Quantidade.Venda.com.Ajuste
                   )),
-                key = ano,
+                key = Ano.Base.Ral,
                 value = soma
               )
             
@@ -942,25 +942,25 @@ producaoBENEFICIADA_groupBY_MUNICIPIO <-
 
 ##_____producaoBENEFICIADA_groupBY_PRODUTO
 #producaoBENEFICIADA_groupBY_PRODUTO <-
-#  function(subsAMB = ".",
-#           subsRAL = ".",
-#           cpfcnpj = ".",
-#           municipio = ".",
+#  function(Substancia.AMB = ".",
+#           Substancia.RAL = ".",
+#           CPF.CNPJ.Titular = ".",
+#           Municipio.Mina = ".",
 #           usina = ".",
 #           produto = ".",
 #           volume = "producao") {
 #    if (volume == "producao") {
 #      x <-
 #        spread(
-#          select(producaoBENEFICIADA[grepl(producaoBENEFICIADA$Substancia.AMB, pattern = subsAMB) == TRUE &
-#                                       #grepl(producaoBENEFICIADA$substancia.ral, pattern = subsRAL) == TRUE &
-#                                       grepl(producaoBENEFICIADA$cpfcnpj, pattern = cpfcnpj) == TRUE &
-#                                       grepl(producaoBENEFICIADA$Municipio, pattern = municipio) == TRUE &
+#          select(producaoBENEFICIADA[grepl(producaoBENEFICIADA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
+#                                       #grepl(producaoBENEFICIADA$substancia.ral, pattern = Substancia.RAL) == TRUE &
+#                                       grepl(producaoBENEFICIADA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
+#                                       grepl(producaoBENEFICIADA$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
 #                                       #grepl(producaoBENEFICIADA$produto.beneficiado, pattern = produto) == TRUE &
 #                                       grepl(producaoBENEFICIADA$Nome.da.Usina, pattern = Nome.da.Usina) == TRUE,], everything()) %>%
-#            group_by(Ano.Base, produto.beneficiado) %>%
-#            summarise(soma = sum(quantidade.producao.ajuste)),
-#          key = ano,
+#            group_by(Ano.Base.Ral, produto.beneficiado) %>%
+#            summarise(soma = sum(Quantidade.Producao.Com.Ajuste)),
+#          key = Ano.Base.Ral,
 #          value = soma
 #        )
 #      
@@ -970,15 +970,15 @@ producaoBENEFICIADA_groupBY_MUNICIPIO <-
 #      if (volume == "venda") {
 #        x <-
 #          spread(
-#            select(producaoBENEFICIADA[grepl(producaoBENEFICIADA$Substancia.AMB, pattern = subsAMB) == TRUE &
-#                                         #grepl(producaoBENEFICIADA$substancia.ral, pattern = subsRAL) == TRUE &
-#                                         grepl(producaoBENEFICIADA$cpfcnpj, pattern = cpfcnpj) == TRUE &
-#                                         grepl(producaoBENEFICIADA$Municipio, pattern = municipio) == TRUE &
+#            select(producaoBENEFICIADA[grepl(producaoBENEFICIADA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
+#                                         #grepl(producaoBENEFICIADA$substancia.ral, pattern = Substancia.RAL) == TRUE &
+#                                         grepl(producaoBENEFICIADA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
+#                                         grepl(producaoBENEFICIADA$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
 #                                         #grepl(producaoBENEFICIADA$produto.beneficiado, pattern = produto) == TRUE &
 #                                         grepl(producaoBENEFICIADA$Nome.da.Usina, pattern = Nome.da.Usina) == TRUE,], everything()) %>%
-#              group_by(Ano.Base, produto.beneficiado) %>%
-#              summarise(soma = sum(quantidade.venda.ajuste)),
-#            key = ano,
+#              group_by(Ano.Base.Ral, produto.beneficiado) %>%
+#              summarise(soma = sum(Quantidade.Venda.com.Ajuste)),
+#            key = Ano.Base.Ral,
 #            value = soma
 #          )
 #        
@@ -987,17 +987,17 @@ producaoBENEFICIADA_groupBY_MUNICIPIO <-
 #        if (volume == "producao.substancia") {
 #          x <-
 #            spread(
-#              select(producaoBENEFICIADA[grepl(producaoBENEFICIADA$Substancia.AMB, pattern = subsAMB) == TRUE &
-#                                           #grepl(producaoBENEFICIADA$substancia.ral, pattern = subsRAL) == TRUE &
-#                                           grepl(producaoBENEFICIADA$cpfcnpj, pattern = cpfcnpj) == TRUE &
-#                                           grepl(producaoBENEFICIADA$Municipio, pattern = municipio) == TRUE &
+#              select(producaoBENEFICIADA[grepl(producaoBENEFICIADA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
+#                                           #grepl(producaoBENEFICIADA$substancia.ral, pattern = Substancia.RAL) == TRUE &
+#                                           grepl(producaoBENEFICIADA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
+#                                           grepl(producaoBENEFICIADA$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
 #                                           #grepl(producaoBENEFICIADA$produto.beneficiado, pattern = produto) == TRUE &
 #                                           grepl(producaoBENEFICIADA$Nome.da.Usina, pattern = Nome.da.Usina) == TRUE,], everything()) %>%
-#                group_by(Ano.Base, produto.beneficiado) %>%
+#                group_by(Ano.Base.Ral, produto.beneficiado) %>%
 #                summarise(soma = sum(
-#                  quantidade.producao.substancia.ajuste
+#                  Quantidade.Producao.Substancia.com.Ajuste
 #                )),
-#              key = ano,
+#              key = Ano.Base.Ral,
 #              value = soma
 #            )
 #          
@@ -1006,17 +1006,17 @@ producaoBENEFICIADA_groupBY_MUNICIPIO <-
 #          if (volume == "venda.substancia") {
 #            x <-
 #              spread(
-#                select(producaoBENEFICIADA[grepl(producaoBENEFICIADA$Substancia.AMB, pattern = subsAMB) == TRUE &
-#                                             #grepl(producaoBENEFICIADA$substancia.ral, pattern = subsRAL) == TRUE &
-#                                             grepl(producaoBENEFICIADA$cpfcnpj, pattern = cpfcnpj) == TRUE &
-#                                             grepl(producaoBENEFICIADA$Municipio, pattern = municipio) == TRUE &
+#                select(producaoBENEFICIADA[grepl(producaoBENEFICIADA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
+#                                             #grepl(producaoBENEFICIADA$substancia.ral, pattern = Substancia.RAL) == TRUE &
+#                                             grepl(producaoBENEFICIADA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
+#                                             grepl(producaoBENEFICIADA$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
 #                                             #grepl(producaoBENEFICIADA$produto.beneficiado, pattern = produto) == TRUE &
 #                                             grepl(producaoBENEFICIADA$Nome.da.Usina, pattern = Nome.da.Usina) == TRUE,], everything()) %>%
-#                  group_by(Ano.Base, produto.beneficiado) %>%
+#                  group_by(Ano.Base.Ral, produto.beneficiado) %>%
 #                  summarise(soma = sum(
-#                    quantidade.venda.substancia.ajuste
+#                    Quantidade.Venda.com.Ajuste
 #                  )),
-#                key = ano,
+#                key = Ano.Base.Ral,
 #                value = soma
 #              )
 #            
@@ -1032,25 +1032,25 @@ producaoBENEFICIADA_groupBY_MUNICIPIO <-
 
 #_____producaoBENEFICIADA_groupBY_SUBSTANCIA.AMB
 producaoBENEFICIADA_groupBY_SUBSTANCIA.AMB <-
-  function(subsAMB = ".",
-           #subsRAL = ".",
-           cpfcnpj = ".",
-           municipio = ".",
+  function(Substancia.AMB = ".",
+           #Substancia.RAL = ".",
+           CPF.CNPJ.Titular = ".",
+           Municipio.Mina = ".",
            usina = ".",
            #produto = ".",
            volume = "producao") {
     if (volume == "producao") {
       x <-
         spread(
-          select(producaoBENEFICIADA[grepl(producaoBENEFICIADA$Substancia.AMB, pattern = subsAMB) == TRUE &
-                                       #grepl(producaoBENEFICIADA$substancia.ral, pattern = subsRAL) == TRUE &
-                                       grepl(producaoBENEFICIADA$cpfcnpj, pattern = cpfcnpj) == TRUE &
-                                       grepl(producaoBENEFICIADA$Municipio, pattern = municipio) == TRUE &
+          select(producaoBENEFICIADA[grepl(producaoBENEFICIADA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
+                                       #grepl(producaoBENEFICIADA$substancia.ral, pattern = Substancia.RAL) == TRUE &
+                                       grepl(producaoBENEFICIADA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
+                                       grepl(producaoBENEFICIADA$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
                                        #grepl(producaoBENEFICIADA$produto.beneficiado, pattern = produto) == TRUE &
                                        grepl(producaoBENEFICIADA$Nome.da.Usina, pattern = Nome.da.Usina) == TRUE,], everything()) %>%
-            group_by(Ano.Base, Substancia.AMB) %>%
-            summarise(soma = sum(quantidade.producao.ajuste)),
-          key = ano,
+            group_by(Ano.Base.Ral, Substancia.AMB) %>%
+            summarise(soma = sum(Quantidade.Producao.Com.Ajuste)),
+          key = Ano.Base.Ral,
           value = soma
         )
       
@@ -1060,15 +1060,15 @@ producaoBENEFICIADA_groupBY_SUBSTANCIA.AMB <-
       if (volume == "venda") {
         x <-
           spread(
-            select(producaoBENEFICIADA[grepl(producaoBENEFICIADA$Substancia.AMB, pattern = subsAMB) == TRUE &
-                                         #grepl(producaoBENEFICIADA$substancia.ral, pattern = subsRAL) == TRUE &
-                                         grepl(producaoBENEFICIADA$cpfcnpj, pattern = cpfcnpj) == TRUE &
-                                         grepl(producaoBENEFICIADA$Municipio, pattern = municipio) == TRUE &
+            select(producaoBENEFICIADA[grepl(producaoBENEFICIADA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
+                                         #grepl(producaoBENEFICIADA$substancia.ral, pattern = Substancia.RAL) == TRUE &
+                                         grepl(producaoBENEFICIADA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
+                                         grepl(producaoBENEFICIADA$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
                                          #grepl(producaoBENEFICIADA$produto.beneficiado, pattern = produto) == TRUE &
                                          grepl(producaoBENEFICIADA$Nome.da.Usina, pattern = Nome.da.Usina) == TRUE,], everything()) %>%
-              group_by(Ano.Base, Substancia.AMB) %>%
-              summarise(soma = sum(quantidade.venda.ajuste)),
-            key = ano,
+              group_by(Ano.Base.Ral, Substancia.AMB) %>%
+              summarise(soma = sum(Quantidade.Venda.com.Ajuste)),
+            key = Ano.Base.Ral,
             value = soma
           )
         
@@ -1077,17 +1077,17 @@ producaoBENEFICIADA_groupBY_SUBSTANCIA.AMB <-
         if (volume == "producao.substancia") {
           x <-
             spread(
-              select(producaoBENEFICIADA[grepl(producaoBENEFICIADA$Substancia.AMB, pattern = subsAMB) == TRUE &
-                                           #grepl(producaoBENEFICIADA$substancia.ral, pattern = subsRAL) == TRUE &
-                                           grepl(producaoBENEFICIADA$cpfcnpj, pattern = cpfcnpj) == TRUE &
-                                           grepl(producaoBENEFICIADA$Municipio, pattern = municipio) == TRUE &
+              select(producaoBENEFICIADA[grepl(producaoBENEFICIADA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
+                                           #grepl(producaoBENEFICIADA$substancia.ral, pattern = Substancia.RAL) == TRUE &
+                                           grepl(producaoBENEFICIADA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
+                                           grepl(producaoBENEFICIADA$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
                                            #grepl(producaoBENEFICIADA$produto.beneficiado, pattern = produto) == TRUE &
                                            grepl(producaoBENEFICIADA$Nome.da.Usina, pattern = Nome.da.Usina) == TRUE,], everything()) %>%
-                group_by(Ano.Base, Substancia.AMB) %>%
+                group_by(Ano.Base.Ral, Substancia.AMB) %>%
                 summarise(soma = sum(
-                  quantidade.producao.substancia.ajuste
+                  Quantidade.Producao.Substancia.com.Ajuste
                 )),
-              key = ano,
+              key = Ano.Base.Ral,
               value = soma
             )
           
@@ -1096,17 +1096,17 @@ producaoBENEFICIADA_groupBY_SUBSTANCIA.AMB <-
           if (volume == "venda.substancia") {
             x <-
               spread(
-                select(producaoBENEFICIADA[grepl(producaoBENEFICIADA$Substancia.AMB, pattern = subsAMB) == TRUE &
-                                             #grepl(producaoBENEFICIADA$substancia.ral, pattern = subsRAL) == TRUE &
-                                             grepl(producaoBENEFICIADA$cpfcnpj, pattern = cpfcnpj) == TRUE &
-                                             grepl(producaoBENEFICIADA$Municipio, pattern = municipio) == TRUE &
+                select(producaoBENEFICIADA[grepl(producaoBENEFICIADA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
+                                             #grepl(producaoBENEFICIADA$substancia.ral, pattern = Substancia.RAL) == TRUE &
+                                             grepl(producaoBENEFICIADA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
+                                             grepl(producaoBENEFICIADA$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
                                              #grepl(producaoBENEFICIADA$produto.beneficiado, pattern = produto) == TRUE &
                                              grepl(producaoBENEFICIADA$Nome.da.Usina, pattern = Nome.da.Usina) == TRUE,], everything()) %>%
-                  group_by(Ano.Base, Substancia.AMB) %>%
+                  group_by(Ano.Base.Ral, Substancia.AMB) %>%
                   summarise(soma = sum(
-                    quantidade.venda.substancia.ajuste
+                    Quantidade.Venda.com.Ajuste
                   )),
-                key = ano,
+                key = Ano.Base.Ral,
                 value = soma
               )
             
@@ -1122,25 +1122,25 @@ producaoBENEFICIADA_groupBY_SUBSTANCIA.AMB <-
 
 #_____producaoBENEFICIADA_groupBY_TITULAR
 producaoBENEFICIADA_groupBY_TITULAR <-
-  function(subsAMB = ".",
-           #subsRAL = ".",
-           cpfcnpj = ".",
-           municipio = ".",
+  function(Substancia.AMB = ".",
+           #Substancia.RAL = ".",
+           CPF.CNPJ.Titular = ".",
+           Municipio.Mina = ".",
            usina = ".",
            #produto = ".",
            volume = "producao") {
     if (volume == "producao") {
       x <-
         spread(
-          select(producaoBENEFICIADA[grepl(producaoBENEFICIADA$Substancia.AMB, pattern = subsAMB) == TRUE &
-                                       #grepl(producaoBENEFICIADA$substancia.ral, pattern = subsRAL) == TRUE &
-                                       grepl(producaoBENEFICIADA$cpfcnpj, pattern = cpfcnpj) == TRUE &
-                                       grepl(producaoBENEFICIADA$Municipio, pattern = municipio) == TRUE &
+          select(producaoBENEFICIADA[grepl(producaoBENEFICIADA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
+                                       #grepl(producaoBENEFICIADA$substancia.ral, pattern = Substancia.RAL) == TRUE &
+                                       grepl(producaoBENEFICIADA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
+                                       grepl(producaoBENEFICIADA$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
                                        #grepl(producaoBENEFICIADA$produto.beneficiado, pattern = produto) == TRUE &
                                        grepl(producaoBENEFICIADA$Nome.da.Usina, pattern = Nome.da.Usina) == TRUE,], everything()) %>%
-            group_by(Ano.Base, cpfcnpj) %>%
-            summarise(soma = sum(quantidade.producao.ajuste)),
-          key = ano,
+            group_by(Ano.Base.Ral, CPF.CNPJ.Titular) %>%
+            summarise(soma = sum(Quantidade.Producao.Com.Ajuste)),
+          key = Ano.Base.Ral,
           value = soma
         )
       
@@ -1150,15 +1150,15 @@ producaoBENEFICIADA_groupBY_TITULAR <-
       if (volume == "venda") {
         x <-
           spread(
-            select(producaoBENEFICIADA[grepl(producaoBENEFICIADA$Substancia.AMB, pattern = subsAMB) == TRUE &
-                                         #grepl(producaoBENEFICIADA$substancia.ral, pattern = subsRAL) == TRUE &
-                                         grepl(producaoBENEFICIADA$cpfcnpj, pattern = cpfcnpj) == TRUE &
-                                         grepl(producaoBENEFICIADA$Municipio, pattern = municipio) == TRUE &
+            select(producaoBENEFICIADA[grepl(producaoBENEFICIADA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
+                                         #grepl(producaoBENEFICIADA$substancia.ral, pattern = Substancia.RAL) == TRUE &
+                                         grepl(producaoBENEFICIADA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
+                                         grepl(producaoBENEFICIADA$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
                                          #grepl(producaoBENEFICIADA$produto.beneficiado, pattern = produto) == TRUE &
                                          grepl(producaoBENEFICIADA$Nome.da.Usina, pattern = Nome.da.Usina) == TRUE,], everything()) %>%
-              group_by(Ano.Base, cpfcnpj) %>%
-              summarise(soma = sum(quantidade.venda.ajuste)),
-            key = ano,
+              group_by(Ano.Base.Ral, CPF.CNPJ.Titular) %>%
+              summarise(soma = sum(Quantidade.Venda.com.Ajuste)),
+            key = Ano.Base.Ral,
             value = soma
           )
         
@@ -1167,17 +1167,17 @@ producaoBENEFICIADA_groupBY_TITULAR <-
         if (volume == "producao.substancia") {
           x <-
             spread(
-              select(producaoBENEFICIADA[grepl(producaoBENEFICIADA$Substancia.AMB, pattern = subsAMB) == TRUE &
-                                           #grepl(producaoBENEFICIADA$substancia.ral, pattern = subsRAL) == TRUE &
-                                           grepl(producaoBENEFICIADA$cpfcnpj, pattern = cpfcnpj) == TRUE &
-                                           grepl(producaoBENEFICIADA$Municipio, pattern = municipio) == TRUE &
+              select(producaoBENEFICIADA[grepl(producaoBENEFICIADA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
+                                           #grepl(producaoBENEFICIADA$substancia.ral, pattern = Substancia.RAL) == TRUE &
+                                           grepl(producaoBENEFICIADA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
+                                           grepl(producaoBENEFICIADA$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
                                            #grepl(producaoBENEFICIADA$produto.beneficiado, pattern = produto) == TRUE &
                                            grepl(producaoBENEFICIADA$Nome.da.Usina, pattern = Nome.da.Usina) == TRUE,], everything()) %>%
-                group_by(Ano.Base, cpfcnpj) %>%
+                group_by(Ano.Base.Ral, CPF.CNPJ.Titular) %>%
                 summarise(soma = sum(
-                  quantidade.producao.substancia.ajuste
+                  Quantidade.Producao.Substancia.com.Ajuste
                 )),
-              key = ano,
+              key = Ano.Base.Ral,
               value = soma
             )
           
@@ -1186,17 +1186,17 @@ producaoBENEFICIADA_groupBY_TITULAR <-
           if (volume == "venda.substancia") {
             x <-
               spread(
-                select(producaoBENEFICIADA[grepl(producaoBENEFICIADA$Substancia.AMB, pattern = subsAMB) == TRUE &
-                                             #grepl(producaoBENEFICIADA$substancia.ral, pattern = subsRAL) == TRUE &
-                                             grepl(producaoBENEFICIADA$cpfcnpj, pattern = cpfcnpj) == TRUE &
-                                             grepl(producaoBENEFICIADA$Municipio, pattern = municipio) == TRUE &
+                select(producaoBENEFICIADA[grepl(producaoBENEFICIADA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
+                                             #grepl(producaoBENEFICIADA$substancia.ral, pattern = Substancia.RAL) == TRUE &
+                                             grepl(producaoBENEFICIADA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
+                                             grepl(producaoBENEFICIADA$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
                                              #grepl(producaoBENEFICIADA$produto.beneficiado, pattern = produto) == TRUE &
                                              grepl(producaoBENEFICIADA$Nome.da.Usina, pattern = Nome.da.Usina) == TRUE,], everything()) %>%
-                  group_by(Ano.Base, cpfcnpj) %>%
+                  group_by(Ano.Base.Ral, CPF.CNPJ.Titular) %>%
                   summarise(soma = sum(
-                    quantidade.venda.substancia.ajuste
+                    Quantidade.Venda.com.Ajuste
                   )),
-                key = ano,
+                key = Ano.Base.Ral,
                 value = soma
               )
             
@@ -1208,40 +1208,40 @@ producaoBENEFICIADA_groupBY_TITULAR <-
     }
   }
 
-# Avaliação de prioridades por critério de Quantis----
+# Avalia??o de prioridades por crit?rio de Quantis----
 
 FUNA_PRODUCAO_Quantil_SPREAD <-
-  function(subsAMB = '.', producao = "bruta", GroupBY = 'usina') {
+  function(Substancia.AMB = '.', producao = "bruta", GroupBY = 'usina') {
     if (producao == "bruta") {
       x <-
         spread(
           producaoBRUTA[producaoBRUTA$Processo %in% producaoBRUTA[producaoBRUTA$pareto == 1 &
-                                                                    grepl(x = producaoBRUTA$Substancia.AMB, pattern = subsAMB), c('processo')] &
-                          grepl(x = producaoBRUTA$Substancia.AMB, pattern = subsAMB), c('processo', 'ano', 'quantidade.producao.ajuste')] %>%
-            group_by(processo, ano) %>% summarise("Producao_BRUTA" = sum(quantidade.producao.ajuste)),
-          key = "Ano.Base",
+                                                                    grepl(x = producaoBRUTA$Substancia.AMB, pattern = Substancia.AMB), c('Processo')] &
+                          grepl(x = producaoBRUTA$Substancia.AMB, pattern = Substancia.AMB), c('Processo', 'Ano.Base.Ral', 'Quantidade.Producao.Com.Ajuste')] %>%
+            group_by(Processo, Ano.Base.Ral) %>% summarise("Producao_BRUTA" = sum(Quantidade.Producao.Com.Ajuste)),
+          key = "Ano.Base.Ral",
           value = "Producao_BRUTA",
           fill = NA) 
       return(x)
-    } else if (producao == "beneficiada" & GroupBY == 'municipio') {
+    } else if (producao == "beneficiada" & GroupBY == 'Municipio.Mina') {
         x <-
           spread(
-            producaoBENEFICIADA[producaoBENEFICIADA$id_cpfcnpj.municipio %in% producaoBENEFICIADA[producaoBENEFICIADA$pareto == 1 &
-                                                                                                    grepl(x = producaoBENEFICIADA$Substancia.AMB, pattern = subsAMB), c('id_cpfcnpj.municipio')] &
-                                  grepl(x = producaoBENEFICIADA$Substancia.AMB, pattern = subsAMB), c('id_cpfcnpj.municipio', 'ano', 'quantidade.producao.ajuste')] %>%
-              group_by(id_cpfcnpj.municipio, ano) %>% summarise("Producao_BENEFICIADA" = sum(quantidade.producao.ajuste)),
-            key = "Ano.Base",
+            producaoBENEFICIADA[producaoBENEFICIADA$id_CPF.CNPJ.Titular.Municipio.Mina %in% producaoBENEFICIADA[producaoBENEFICIADA$pareto == 1 &
+                                                                                                    grepl(x = producaoBENEFICIADA$Substancia.AMB, pattern = Substancia.AMB), c('id_CPF.CNPJ.Titular.Municipio.Mina')] &
+                                  grepl(x = producaoBENEFICIADA$Substancia.AMB, pattern = Substancia.AMB), c('id_CPF.CNPJ.Titular.Municipio.Mina', 'Ano.Base.Ral', 'Quantidade.Producao.Com.Ajuste')] %>%
+              group_by(id_CPF.CNPJ.Titular.Municipio.Mina, Ano.Base.Ral) %>% summarise("Producao_BENEFICIADA" = sum(Quantidade.Producao.Com.Ajuste)),
+            key = "Ano.Base.Ral",
             value = "Producao_BENEFICIADA",
             fill = NA) 
         return(x)
       } else {
         x <-
           spread(
-            producaoBENEFICIADA[producaoBENEFICIADA$id_cpfcnpj.usina %in% producaoBENEFICIADA[producaoBENEFICIADA$pareto == 1 &
-                                                                                                grepl(x = producaoBENEFICIADA$Substancia.AMB, pattern = subsAMB), c('id_cpfcnpj.usina')] &
-                                  grepl(x = producaoBENEFICIADA$Substancia.AMB, pattern = subsAMB), c('id_cpfcnpj.usina', 'ano', 'quantidade.producao.ajuste')] %>%
-              group_by(id_cpfcnpj.usina, ano) %>% summarise("Producao_BENEFICIADA" = sum(quantidade.producao.ajuste)),
-            key = "Ano.Base",
+            producaoBENEFICIADA[producaoBENEFICIADA$id_CPF.CNPJ.Titular.usina %in% producaoBENEFICIADA[producaoBENEFICIADA$pareto == 1 &
+                                                                                                grepl(x = producaoBENEFICIADA$Substancia.AMB, pattern = Substancia.AMB), c('id_CPF.CNPJ.Titular.usina')] &
+                                  grepl(x = producaoBENEFICIADA$Substancia.AMB, pattern = Substancia.AMB), c('id_CPF.CNPJ.Titular.usina', 'Ano.Base.Ral', 'Quantidade.Producao.Com.Ajuste')] %>%
+              group_by(id_CPF.CNPJ.Titular.usina, Ano.Base.Ral) %>% summarise("Producao_BENEFICIADA" = sum(Quantidade.Producao.Com.Ajuste)),
+            key = "Ano.Base.Ral",
             value = "Producao_BENEFICIADA",
             fill = NA) 
         return(x)
