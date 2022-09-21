@@ -1,9 +1,5 @@
 #  rm(list = ls()) 
 
-
-#     CORRIGIR FUNÇÕES VPM = Vendas + Consumo Pr?prio + Transfer?ncias (p/ transforma??o, tratamento ou consumo)
-
-
 # carregamento ----
 source(file = "./R/geocod.R")
 source(file = "./R/FUNA_Eventos_RRR_RFP.R", encoding = "UTF-8") 
@@ -13,6 +9,7 @@ source(file = "./R/graficos_AMB.R")
 source(file = "./R/Funcoes_Producao.R", encoding = "UTF-8") 
 source(file = "./R/Funcoes_Reserva.R", encoding = "UTF-8") 
 source(file = "./R/Abatimento_Reserva_Producao.R", encoding = "UTF-8") 
+#     CORRIGIR FUNÇÕES VPM = Vendas + Consumo Pr?prio + Transfer?ncias (p/ transforma??o, tratamento ou consumo)
 source(file = "./R/Funcoes_VPM.R", encoding = "UTF-8") 
 source(file = "./R/carregamento_Bases_AMB_outras.r", encoding = "UTF-8") 
 # source(file = "./Rastreamento_de_Inconsistencias/Municipios_inconsistencia.R")
@@ -23,8 +20,8 @@ source(file = "./R/carregamento_Bases_AMB_outras.r", encoding = "UTF-8")
 
  #_____Reserva visão ---- 
    Nome.Mina <- '.'
-   CPF.CNPJ.Titular <- '.'
-   Substancia.AMB <- 'Calcario'
+   CPF.CNPJ.Titular <- '38.282.487/0001-15'
+   Substancia.AMB <- '.'
    Processo <- '.'
 
    FUNA_visao_RESERVA(Substancia.AMB = Substancia.AMB, Processo = Processo, CPF.CNPJ.Titular = CPF.CNPJ.Titular, Nome.Mina = Nome.Mina)
