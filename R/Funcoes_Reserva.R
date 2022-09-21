@@ -585,8 +585,8 @@ FUNA_Tabela_Pareto_SPREAD <-
       spread(
         reserva_AMB[reserva_AMB$Processo %in% reserva_AMB[reserva_AMB$pareto == 1 &
                                                             grepl(x = reserva_AMB$Substancia.AMB, pattern = Substancia.AMB), c('Processo')] &
-                      grepl(x = reserva_AMB$Substancia.AMB, pattern = Substancia.AMB), c('Processo', 'ano', 'Massa.Medida')] %>%
-          group_by(Processo, ano) %>% summarise("Massa.Medida" = sum(Massa.Medida)),
+                      grepl(x = reserva_AMB$Substancia.AMB, pattern = Substancia.AMB), c('Processo', 'Ano.Base.Ral', 'Massa.Medida')] %>%
+          group_by(Processo, Ano.Base.Ral) %>% summarise("Massa.Medida" = sum(Massa.Medida)),
         key = Ano.Base.Ral,
         value = "Massa.Medida",
         fill = NA

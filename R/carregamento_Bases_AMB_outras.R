@@ -211,36 +211,37 @@ producaoBENEFICIADA <-
 
 # CARREGANDO Produção QUANTIDADE_E_VALOR_DA_PRODUÇÃO_COMERCIALIZADA ----
 
-# VPM_QuantidadeValorCOMERCIALIZADO <-
-#   read.table(
-#     "./data/DBAMB_QuantidadeEhValordaProducaoMineralComercializada.csv",
-#     header = TRUE, sep = "\t",dec = ",",
-#     encoding = 'Latin1',fill = TRUE, quote = "")
-# 
-# 
-# colnames(VPM_QuantidadeValorCOMERCIALIZADO) <-
-#   colnames(VPM_QuantidadeValorCOMERCIALIZADO) |> iconv(from = "UTF-8", to = "ASCII//TRANSLIT")
-# 
-# 
-# 
-#  VPM_QuantidadeValorCOMERCIALIZADO$Substancia.RAL <- 
-#    VPM_QuantidadeValorCOMERCIALIZADO$Substancia.RAL |> iconv(from = "UTF-8", to = "ASCII//TRANSLIT")
-# 
-# VPM_QuantidadeValorCOMERCIALIZADO$Substancia.AMB <-
-#   VPM_QuantidadeValorCOMERCIALIZADO$Substancia.AMB |> iconv(from = "UTF-8", to = "ASCII//TRANSLIT")
-# 
-# VPM_QuantidadeValorCOMERCIALIZADO$Produto.Comercializado <-
-#   VPM_QuantidadeValorCOMERCIALIZADO$Produto.Comercializado |> iconv(from = "UTF-8", to = "ASCII//TRANSLIT")
-# 
-# VPM_QuantidadeValorCOMERCIALIZADO$Municipio.Mina <-
-#   VPM_QuantidadeValorCOMERCIALIZADO$Municipio |> iconv(from = "UTF-8", to = "ASCII//TRANSLIT")
-# 
-# VPM_QuantidadeValorCOMERCIALIZADO$Nome <-
-#   VPM_QuantidadeValorCOMERCIALIZADO$Nome |> iconv(from = "UTF-8", to = "ASCII//TRANSLIT") |> tolower() |> stringr::str_squish()
+ VPM_QuantidadeValorCOMERCIALIZADO <-
+   read.table(
+     "./data/DBAMB_QuantidadeEhValordaProducaoMineralComercializada.csv",
+     header = TRUE, sep = "\t",dec = ",",
+     fill = TRUE, quote = "",
+     fileEncoding = 'latin1', encoding = 'UTF-8')
+ 
+ 
+ colnames(VPM_QuantidadeValorCOMERCIALIZADO) <-
+   colnames(VPM_QuantidadeValorCOMERCIALIZADO) |> iconv(from = "UTF-8", to = "ASCII//TRANSLIT")
+ 
+ 
+ 
+  VPM_QuantidadeValorCOMERCIALIZADO$Substancia.RAL <- 
+    VPM_QuantidadeValorCOMERCIALIZADO$Substancia.RAL |> iconv(from = "UTF-8", to = "ASCII//TRANSLIT")
+ 
+ VPM_QuantidadeValorCOMERCIALIZADO$Substancia.AMB <-
+   VPM_QuantidadeValorCOMERCIALIZADO$Substancia.AMB |> iconv(from = "UTF-8", to = "ASCII//TRANSLIT")
+ 
+ VPM_QuantidadeValorCOMERCIALIZADO$Produto.Comercializado <-
+   VPM_QuantidadeValorCOMERCIALIZADO$Produto.Comercializado |> iconv(from = "UTF-8", to = "ASCII//TRANSLIT")
+ 
+ VPM_QuantidadeValorCOMERCIALIZADO$Municipio.Mina <-
+   VPM_QuantidadeValorCOMERCIALIZADO$Municipio |> iconv(from = "UTF-8", to = "ASCII//TRANSLIT")
+ 
+ VPM_QuantidadeValorCOMERCIALIZADO$Nome <-
+   VPM_QuantidadeValorCOMERCIALIZADO$Nome |> iconv(from = "UTF-8", to = "ASCII//TRANSLIT") |> tolower() |> stringr::str_squish()
 
-# 
-# 
-# 
+ 
+ 
+ 
 # # CARREGANDO consumidores MINA ----
 # 
 # consumidoresMINA <-

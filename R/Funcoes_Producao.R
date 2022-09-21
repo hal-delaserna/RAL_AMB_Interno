@@ -1,4 +1,4 @@
-# Fun??es PRODU??O BRUTA ----
+# Funções PRODUÇÃO BRUTA ----
 
 
 
@@ -607,7 +607,7 @@ producaoBRUTA_groupBY_TITULAR <-
   }
 
 
-# Fun??es PRODU??O BENEFICIADA ----
+# Funções PRODUÇÃO BENEFICIADA ----
 
 FUNA_visao_PRODUCAO_BENEFICIADA <-
   function(CPF.CNPJ.Titular = '.',
@@ -1208,7 +1208,7 @@ producaoBENEFICIADA_groupBY_TITULAR <-
     }
   }
 
-# Avalia??o de prioridades por crit?rio de Quantis----
+# Avaliação de prioridades por critério de Quantis----
 
 FUNA_PRODUCAO_Quantil_SPREAD <-
   function(Substancia.AMB = '.', producao = "bruta", GroupBY = 'usina') {

@@ -1,9 +1,9 @@
 library(imputeTS)
 
-# boxplot series preço-ano ----
+# boxplot series preÃ§o-ano ----
 boxQuadro <-
   function(df,
-           anos = 2011:2018,
+           anos = 2016:2021,
            ylim = c(10, 120)) {
     lista <- list()
     df <- df

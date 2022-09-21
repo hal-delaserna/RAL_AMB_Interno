@@ -1,14 +1,15 @@
 #  rm(list = ls()) 
 
-#               ATENÇÃO: FAZER NOVO DOWNLOAD DAS RESERVAS. NÃO CONSTA AREIA INDUSTRIAL
-#          CORRIGIR VPM = Vendas + Consumo Pr?prio + Transfer?ncias (p/ transforma??o, tratamento ou consumo)
+
+#     CORRIGIR FUNÇÕES VPM = Vendas + Consumo Pr?prio + Transfer?ncias (p/ transforma??o, tratamento ou consumo)
 
 
 # carregamento ----
+source(file = "./R/geocod.R")
 source(file = "./R/FUNA_Eventos_RRR_RFP.R", encoding = "UTF-8") 
-source(file = "./R/Funcoes_Consumidores.R", encoding = "UTF-8") 
+source(file = "./R/Funcoes_Consumidores.R") 
 source(file = "./R/Funcoes_de_Formatacao_Estilo.R", encoding = "UTF-8") 
-source(file = "./R/graficos_AMB.R", encoding = "UTF-8") 
+source(file = "./R/graficos_AMB.R") 
 source(file = "./R/Funcoes_Producao.R", encoding = "UTF-8") 
 source(file = "./R/Funcoes_Reserva.R", encoding = "UTF-8") 
 source(file = "./R/Abatimento_Reserva_Producao.R", encoding = "UTF-8") 
@@ -28,15 +29,15 @@ source(file = "./R/carregamento_Bases_AMB_outras.r", encoding = "UTF-8")
 
    FUNA_visao_RESERVA(Substancia.AMB = Substancia.AMB, Processo = Processo, CPF.CNPJ.Titular = CPF.CNPJ.Titular, Nome.Mina = Nome.Mina)
 
-   FUNA_Tabela_Pareto_SPREAD(Substancia.AMB = "dolomito")[,] %>% FUNA_BARPLOT()
+   FUNA_Tabela_Pareto_SPREAD(Substancia.AMB = Substancia.AMB)[,] %>% FUNA_BARPLOT()
    
    #_____ medida + indicada  + Inferida + lavrável ----
    reserva_groupBY_SUBSTANCIA.AMB(Processo = Processo, Nome.Mina = Nome.Mina, reserva = 'medida')
    reserva_groupBY_SUBSTANCIA.AMB(Processo = Processo, Nome.Mina = Nome.Mina, reserva = 'indicada')
    reserva_groupBY_SUBSTANCIA.AMB(Processo = Processo, Nome.Mina = Nome.Mina, reserva = 'inferida')
-   reserva_groupBY_SUBSTANCIA.AMB(Processo = Processo, Nome.Mina = Nome.Mina, reserva = 'lavravel')
+   # reserva_groupBY_SUBSTANCIA.AMB(Processo = Processo, Nome.Mina = Nome.Mina, reserva = 'lavravel')
    
-   #____________ Abatimento - Produ??o Reserva --------------------------------------
+   #____________ Abatimento - Produção Reserva --------------------------------------
    
    Processo <- '.'
    Nome.Mina <- 'vau novo 1'
@@ -54,9 +55,9 @@ source(file = "./R/carregamento_Bases_AMB_outras.r", encoding = "UTF-8")
    lista_reservas_iguais <-
       filter(
          reserva_AMB[reserva_AMB$Ano.Base.Ral > 2010 &
-                        reserva_AMB$massa.medida > 10 &
+                        reserva_AMB$Massa.Medida > 10 &
                         !reserva_AMB$Substancia.AMB %in% c('areia', "brita e cascalho", "saibro"),] %>% 
-            group_by(Processo, Substancia.AMB) %>% summarise("reservas_iguais" = max(massa.medida) - mean(massa.medida)),
+            group_by(Processo, Substancia.AMB) %>% summarise("reservas_iguais" = max(Massa.Medida) - mean(Massa.Medida)),
          reservas_iguais == 0
       )[, c(1, 2)]
    
@@ -74,25 +75,11 @@ source(file = "./R/carregamento_Bases_AMB_outras.r", encoding = "UTF-8")
    reservas_iguais_mas_produzindo[is.na(reservas_iguais_mas_produzindo$quantidade.producao.ajuste) == FALSE, ] %>% View()
    
    
-   
-   FUNA_Tabela_Pareto_SPREAD <- function(Substancia.AMB = '.') {
-      x <-
-         spread(reserva_AMB[reserva_AMB$Processo %in% reserva_AMB[reserva_AMB$pareto == 1 &
-                                                                     reserva_AMB$Substancia.AMB == Substancia.AMB, c('Processo')] &
-                               reserva_AMB$massa.medida > 100 &
-                               reserva_AMB$Substancia.AMB == Substancia.AMB, c('Processo', 'Ano.Base.Ral', 'massa.medida')],
-                key = "Ano.Base.Ral",
-                value = "massa.medida",
-                fill = NA)
-      return(x)}
-   
-   
-   
-   
+
    reserva_AMB[reserva_AMB$Processo %in% reserva_AMB[reserva_AMB$pareto == 1 &
                                                         reserva_AMB$Substancia.AMB == Substancia.AMB, c('Processo')] &
-                  reserva_AMB$Substancia.AMB == Substancia.AMB, c('Processo', 'Ano.Base.Ral', 'massa.medida')] %>% 
-      group_by(Processo, Ano.Base.Ral) %>% summarise("massa.medida" = sum(massa.medida))
+                  reserva_AMB$Substancia.AMB == Substancia.AMB, c('Processo', 'Ano.Base.Ral', 'Massa.Medida')] %>% 
+      group_by(Processo, Ano.Base.Ral) %>% summarise("Massa.Medida" = sum(Massa.Medida))
    
    
    #__________ Migra??o de Reservas ----
@@ -150,14 +137,14 @@ source(file = "./R/carregamento_Bases_AMB_outras.r", encoding = "UTF-8")
    # O RRR foi importado?
    
    
-   # 001.546/1940 > RRR de 2014 (apresentado em 2017, n?o fora abatida a produ??o)
+   # 001.546/1940 > RRR de 2014 (apresentado em 2017, n?o fora abatida a Produção)
    # 003.081/1962 > RRR de 2014 
    # 820.061/2001 > argilas comuns; apresentou RRR em 2015
    
    
    
-# PRODU??O  ------------------------------------------------------------------------
- #_____Produ??o BRUTA vis?o ----
+# Produção  ------------------------------------------------------------------------
+ #_____Produção BRUTA vis?o ----
    c(Substancia.AMB <- 'talco',            CPF.CNPJ.Titular <- '.',          Nome.Mina <- '.',    usina <- '.',            
      Processo <- '.',               minerio <- '.',      municipio <- '.',          produto <- '.')
    #producaoBENEFICIADA[producaoBENEFICIADA$CPF.CNPJ.Titular=='48.277.495/0001-27' & producaoBENEFICIADA$Ano.Base.Ral == 2016 & producaoBENEFICIADA$Substancia.AMB == 'bauxita metalurgica',] <- rep("NULL",21)
@@ -190,24 +177,27 @@ source(file = "./R/carregamento_Bases_AMB_outras.r", encoding = "UTF-8")
    #--------------------- outras fun??es  -----------------------------------------
    # lista Processos - pareto
       reserva_AMB[reserva_AMB$pareto == 1 &
-                     reserva_AMB$Ano.Base.Ral > 2010 &
-                     !reserva_AMB$Substancia.AMB %in% c('areia', "brita e cascalho", "saibro"), 
-                  c(c("Processo", "Substancia.AMB"))] %>% unique() %>% arrange(Substancia.AMB) %>% View()
-   
-   # fun??o busca pareto
-   FUNA_Tabela_Pareto_SPREAD <- function(Substancia.AMB = '.') {
-      x <-
-         spread(
-            reserva_AMB[reserva_AMB$Processo %in% reserva_AMB[reserva_AMB$pareto == 1 &
-                                                                 reserva_AMB$Substancia.AMB == Substancia.AMB, c('Processo')] &
-                           reserva_AMB$Substancia.AMB == Substancia.AMB, c('Processo', 'Ano.Base.Ral', 'massa.medida')] %>%
-               group_by(Processo, Ano.Base.Ral) %>% summarise("massa.medida" = sum(massa.medida)),
+                    reserva_AMB$Ano.Base.Ral > 2010 &
+                    !reserva_AMB$Substancia.AMB %in% 
+                    c('Calcário'),
+                  c(c("Processo", "Substancia.AMB"))] %>% 
+        unique() %>% arrange(Substancia.AMB) %>% View()
+      
+   # função busca pareto
+      FUNA_Tabela_Pareto_SPREAD <- function(Substancia.AMB = '.') {
+        x <-
+          spread(
+            reserva_AMB[reserva_AMB$Processo %in% 
+                          reserva_AMB[reserva_AMB$pareto == 1 &
+                                        reserva_AMB$Substancia.AMB == Substancia.AMB, c('Processo')] &
+                          reserva_AMB$Substancia.AMB == Substancia.AMB, c('Processo', 'Ano.Base.Ral', 'Massa.Medida')] %>%
+              group_by(Processo, Ano.Base.Ral) %>% summarise("Massa.Medida" = sum(Massa.Medida)),
             key = "Ano.Base.Ral",
-            value = "massa.medida",
+            value = "Massa.Medida",
             fill = NA
-         )
-      return(x)
-   }
+          )
+        return(x)
+      }
       
 #__________ n Processos ----
   

@@ -1,4 +1,3 @@
-      'character',	   # Mesorregi?o
 geocod <-
   read.table(
     file = paste(sep = "",
@@ -15,6 +14,7 @@ geocod <-
       'character',	   # UF
       'character',	   # UF_sigla
       'integer',	     # Cod_Mesorregi?o.Geogr?fica
+      'character',	   # Mesorregi?o
       'integer',	     # Cod_Microrregi?o
       'character',	   # Microrregi?o
       'integer',	     # GEOCOD
