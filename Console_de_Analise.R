@@ -140,25 +140,26 @@ source(file = "./R/carregamento_Bases_AMB_outras.r", encoding = "UTF-8")
    
    
    
-   # PRODUÇÃO  ------------------------------------------------------------------------
-   #_____Produção BRUTA visão ----
+# PRODUÇÃO  ------------------------------------------------------------------------
+
    
      Substancia.AMB <- '.'
-     CPF.CNPJ.Titular <- '01.637.895/0106-00'
+     CPF.CNPJ.Titular <- '38.282.487/0001-15'
      Municipio <- '.'
      Nome.Mina <- '.'
      Nome.Usina <- '.'
      Processo <- '.'
      Minerio <- '.'
 
+     
+#_____Produção BRUTA visão ----
 
-         # BRUTA
  FUNA_visao_PRODUCAO_BRUTA(Substancia.AMB = Substancia.AMB, Processo = Processo, CPF.CNPJ.Titular = CPF.CNPJ.Titular, Nome.Mina = Nome.Mina)
  
-         # BENEFICIADA
+#_____Produção BENEFICIADA visão ----
  FUNA_visao_PRODUCAO_BENEFICIADA(Substancia.AMB = Substancia.AMB, CPF.CNPJ.Titular = CPF.CNPJ.Titular, Nome.Usina = Nome.Usina)
  
- #producaoBENEFICIADA[producaoBENEFICIADA$CPF.CNPJ.Titular=='48.277.495/0001-27' & producaoBENEFICIADA$Ano.Base.Ral == 2016 & producaoBENEFICIADA$Substancia.AMB == 'bauxita metalurgica',] <- rep("NULL",21)
+#producaoBENEFICIADA[producaoBENEFICIADA$CPF.CNPJ.Titular=='48.277.495/0001-27' & producaoBENEFICIADA$Ano.Base.Ral == 2016 & producaoBENEFICIADA$Substancia.AMB == 'bauxita metalurgica',] <- rep("NULL",21)
  
  
       # PRODUCAO QUANTIL-WIDE
@@ -169,9 +170,7 @@ source(file = "./R/carregamento_Bases_AMB_outras.r", encoding = "UTF-8")
  probs <- 0.8
  
  FUNA_PRODUCAO_Quantil_WIDE(Substancia.AMB = Substancia.AMB, probs = probs)
- 
- 
- 
+
  
 #_____CONSUMIDORES  ------------------------------------------------------------------
          #MINA

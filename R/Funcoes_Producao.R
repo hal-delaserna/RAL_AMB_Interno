@@ -88,7 +88,7 @@ producaoBRUTA_GERAL <-
                                  grepl(producaoBRUTA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
                                  grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio) == TRUE &
                                  grepl(producaoBRUTA$Processo, pattern = Processo) == TRUE &
-                                 grepl(producaoBRUTA$Nome.da.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
+                                 grepl(producaoBRUTA$Nome.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
             group_by(Ano.Base.Ral) %>%
             summarise(soma = sum(Quantidade.Producao.Com.Ajuste)),
           key = Ano.Base.Ral,
@@ -106,7 +106,7 @@ producaoBRUTA_GERAL <-
                                    grepl(producaoBRUTA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
                                    grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio) == TRUE &
                                    grepl(producaoBRUTA$Processo, pattern = Processo) == TRUE &
-                                   grepl(producaoBRUTA$Nome.da.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
+                                   grepl(producaoBRUTA$Nome.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
               group_by(Ano.Base.Ral) %>%
               summarise(soma = sum(Quantidade.Venda.com.Ajuste)),
             key = Ano.Base.Ral,
@@ -123,7 +123,7 @@ producaoBRUTA_GERAL <-
                                      grepl(producaoBRUTA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
                                      grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio) == TRUE &
                                      grepl(producaoBRUTA$Processo, pattern = Processo) == TRUE &
-                                     grepl(producaoBRUTA$Nome.da.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
+                                     grepl(producaoBRUTA$Nome.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
                 group_by(Ano.Base.Ral) %>%
                 summarise(soma = sum(
                   Quantidade.Producao.Substancia.com.Ajuste
@@ -142,7 +142,7 @@ producaoBRUTA_GERAL <-
                                        grepl(producaoBRUTA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
                                        grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio) == TRUE &
                                        grepl(producaoBRUTA$Processo, pattern = Processo) == TRUE &
-                                       grepl(producaoBRUTA$Nome.da.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
+                                       grepl(producaoBRUTA$Nome.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
                   group_by(Ano.Base.Ral) %>%
                   summarise(soma = sum(
                     Quantidade.Venda.com.Ajuste
@@ -176,7 +176,7 @@ producaoBRUTA_groupBY_MINA <-
                                  grepl(producaoBRUTA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
                                  grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio) == TRUE &
                                  grepl(producaoBRUTA$Processo, pattern = Processo) == TRUE &
-                                 grepl(producaoBRUTA$Nome.da.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
+                                 grepl(producaoBRUTA$Nome.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
             group_by(Ano.Base.Ral, Nome.Mina) %>%
             summarise(soma = sum(Quantidade.Producao.Com.Ajuste)),
           key = Ano.Base.Ral,
@@ -194,7 +194,7 @@ producaoBRUTA_groupBY_MINA <-
                                    grepl(producaoBRUTA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
                                    grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio) == TRUE &
                                    grepl(producaoBRUTA$Processo, pattern = Processo) == TRUE &
-                                   grepl(producaoBRUTA$Nome.da.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
+                                   grepl(producaoBRUTA$Nome.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
               group_by(Ano.Base.Ral, Nome.Mina) %>%
               summarise(soma = sum(Quantidade.Venda.com.Ajuste)),
             key = Ano.Base.Ral,
@@ -211,7 +211,7 @@ producaoBRUTA_groupBY_MINA <-
                                      grepl(producaoBRUTA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
                                      grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio) == TRUE &
                                      grepl(producaoBRUTA$Processo, pattern = Processo) == TRUE &
-                                     grepl(producaoBRUTA$Nome.da.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
+                                     grepl(producaoBRUTA$Nome.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
                 group_by(Ano.Base.Ral, Nome.Mina) %>%
                 summarise(soma = sum(
                   Quantidade.Producao.Substancia.com.Ajuste
@@ -230,7 +230,7 @@ producaoBRUTA_groupBY_MINA <-
                                        grepl(producaoBRUTA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
                                        grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio) == TRUE &
                                        grepl(producaoBRUTA$Processo, pattern = Processo) == TRUE &
-                                       grepl(producaoBRUTA$Nome.da.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
+                                       grepl(producaoBRUTA$Nome.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
                   group_by(Ano.Base.Ral, Nome.Mina) %>%
                   summarise(soma = sum(
                     Quantidade.Venda.com.Ajuste
@@ -266,7 +266,7 @@ producaoBRUTA_groupBY_MUNICIPIO <-
                                  grepl(producaoBRUTA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
                                  grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio) == TRUE &
                                  grepl(producaoBRUTA$Processo, pattern = Processo) == TRUE &
-                                 grepl(producaoBRUTA$Nome.da.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
+                                 grepl(producaoBRUTA$Nome.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
             group_by(Ano.Base.Ral, Municipio.Mina) %>%
             summarise(soma = sum(Quantidade.Producao.Com.Ajuste)),
           key = Ano.Base.Ral,
@@ -284,7 +284,7 @@ producaoBRUTA_groupBY_MUNICIPIO <-
                                    grepl(producaoBRUTA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
                                    grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio) == TRUE &
                                    grepl(producaoBRUTA$Processo, pattern = Processo) == TRUE &
-                                   grepl(producaoBRUTA$Nome.da.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
+                                   grepl(producaoBRUTA$Nome.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
               group_by(Ano.Base.Ral, Municipio.Mina) %>%
               summarise(soma = sum(Quantidade.Venda.com.Ajuste)),
             key = Ano.Base.Ral,
@@ -301,7 +301,7 @@ producaoBRUTA_groupBY_MUNICIPIO <-
                                      grepl(producaoBRUTA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
                                      grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio) == TRUE &
                                      grepl(producaoBRUTA$Processo, pattern = Processo) == TRUE &
-                                     grepl(producaoBRUTA$Nome.da.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
+                                     grepl(producaoBRUTA$Nome.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
                 group_by(Ano.Base.Ral, Municipio.Mina) %>%
                 summarise(soma = sum(
                   Quantidade.Producao.Substancia.com.Ajuste
@@ -320,7 +320,7 @@ producaoBRUTA_groupBY_MUNICIPIO <-
                                        grepl(producaoBRUTA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
                                        grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio) == TRUE &
                                        grepl(producaoBRUTA$Processo, pattern = Processo) == TRUE &
-                                       grepl(producaoBRUTA$Nome.da.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
+                                       grepl(producaoBRUTA$Nome.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
                   group_by(Ano.Base.Ral, Municipio.Mina) %>%
                   summarise(soma = sum(
                     Quantidade.Venda.com.Ajuste
@@ -355,7 +355,7 @@ producaoBRUTA_groupBY_PROCESSO <-
                                  grepl(producaoBRUTA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
                                  grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio) == TRUE &
                                  grepl(producaoBRUTA$Processo, pattern = Processo) == TRUE &
-                                 grepl(producaoBRUTA$Nome.da.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
+                                 grepl(producaoBRUTA$Nome.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
             group_by(Ano.Base.Ral, Processo) %>%
             summarise(soma = sum(Quantidade.Producao.Com.Ajuste)),
           key = Ano.Base.Ral,
@@ -373,7 +373,7 @@ producaoBRUTA_groupBY_PROCESSO <-
                                    grepl(producaoBRUTA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
                                    grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio) == TRUE &
                                    grepl(producaoBRUTA$Processo, pattern = Processo) == TRUE &
-                                   grepl(producaoBRUTA$Nome.da.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
+                                   grepl(producaoBRUTA$Nome.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
               group_by(Ano.Base.Ral, Processo) %>%
               summarise(soma = sum(Quantidade.Venda.com.Ajuste)),
             key = Ano.Base.Ral,
@@ -390,7 +390,7 @@ producaoBRUTA_groupBY_PROCESSO <-
                                      grepl(producaoBRUTA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
                                      grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio) == TRUE &
                                      grepl(producaoBRUTA$Processo, pattern = Processo) == TRUE &
-                                     grepl(producaoBRUTA$Nome.da.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
+                                     grepl(producaoBRUTA$Nome.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
                 group_by(Ano.Base.Ral, Processo) %>%
                 summarise(soma = sum(
                   Quantidade.Producao.Substancia.com.Ajuste
@@ -409,7 +409,7 @@ producaoBRUTA_groupBY_PROCESSO <-
                                        grepl(producaoBRUTA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
                                        grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio) == TRUE &
                                        grepl(producaoBRUTA$Processo, pattern = Processo) == TRUE &
-                                       grepl(producaoBRUTA$Nome.da.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
+                                       grepl(producaoBRUTA$Nome.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
                   group_by(Ano.Base.Ral, Processo) %>%
                   summarise(soma = sum(
                     Quantidade.Venda.com.Ajuste
@@ -445,7 +445,7 @@ producaoBRUTA_groupBY_SUBSTANCIA.AMB <-
                                  grepl(producaoBRUTA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
                                  grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio) == TRUE &
                                  grepl(producaoBRUTA$Processo, pattern = Processo) == TRUE &
-                                 grepl(producaoBRUTA$Nome.da.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
+                                 grepl(producaoBRUTA$Nome.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
             group_by(Ano.Base.Ral, Substancia.AMB) %>%
             summarise(soma = sum(Quantidade.Producao.Com.Ajuste)),
           key = Ano.Base.Ral,
@@ -463,7 +463,7 @@ producaoBRUTA_groupBY_SUBSTANCIA.AMB <-
                                    grepl(producaoBRUTA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
                                    grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio) == TRUE &
                                    grepl(producaoBRUTA$Processo, pattern = Processo) == TRUE &
-                                   grepl(producaoBRUTA$Nome.da.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
+                                   grepl(producaoBRUTA$Nome.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
               group_by(Ano.Base.Ral, Substancia.AMB) %>%
               summarise(soma = sum(Quantidade.Venda.com.Ajuste)),
             key = Ano.Base.Ral,
@@ -480,7 +480,7 @@ producaoBRUTA_groupBY_SUBSTANCIA.AMB <-
                                      grepl(producaoBRUTA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
                                      grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio) == TRUE &
                                      grepl(producaoBRUTA$Processo, pattern = Processo) == TRUE &
-                                     grepl(producaoBRUTA$Nome.da.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
+                                     grepl(producaoBRUTA$Nome.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
                 group_by(Ano.Base.Ral, Substancia.AMB) %>%
                 summarise(soma = sum(
                   Quantidade.Producao.Substancia.com.Ajuste
@@ -499,7 +499,7 @@ producaoBRUTA_groupBY_SUBSTANCIA.AMB <-
                                        grepl(producaoBRUTA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
                                        grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio) == TRUE &
                                        grepl(producaoBRUTA$Processo, pattern = Processo) == TRUE &
-                                       grepl(producaoBRUTA$Nome.da.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
+                                       grepl(producaoBRUTA$Nome.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
                   group_by(Ano.Base.Ral, Substancia.AMB) %>%
                   summarise(soma = sum(
                     Quantidade.Venda.com.Ajuste
@@ -535,7 +535,7 @@ producaoBRUTA_groupBY_TITULAR <-
                                  grepl(producaoBRUTA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
                                  grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio) == TRUE &
                                  grepl(producaoBRUTA$Processo, pattern = Processo) == TRUE &
-                                 grepl(producaoBRUTA$Nome.da.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
+                                 grepl(producaoBRUTA$Nome.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
             group_by(Ano.Base.Ral, CPF.CNPJ.Titular) %>%
             summarise(soma = sum(Quantidade.Producao.Com.Ajuste)),
           key = Ano.Base.Ral,
@@ -553,7 +553,7 @@ producaoBRUTA_groupBY_TITULAR <-
                                    grepl(producaoBRUTA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
                                    grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio) == TRUE &
                                    grepl(producaoBRUTA$Processo, pattern = Processo) == TRUE &
-                                   grepl(producaoBRUTA$Nome.da.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
+                                   grepl(producaoBRUTA$Nome.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
               group_by(Ano.Base.Ral, CPF.CNPJ.Titular) %>%
               summarise(soma = sum(Quantidade.Venda.com.Ajuste)),
             key = Ano.Base.Ral,
@@ -570,7 +570,7 @@ producaoBRUTA_groupBY_TITULAR <-
                                      grepl(producaoBRUTA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
                                      grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio) == TRUE &
                                      grepl(producaoBRUTA$Processo, pattern = Processo) == TRUE &
-                                     grepl(producaoBRUTA$Nome.da.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
+                                     grepl(producaoBRUTA$Nome.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
                 group_by(Ano.Base.Ral, CPF.CNPJ.Titular) %>%
                 summarise(soma = sum(
                   Quantidade.Producao.Substancia.com.Ajuste
@@ -589,7 +589,7 @@ producaoBRUTA_groupBY_TITULAR <-
                                        grepl(producaoBRUTA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
                                        grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio) == TRUE &
                                        grepl(producaoBRUTA$Processo, pattern = Processo) == TRUE &
-                                       grepl(producaoBRUTA$Nome.da.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
+                                       grepl(producaoBRUTA$Nome.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
                   group_by(Ano.Base.Ral, CPF.CNPJ.Titular) %>%
                   summarise(soma = sum(
                     Quantidade.Venda.com.Ajuste
