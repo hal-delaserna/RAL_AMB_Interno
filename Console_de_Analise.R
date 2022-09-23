@@ -1,26 +1,25 @@
-#  rm(list = ls()) 
+#  rm(list = ls())
 
 # carregamento ----
 source(file = "./R/geocod.R")
-source(file = "./R/FUNA_Eventos_RRR_RFP.R", encoding = "UTF-8") 
-source(file = "./R/Funcoes_Consumidores.R") 
-source(file = "./R/Funcoes_de_Formatacao_Estilo.R", encoding = "UTF-8") 
-source(file = "./R/graficos_AMB.R") 
-source(file = "./R/Funcoes_Producao.R", encoding = "UTF-8") 
-source(file = "./R/Funcoes_Reserva.R", encoding = "UTF-8") 
-source(file = "./R/Abatimento_Reserva_Producao.R", encoding = "UTF-8") 
+source(file = "./R/FUNA_Eventos_RRR_RFP.R", encoding = "UTF-8")
+source(file = "./R/Funcoes_Consumidores.R")
+source(file = "./R/Funcoes_de_Formatacao_Estilo.R", encoding = "UTF-8")
+source(file = "./R/graficos_AMB.R")
+source(file = "./R/Funcoes_Producao.R", encoding = "UTF-8")
+source(file = "./R/Funcoes_Reserva.R", encoding = "UTF-8")
+source(file = "./R/Abatimento_Reserva_Producao.R", encoding = "UTF-8")
 #     CORRIGIR FUNÇÕES VPM = Vendas + Consumo Pr?prio + Transfer?ncias (p/ transforma??o, tratamento ou consumo)
-source(file = "./R/Funcoes_VPM.R", encoding = "UTF-8") 
-source(file = "./R/carregamento_Bases_AMB_outras.r", encoding = "UTF-8") 
+source(file = "./R/Funcoes_VPM.R", encoding = "UTF-8")
+source(file = "./R/carregamento_Bases_AMB_outras.r", encoding = "UTF-8")
 # source(file = "./Rastreamento_de_Inconsistencias/Municipios_inconsistencia.R")
 #__________________________________________________________________----
 
 # RESERVA ----
 
-
  #_____Reserva visão ---- 
    Nome.Mina <- '.'
-   CPF.CNPJ.Titular <- '38.282.487/0001-15'
+   CPF.CNPJ.Titular <- '01.637.895/0106-00'
    Substancia.AMB <- '.'
    Processo <- '.'
 
@@ -140,24 +139,40 @@ source(file = "./R/carregamento_Bases_AMB_outras.r", encoding = "UTF-8")
    
    
    
-# Produção  ------------------------------------------------------------------------
- #_____Produção BRUTA vis?o ----
-   c(Substancia.AMB <- 'talco',            CPF.CNPJ.Titular <- '.',          Nome.Mina <- '.',    usina <- '.',            
-     Processo <- '.',               minerio <- '.',      municipio <- '.',          produto <- '.')
-   #producaoBENEFICIADA[producaoBENEFICIADA$CPF.CNPJ.Titular=='48.277.495/0001-27' & producaoBENEFICIADA$Ano.Base.Ral == 2016 & producaoBENEFICIADA$Substancia.AMB == 'bauxita metalurgica',] <- rep("NULL",21)
    
+   # PRODUÇÃO  ------------------------------------------------------------------------
+   #_____Produção BRUTA visão ----
+   
+     Substancia.AMB <- '.'
+     CPF.CNPJ.Titular <- '01.637.895/0106-00'
+     Municipio <- '.'
+     Nome.Mina <- '.'
+     Nome.Usina <- '.'
+     Processo <- '.'
+     Minerio <- '.'
+
+
          # BRUTA
  FUNA_visao_PRODUCAO_BRUTA(Substancia.AMB = Substancia.AMB, Processo = Processo, CPF.CNPJ.Titular = CPF.CNPJ.Titular, Nome.Mina = Nome.Mina)
  
-            # BENEFICIADA
- FUNA_visao_PRODUCAO_BENEFICIADA(Substancia.AMB = Substancia.AMB, CPF.CNPJ.Titular = CPF.CNPJ.Titular, usina = usina)
+         # BENEFICIADA
+ FUNA_visao_PRODUCAO_BENEFICIADA(Substancia.AMB = Substancia.AMB, CPF.CNPJ.Titular = CPF.CNPJ.Titular, Nome.Usina = Nome.Usina)
  
-                # PRODUCAO QUANTIL-WIDE
- FUNA_PRODUCAO_Quantil_SPREAD(Substancia.AMB = 'filito', producao = 'bruta', GroupBY = 'Nome.Mina') %>% FUNA_BARPLOT()
+ #producaoBENEFICIADA[producaoBENEFICIADA$CPF.CNPJ.Titular=='48.277.495/0001-27' & producaoBENEFICIADA$Ano.Base.Ral == 2016 & producaoBENEFICIADA$Substancia.AMB == 'bauxita metalurgica',] <- rep("NULL",21)
  
-   # RESERVA   
- FUNA_visao_RESERVA(Substancia.AMB = Substancia.AMB, Processo = Processo, CPF.CNPJ.Titular = CPF.CNPJ.Titular, Nome.Mina = Nome.Mina)
-
+ 
+      # PRODUCAO QUANTIL-WIDE
+ # FUNA_PRODUCAO_Quantil_SPREAD(Substancia.AMB = 'filito', producao = 'bruta', GroupBY = 'Nome.Mina') %>% FUNA_BARPLOT()
+ 
+ 
+ Substancia.AMB <- "Calcario"
+ probs <- 0.8
+ 
+ FUNA_PRODUCAO_Quantil_WIDE(Substancia.AMB = Substancia.AMB, probs = probs)
+ 
+ 
+ 
+ 
 #_____CONSUMIDORES  ------------------------------------------------------------------
          #MINA
    consumidoresMINA_busca(CPF.CNPJ.Titular = CPF.CNPJ.Titular, Nome.Mina = Nome.Mina)

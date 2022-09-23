@@ -4,7 +4,7 @@ valor_VPM_GERAL <-
   function(Substancia.AMB = ".",
            Substancia.RAL = ".",
            CPF.CNPJ.Titular = ".",
-           Municipio.Mina = ".",
+           Municipio = ".",
            Nome = ".",
            Produto.Comercializado = ".",
            Tipo.Empreendimento = ".",
@@ -15,7 +15,7 @@ valor_VPM_GERAL <-
           select(VPM_QuantidadeValorCOMERCIALIZADO[grepl(VPM_QuantidadeValorCOMERCIALIZADO$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                                      grepl(VPM_QuantidadeValorCOMERCIALIZADO$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                                      grepl(VPM_QuantidadeValorCOMERCIALIZADO$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                                     grepl(VPM_QuantidadeValorCOMERCIALIZADO$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                                     grepl(VPM_QuantidadeValorCOMERCIALIZADO$Municipio, pattern = Municipio) == TRUE &
                                                      grepl(VPM_QuantidadeValorCOMERCIALIZADO$Produto.Comercializado, pattern = Produto.Comercializado) == TRUE &
                                                      grepl(VPM_QuantidadeValorCOMERCIALIZADO$Tipo.Empreendimento, pattern = Tipo.Empreendimento) == TRUE &
                                                      grepl(VPM_QuantidadeValorCOMERCIALIZADO$Nome, pattern = Nome) == TRUE,], everything()) %>%
@@ -34,7 +34,7 @@ valor_VPM_GERAL <-
             select(VPM_QuantidadeValorCOMERCIALIZADO[grepl(VPM_QuantidadeValorCOMERCIALIZADO$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                                        grepl(VPM_QuantidadeValorCOMERCIALIZADO$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                                        grepl(VPM_QuantidadeValorCOMERCIALIZADO$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                                       grepl(VPM_QuantidadeValorCOMERCIALIZADO$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                                       grepl(VPM_QuantidadeValorCOMERCIALIZADO$Municipio, pattern = Municipio) == TRUE &
                                                        grepl(VPM_QuantidadeValorCOMERCIALIZADO$Produto.Comercializado, pattern = Produto.Comercializado) == TRUE &
                                                        grepl(VPM_QuantidadeValorCOMERCIALIZADO$Tipo.Empreendimento, pattern = Tipo.Empreendimento) == TRUE &
                                                        grepl(VPM_QuantidadeValorCOMERCIALIZADO$Nome, pattern = Nome) == TRUE,], everything()) %>%
@@ -52,7 +52,7 @@ valor_VPM_GERAL <-
               select(VPM_QuantidadeValorCOMERCIALIZADO[grepl(VPM_QuantidadeValorCOMERCIALIZADO$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                                          grepl(VPM_QuantidadeValorCOMERCIALIZADO$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                                          grepl(VPM_QuantidadeValorCOMERCIALIZADO$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                                         grepl(VPM_QuantidadeValorCOMERCIALIZADO$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                                         grepl(VPM_QuantidadeValorCOMERCIALIZADO$Municipio, pattern = Municipio) == TRUE &
                                                          grepl(VPM_QuantidadeValorCOMERCIALIZADO$Produto.Comercializado, pattern = Produto.Comercializado) == TRUE &
                                                          grepl(VPM_QuantidadeValorCOMERCIALIZADO$Tipo.Empreendimento, pattern = Tipo.Empreendimento) == TRUE &
                                                          grepl(VPM_QuantidadeValorCOMERCIALIZADO$Nome, pattern = Nome) == TRUE,], everything()) %>%
@@ -72,7 +72,7 @@ valor_VPM_GERAL <-
                 select(VPM_QuantidadeValorCOMERCIALIZADO[grepl(VPM_QuantidadeValorCOMERCIALIZADO$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                                            grepl(VPM_QuantidadeValorCOMERCIALIZADO$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                                            grepl(VPM_QuantidadeValorCOMERCIALIZADO$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                                           grepl(VPM_QuantidadeValorCOMERCIALIZADO$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                                           grepl(VPM_QuantidadeValorCOMERCIALIZADO$Municipio, pattern = Municipio) == TRUE &
                                                            grepl(VPM_QuantidadeValorCOMERCIALIZADO$Produto.Comercializado, pattern = Produto.Comercializado) == TRUE &
                                                            grepl(VPM_QuantidadeValorCOMERCIALIZADO$Tipo.Empreendimento, pattern = Tipo.Empreendimento) == TRUE &
                                                            grepl(VPM_QuantidadeValorCOMERCIALIZADO$Nome, pattern = Nome) == TRUE,], everything()) %>%
@@ -97,7 +97,7 @@ valor_VPM_groupBY_Nome <-
   function(Substancia.AMB = ".",
            Substancia.RAL = ".",
            CPF.CNPJ.Titular = ".",
-           Municipio.Mina = ".",
+           Municipio = ".",
            Nome = ".",
            Produto.Comercializado = ".",
            Tipo.Empreendimento = ".",
@@ -108,7 +108,7 @@ valor_VPM_groupBY_Nome <-
           select(VPM_QuantidadeValorCOMERCIALIZADO[grepl(VPM_QuantidadeValorCOMERCIALIZADO$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                                      grepl(VPM_QuantidadeValorCOMERCIALIZADO$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                                      grepl(VPM_QuantidadeValorCOMERCIALIZADO$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                                     grepl(VPM_QuantidadeValorCOMERCIALIZADO$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                                     grepl(VPM_QuantidadeValorCOMERCIALIZADO$Municipio, pattern = Municipio) == TRUE &
                                                      grepl(VPM_QuantidadeValorCOMERCIALIZADO$Produto.Comercializado, pattern = Produto.Comercializado) == TRUE &
                                                      grepl(VPM_QuantidadeValorCOMERCIALIZADO$Tipo.Empreendimento, pattern = Tipo.Empreendimento) == TRUE &
                                                      grepl(VPM_QuantidadeValorCOMERCIALIZADO$Nome, pattern = Nome) == TRUE,], everything()) %>%
@@ -127,7 +127,7 @@ valor_VPM_groupBY_Nome <-
             select(VPM_QuantidadeValorCOMERCIALIZADO[grepl(VPM_QuantidadeValorCOMERCIALIZADO$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                                        grepl(VPM_QuantidadeValorCOMERCIALIZADO$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                                        grepl(VPM_QuantidadeValorCOMERCIALIZADO$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                                       grepl(VPM_QuantidadeValorCOMERCIALIZADO$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                                       grepl(VPM_QuantidadeValorCOMERCIALIZADO$Municipio, pattern = Municipio) == TRUE &
                                                        grepl(VPM_QuantidadeValorCOMERCIALIZADO$Produto.Comercializado, pattern = Produto.Comercializado) == TRUE &
                                                        grepl(VPM_QuantidadeValorCOMERCIALIZADO$Tipo.Empreendimento, pattern = Tipo.Empreendimento) == TRUE &
                                                        grepl(VPM_QuantidadeValorCOMERCIALIZADO$Nome, pattern = Nome) == TRUE,], everything()) %>%
@@ -145,7 +145,7 @@ valor_VPM_groupBY_Nome <-
               select(VPM_QuantidadeValorCOMERCIALIZADO[grepl(VPM_QuantidadeValorCOMERCIALIZADO$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                                          grepl(VPM_QuantidadeValorCOMERCIALIZADO$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                                          grepl(VPM_QuantidadeValorCOMERCIALIZADO$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                                         grepl(VPM_QuantidadeValorCOMERCIALIZADO$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                                         grepl(VPM_QuantidadeValorCOMERCIALIZADO$Municipio, pattern = Municipio) == TRUE &
                                                          grepl(VPM_QuantidadeValorCOMERCIALIZADO$Produto.Comercializado, pattern = Produto.Comercializado) == TRUE &
                                                          grepl(VPM_QuantidadeValorCOMERCIALIZADO$Tipo.Empreendimento, pattern = Tipo.Empreendimento) == TRUE &
                                                          grepl(VPM_QuantidadeValorCOMERCIALIZADO$Nome, pattern = Nome) == TRUE,], everything()) %>%
@@ -165,7 +165,7 @@ valor_VPM_groupBY_Nome <-
                 select(VPM_QuantidadeValorCOMERCIALIZADO[grepl(VPM_QuantidadeValorCOMERCIALIZADO$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                                            grepl(VPM_QuantidadeValorCOMERCIALIZADO$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                                            grepl(VPM_QuantidadeValorCOMERCIALIZADO$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                                           grepl(VPM_QuantidadeValorCOMERCIALIZADO$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                                           grepl(VPM_QuantidadeValorCOMERCIALIZADO$Municipio, pattern = Municipio) == TRUE &
                                                            grepl(VPM_QuantidadeValorCOMERCIALIZADO$Produto.Comercializado, pattern = Produto.Comercializado) == TRUE &
                                                            grepl(VPM_QuantidadeValorCOMERCIALIZADO$Tipo.Empreendimento, pattern = Tipo.Empreendimento) == TRUE &
                                                            grepl(VPM_QuantidadeValorCOMERCIALIZADO$Nome, pattern = Nome) == TRUE,], everything()) %>%
@@ -192,7 +192,7 @@ valor_VPM_groupBY_MUNICIPIO <-
   function(Substancia.AMB = ".",
            Substancia.RAL = ".",
            CPF.CNPJ.Titular = ".",
-           Municipio.Mina = ".",
+           Municipio = ".",
            Nome = ".",
            Produto.Comercializado = ".",
            Tipo.Empreendimento = ".",
@@ -203,11 +203,11 @@ valor_VPM_groupBY_MUNICIPIO <-
           select(VPM_QuantidadeValorCOMERCIALIZADO[grepl(VPM_QuantidadeValorCOMERCIALIZADO$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                                      grepl(VPM_QuantidadeValorCOMERCIALIZADO$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                                      grepl(VPM_QuantidadeValorCOMERCIALIZADO$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                                     grepl(VPM_QuantidadeValorCOMERCIALIZADO$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                                     grepl(VPM_QuantidadeValorCOMERCIALIZADO$Municipio, pattern = Municipio) == TRUE &
                                                      grepl(VPM_QuantidadeValorCOMERCIALIZADO$Produto.Comercializado, pattern = Produto.Comercializado) == TRUE &
                                                      grepl(VPM_QuantidadeValorCOMERCIALIZADO$Tipo.Empreendimento, pattern = Tipo.Empreendimento) == TRUE &
                                                      grepl(VPM_QuantidadeValorCOMERCIALIZADO$Nome, pattern = Nome) == TRUE,], everything()) %>%
-            group_by(Ano.Base.Ral, Municipio.Mina) %>%
+            group_by(Ano.Base.Ral, Municipio) %>%
             summarise(soma = sum(Quantidade.Producao.Comercializada...Substancia)),
           key = Ano.Base.Ral,
           value = soma
@@ -222,11 +222,11 @@ valor_VPM_groupBY_MUNICIPIO <-
             select(VPM_QuantidadeValorCOMERCIALIZADO[grepl(VPM_QuantidadeValorCOMERCIALIZADO$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                                        grepl(VPM_QuantidadeValorCOMERCIALIZADO$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                                        grepl(VPM_QuantidadeValorCOMERCIALIZADO$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                                       grepl(VPM_QuantidadeValorCOMERCIALIZADO$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                                       grepl(VPM_QuantidadeValorCOMERCIALIZADO$Municipio, pattern = Municipio) == TRUE &
                                                        grepl(VPM_QuantidadeValorCOMERCIALIZADO$Produto.Comercializado, pattern = Produto.Comercializado) == TRUE &
                                                        grepl(VPM_QuantidadeValorCOMERCIALIZADO$Tipo.Empreendimento, pattern = Tipo.Empreendimento) == TRUE &
                                                        grepl(VPM_QuantidadeValorCOMERCIALIZADO$Nome, pattern = Nome) == TRUE,], everything()) %>%
-              group_by(Ano.Base.Ral, Municipio.Mina) %>%
+              group_by(Ano.Base.Ral, Municipio) %>%
               summarise(soma = sum(Valor.Producao.Comercializada.Substancia.AMB)),
             key = Ano.Base.Ral,
             value = soma
@@ -240,11 +240,11 @@ valor_VPM_groupBY_MUNICIPIO <-
               select(VPM_QuantidadeValorCOMERCIALIZADO[grepl(VPM_QuantidadeValorCOMERCIALIZADO$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                                          grepl(VPM_QuantidadeValorCOMERCIALIZADO$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                                          grepl(VPM_QuantidadeValorCOMERCIALIZADO$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                                         grepl(VPM_QuantidadeValorCOMERCIALIZADO$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                                         grepl(VPM_QuantidadeValorCOMERCIALIZADO$Municipio, pattern = Municipio) == TRUE &
                                                          grepl(VPM_QuantidadeValorCOMERCIALIZADO$Produto.Comercializado, pattern = Produto.Comercializado) == TRUE &
                                                          grepl(VPM_QuantidadeValorCOMERCIALIZADO$Tipo.Empreendimento, pattern = Tipo.Empreendimento) == TRUE &
                                                          grepl(VPM_QuantidadeValorCOMERCIALIZADO$Nome, pattern = Nome) == TRUE,], everything()) %>%
-                group_by(Ano.Base.Ral, Municipio.Mina) %>%
+                group_by(Ano.Base.Ral, Municipio) %>%
                 summarise(soma = sum(
                   Quantidade.Producao.Comercializada...Produto
                 )),
@@ -260,11 +260,11 @@ valor_VPM_groupBY_MUNICIPIO <-
                 select(VPM_QuantidadeValorCOMERCIALIZADO[grepl(VPM_QuantidadeValorCOMERCIALIZADO$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                                            grepl(VPM_QuantidadeValorCOMERCIALIZADO$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                                            grepl(VPM_QuantidadeValorCOMERCIALIZADO$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                                           grepl(VPM_QuantidadeValorCOMERCIALIZADO$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                                           grepl(VPM_QuantidadeValorCOMERCIALIZADO$Municipio, pattern = Municipio) == TRUE &
                                                            grepl(VPM_QuantidadeValorCOMERCIALIZADO$Produto.Comercializado, pattern = Produto.Comercializado) == TRUE &
                                                            grepl(VPM_QuantidadeValorCOMERCIALIZADO$Tipo.Empreendimento, pattern = Tipo.Empreendimento) == TRUE &
                                                            grepl(VPM_QuantidadeValorCOMERCIALIZADO$Nome, pattern = Nome) == TRUE,], everything()) %>%
-                  group_by(Ano.Base.Ral, Municipio.Mina) %>%
+                  group_by(Ano.Base.Ral, Municipio) %>%
                   summarise(soma = sum(
                     Valor.Producao.Comercializada...Produto
                   )),
@@ -286,7 +286,7 @@ valor_VPM_groupBY_PRODUTO <-
   function(Substancia.AMB = ".",
            Substancia.RAL = ".",
            CPF.CNPJ.Titular = ".",
-           Municipio.Mina = ".",
+           Municipio = ".",
            Nome = ".",
            Produto.Comercializado = ".",
            Tipo.Empreendimento = ".",
@@ -297,7 +297,7 @@ valor_VPM_groupBY_PRODUTO <-
           select(VPM_QuantidadeValorCOMERCIALIZADO[grepl(VPM_QuantidadeValorCOMERCIALIZADO$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                                      grepl(VPM_QuantidadeValorCOMERCIALIZADO$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                                      grepl(VPM_QuantidadeValorCOMERCIALIZADO$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                                     grepl(VPM_QuantidadeValorCOMERCIALIZADO$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                                     grepl(VPM_QuantidadeValorCOMERCIALIZADO$Municipio, pattern = Municipio) == TRUE &
                                                      grepl(VPM_QuantidadeValorCOMERCIALIZADO$Produto.Comercializado, pattern = Produto.Comercializado) == TRUE &
                                                      grepl(VPM_QuantidadeValorCOMERCIALIZADO$Tipo.Empreendimento, pattern = Tipo.Empreendimento) == TRUE &
                                                      grepl(VPM_QuantidadeValorCOMERCIALIZADO$Nome, pattern = Nome) == TRUE,], everything()) %>%
@@ -316,7 +316,7 @@ valor_VPM_groupBY_PRODUTO <-
             select(VPM_QuantidadeValorCOMERCIALIZADO[grepl(VPM_QuantidadeValorCOMERCIALIZADO$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                                        grepl(VPM_QuantidadeValorCOMERCIALIZADO$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                                        grepl(VPM_QuantidadeValorCOMERCIALIZADO$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                                       grepl(VPM_QuantidadeValorCOMERCIALIZADO$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                                       grepl(VPM_QuantidadeValorCOMERCIALIZADO$Municipio, pattern = Municipio) == TRUE &
                                                        grepl(VPM_QuantidadeValorCOMERCIALIZADO$Produto.Comercializado, pattern = Produto.Comercializado) == TRUE &
                                                        grepl(VPM_QuantidadeValorCOMERCIALIZADO$Tipo.Empreendimento, pattern = Tipo.Empreendimento) == TRUE &
                                                        grepl(VPM_QuantidadeValorCOMERCIALIZADO$Nome, pattern = Nome) == TRUE,], everything()) %>%
@@ -334,7 +334,7 @@ valor_VPM_groupBY_PRODUTO <-
               select(VPM_QuantidadeValorCOMERCIALIZADO[grepl(VPM_QuantidadeValorCOMERCIALIZADO$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                                          grepl(VPM_QuantidadeValorCOMERCIALIZADO$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                                          grepl(VPM_QuantidadeValorCOMERCIALIZADO$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                                         grepl(VPM_QuantidadeValorCOMERCIALIZADO$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                                         grepl(VPM_QuantidadeValorCOMERCIALIZADO$Municipio, pattern = Municipio) == TRUE &
                                                          grepl(VPM_QuantidadeValorCOMERCIALIZADO$Produto.Comercializado, pattern = Produto.Comercializado) == TRUE &
                                                          grepl(VPM_QuantidadeValorCOMERCIALIZADO$Tipo.Empreendimento, pattern = Tipo.Empreendimento) == TRUE &
                                                          grepl(VPM_QuantidadeValorCOMERCIALIZADO$Nome, pattern = Nome) == TRUE,], everything()) %>%
@@ -354,7 +354,7 @@ valor_VPM_groupBY_PRODUTO <-
                 select(VPM_QuantidadeValorCOMERCIALIZADO[grepl(VPM_QuantidadeValorCOMERCIALIZADO$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                                            grepl(VPM_QuantidadeValorCOMERCIALIZADO$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                                            grepl(VPM_QuantidadeValorCOMERCIALIZADO$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                                           grepl(VPM_QuantidadeValorCOMERCIALIZADO$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                                           grepl(VPM_QuantidadeValorCOMERCIALIZADO$Municipio, pattern = Municipio) == TRUE &
                                                            grepl(VPM_QuantidadeValorCOMERCIALIZADO$Produto.Comercializado, pattern = Produto.Comercializado) == TRUE &
                                                            grepl(VPM_QuantidadeValorCOMERCIALIZADO$Tipo.Empreendimento, pattern = Tipo.Empreendimento) == TRUE &
                                                            grepl(VPM_QuantidadeValorCOMERCIALIZADO$Nome, pattern = Nome) == TRUE,], everything()) %>%
@@ -381,7 +381,7 @@ valor_VPM_groupBY_SUBSTANCIA.AMB <-
   function(Substancia.AMB = ".",
            Substancia.RAL = ".",
            CPF.CNPJ.Titular = ".",
-           Municipio.Mina = ".",
+           Municipio = ".",
            Nome = ".",
            Produto.Comercializado = ".",
            Tipo.Empreendimento = ".",
@@ -392,7 +392,7 @@ valor_VPM_groupBY_SUBSTANCIA.AMB <-
           select(VPM_QuantidadeValorCOMERCIALIZADO[grepl(VPM_QuantidadeValorCOMERCIALIZADO$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                                      grepl(VPM_QuantidadeValorCOMERCIALIZADO$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                                      grepl(VPM_QuantidadeValorCOMERCIALIZADO$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                                     grepl(VPM_QuantidadeValorCOMERCIALIZADO$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                                     grepl(VPM_QuantidadeValorCOMERCIALIZADO$Municipio, pattern = Municipio) == TRUE &
                                                      grepl(VPM_QuantidadeValorCOMERCIALIZADO$Produto.Comercializado, pattern = Produto.Comercializado) == TRUE &
                                                      grepl(VPM_QuantidadeValorCOMERCIALIZADO$Tipo.Empreendimento, pattern = Tipo.Empreendimento) == TRUE &
                                                      grepl(VPM_QuantidadeValorCOMERCIALIZADO$Nome, pattern = Nome) == TRUE,], everything()) %>%
@@ -411,7 +411,7 @@ valor_VPM_groupBY_SUBSTANCIA.AMB <-
             select(VPM_QuantidadeValorCOMERCIALIZADO[grepl(VPM_QuantidadeValorCOMERCIALIZADO$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                                        grepl(VPM_QuantidadeValorCOMERCIALIZADO$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                                        grepl(VPM_QuantidadeValorCOMERCIALIZADO$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                                       grepl(VPM_QuantidadeValorCOMERCIALIZADO$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                                       grepl(VPM_QuantidadeValorCOMERCIALIZADO$Municipio, pattern = Municipio) == TRUE &
                                                        grepl(VPM_QuantidadeValorCOMERCIALIZADO$Produto.Comercializado, pattern = Produto.Comercializado) == TRUE &
                                                        grepl(VPM_QuantidadeValorCOMERCIALIZADO$Tipo.Empreendimento, pattern = Tipo.Empreendimento) == TRUE &
                                                        grepl(VPM_QuantidadeValorCOMERCIALIZADO$Nome, pattern = Nome) == TRUE,], everything()) %>%
@@ -429,7 +429,7 @@ valor_VPM_groupBY_SUBSTANCIA.AMB <-
               select(VPM_QuantidadeValorCOMERCIALIZADO[grepl(VPM_QuantidadeValorCOMERCIALIZADO$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                                          grepl(VPM_QuantidadeValorCOMERCIALIZADO$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                                          grepl(VPM_QuantidadeValorCOMERCIALIZADO$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                                         grepl(VPM_QuantidadeValorCOMERCIALIZADO$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                                         grepl(VPM_QuantidadeValorCOMERCIALIZADO$Municipio, pattern = Municipio) == TRUE &
                                                          grepl(VPM_QuantidadeValorCOMERCIALIZADO$Produto.Comercializado, pattern = Produto.Comercializado) == TRUE &
                                                          grepl(VPM_QuantidadeValorCOMERCIALIZADO$Tipo.Empreendimento, pattern = Tipo.Empreendimento) == TRUE &
                                                          grepl(VPM_QuantidadeValorCOMERCIALIZADO$Nome, pattern = Nome) == TRUE,], everything()) %>%
@@ -449,7 +449,7 @@ valor_VPM_groupBY_SUBSTANCIA.AMB <-
                 select(VPM_QuantidadeValorCOMERCIALIZADO[grepl(VPM_QuantidadeValorCOMERCIALIZADO$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                                            grepl(VPM_QuantidadeValorCOMERCIALIZADO$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                                            grepl(VPM_QuantidadeValorCOMERCIALIZADO$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                                           grepl(VPM_QuantidadeValorCOMERCIALIZADO$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                                           grepl(VPM_QuantidadeValorCOMERCIALIZADO$Municipio, pattern = Municipio) == TRUE &
                                                            grepl(VPM_QuantidadeValorCOMERCIALIZADO$Produto.Comercializado, pattern = Produto.Comercializado) == TRUE &
                                                            grepl(VPM_QuantidadeValorCOMERCIALIZADO$Tipo.Empreendimento, pattern = Tipo.Empreendimento) == TRUE &
                                                            grepl(VPM_QuantidadeValorCOMERCIALIZADO$Nome, pattern = Nome) == TRUE,], everything()) %>%
@@ -477,7 +477,7 @@ valor_VPM_groupBY_SUBSTANCIA.RAL <-
   function(Substancia.AMB = ".",
            Substancia.RAL = ".",
            CPF.CNPJ.Titular = ".",
-           Municipio.Mina = ".",
+           Municipio = ".",
            Nome = ".",
            Produto.Comercializado = ".",
            Tipo.Empreendimento = ".",
@@ -488,7 +488,7 @@ valor_VPM_groupBY_SUBSTANCIA.RAL <-
           select(VPM_QuantidadeValorCOMERCIALIZADO[grepl(VPM_QuantidadeValorCOMERCIALIZADO$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                                      grepl(VPM_QuantidadeValorCOMERCIALIZADO$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                                      grepl(VPM_QuantidadeValorCOMERCIALIZADO$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                                     grepl(VPM_QuantidadeValorCOMERCIALIZADO$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                                     grepl(VPM_QuantidadeValorCOMERCIALIZADO$Municipio, pattern = Municipio) == TRUE &
                                                      grepl(VPM_QuantidadeValorCOMERCIALIZADO$Produto.Comercializado, pattern = Produto.Comercializado) == TRUE &
                                                      grepl(VPM_QuantidadeValorCOMERCIALIZADO$Tipo.Empreendimento, pattern = Tipo.Empreendimento) == TRUE &
                                                      grepl(VPM_QuantidadeValorCOMERCIALIZADO$Nome, pattern = Nome) == TRUE,], everything()) %>%
@@ -507,7 +507,7 @@ valor_VPM_groupBY_SUBSTANCIA.RAL <-
             select(VPM_QuantidadeValorCOMERCIALIZADO[grepl(VPM_QuantidadeValorCOMERCIALIZADO$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                                        grepl(VPM_QuantidadeValorCOMERCIALIZADO$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                                        grepl(VPM_QuantidadeValorCOMERCIALIZADO$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                                       grepl(VPM_QuantidadeValorCOMERCIALIZADO$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                                       grepl(VPM_QuantidadeValorCOMERCIALIZADO$Municipio, pattern = Municipio) == TRUE &
                                                        grepl(VPM_QuantidadeValorCOMERCIALIZADO$Produto.Comercializado, pattern = Produto.Comercializado) == TRUE &
                                                        grepl(VPM_QuantidadeValorCOMERCIALIZADO$Tipo.Empreendimento, pattern = Tipo.Empreendimento) == TRUE &
                                                        grepl(VPM_QuantidadeValorCOMERCIALIZADO$Nome, pattern = Nome) == TRUE,], everything()) %>%
@@ -525,7 +525,7 @@ valor_VPM_groupBY_SUBSTANCIA.RAL <-
               select(VPM_QuantidadeValorCOMERCIALIZADO[grepl(VPM_QuantidadeValorCOMERCIALIZADO$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                                          grepl(VPM_QuantidadeValorCOMERCIALIZADO$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                                          grepl(VPM_QuantidadeValorCOMERCIALIZADO$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                                         grepl(VPM_QuantidadeValorCOMERCIALIZADO$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                                         grepl(VPM_QuantidadeValorCOMERCIALIZADO$Municipio, pattern = Municipio) == TRUE &
                                                          grepl(VPM_QuantidadeValorCOMERCIALIZADO$Produto.Comercializado, pattern = Produto.Comercializado) == TRUE &
                                                          grepl(VPM_QuantidadeValorCOMERCIALIZADO$Tipo.Empreendimento, pattern = Tipo.Empreendimento) == TRUE &
                                                          grepl(VPM_QuantidadeValorCOMERCIALIZADO$Nome, pattern = Nome) == TRUE,], everything()) %>%
@@ -545,7 +545,7 @@ valor_VPM_groupBY_SUBSTANCIA.RAL <-
                 select(VPM_QuantidadeValorCOMERCIALIZADO[grepl(VPM_QuantidadeValorCOMERCIALIZADO$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                                            grepl(VPM_QuantidadeValorCOMERCIALIZADO$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                                            grepl(VPM_QuantidadeValorCOMERCIALIZADO$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                                           grepl(VPM_QuantidadeValorCOMERCIALIZADO$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                                           grepl(VPM_QuantidadeValorCOMERCIALIZADO$Municipio, pattern = Municipio) == TRUE &
                                                            grepl(VPM_QuantidadeValorCOMERCIALIZADO$Produto.Comercializado, pattern = Produto.Comercializado) == TRUE &
                                                            grepl(VPM_QuantidadeValorCOMERCIALIZADO$Tipo.Empreendimento, pattern = Tipo.Empreendimento) == TRUE &
                                                            grepl(VPM_QuantidadeValorCOMERCIALIZADO$Nome, pattern = Nome) == TRUE,], everything()) %>%
@@ -584,7 +584,7 @@ valor_VPM_groupBY_TITULAR <-
   function(Substancia.AMB = ".",
            Substancia.RAL = ".",
            CPF.CNPJ.Titular = ".",
-           Municipio.Mina = ".",
+           Municipio = ".",
            Nome = ".",
            Produto.Comercializado = ".",
            Tipo.Empreendimento = ".",
@@ -595,7 +595,7 @@ valor_VPM_groupBY_TITULAR <-
           select(VPM_QuantidadeValorCOMERCIALIZADO[grepl(VPM_QuantidadeValorCOMERCIALIZADO$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                                      grepl(VPM_QuantidadeValorCOMERCIALIZADO$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                                      grepl(VPM_QuantidadeValorCOMERCIALIZADO$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                                     grepl(VPM_QuantidadeValorCOMERCIALIZADO$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                                     grepl(VPM_QuantidadeValorCOMERCIALIZADO$Municipio, pattern = Municipio) == TRUE &
                                                      grepl(VPM_QuantidadeValorCOMERCIALIZADO$Produto.Comercializado, pattern = Produto.Comercializado) == TRUE &
                                                      grepl(VPM_QuantidadeValorCOMERCIALIZADO$Tipo.Empreendimento, pattern = Tipo.Empreendimento) == TRUE &
                                                      grepl(VPM_QuantidadeValorCOMERCIALIZADO$Nome, pattern = Nome) == TRUE,], everything()) %>%
@@ -614,7 +614,7 @@ valor_VPM_groupBY_TITULAR <-
             select(VPM_QuantidadeValorCOMERCIALIZADO[grepl(VPM_QuantidadeValorCOMERCIALIZADO$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                                        grepl(VPM_QuantidadeValorCOMERCIALIZADO$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                                        grepl(VPM_QuantidadeValorCOMERCIALIZADO$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                                       grepl(VPM_QuantidadeValorCOMERCIALIZADO$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                                       grepl(VPM_QuantidadeValorCOMERCIALIZADO$Municipio, pattern = Municipio) == TRUE &
                                                        grepl(VPM_QuantidadeValorCOMERCIALIZADO$Produto.Comercializado, pattern = Produto.Comercializado) == TRUE &
                                                        grepl(VPM_QuantidadeValorCOMERCIALIZADO$Tipo.Empreendimento, pattern = Tipo.Empreendimento) == TRUE &
                                                        grepl(VPM_QuantidadeValorCOMERCIALIZADO$Nome, pattern = Nome) == TRUE,], everything()) %>%
@@ -632,7 +632,7 @@ valor_VPM_groupBY_TITULAR <-
               select(VPM_QuantidadeValorCOMERCIALIZADO[grepl(VPM_QuantidadeValorCOMERCIALIZADO$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                                          grepl(VPM_QuantidadeValorCOMERCIALIZADO$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                                          grepl(VPM_QuantidadeValorCOMERCIALIZADO$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                                         grepl(VPM_QuantidadeValorCOMERCIALIZADO$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                                         grepl(VPM_QuantidadeValorCOMERCIALIZADO$Municipio, pattern = Municipio) == TRUE &
                                                          grepl(VPM_QuantidadeValorCOMERCIALIZADO$Produto.Comercializado, pattern = Produto.Comercializado) == TRUE &
                                                          grepl(VPM_QuantidadeValorCOMERCIALIZADO$Tipo.Empreendimento, pattern = Tipo.Empreendimento) == TRUE &
                                                          grepl(VPM_QuantidadeValorCOMERCIALIZADO$Nome, pattern = Nome) == TRUE,], everything()) %>%
@@ -652,7 +652,7 @@ valor_VPM_groupBY_TITULAR <-
                 select(VPM_QuantidadeValorCOMERCIALIZADO[grepl(VPM_QuantidadeValorCOMERCIALIZADO$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                                            grepl(VPM_QuantidadeValorCOMERCIALIZADO$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                                            grepl(VPM_QuantidadeValorCOMERCIALIZADO$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                                           grepl(VPM_QuantidadeValorCOMERCIALIZADO$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                                           grepl(VPM_QuantidadeValorCOMERCIALIZADO$Municipio, pattern = Municipio) == TRUE &
                                                            grepl(VPM_QuantidadeValorCOMERCIALIZADO$Produto.Comercializado, pattern = Produto.Comercializado) == TRUE &
                                                            grepl(VPM_QuantidadeValorCOMERCIALIZADO$Tipo.Empreendimento, pattern = Tipo.Empreendimento) == TRUE &
                                                            grepl(VPM_QuantidadeValorCOMERCIALIZADO$Nome, pattern = Nome) == TRUE,], everything()) %>%

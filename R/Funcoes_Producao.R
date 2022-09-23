@@ -54,7 +54,7 @@ FUNA_visao_PRODUCAO_BRUTA <-
       CPF.CNPJ.Titular = CPF.CNPJ.Titular,
       Nome.Mina = Nome.Mina,
       Substancia.AMB = Substancia.AMB
-    ) %>% as.matrix() %>% barplot(main = a)
+    ) #%>% as.matrix() %>% barplot(main = a)
     # Reserva
     reserva_groupBY_SUBSTANCIA.AMB(
       Processo = Processo,
@@ -76,7 +76,7 @@ producaoBRUTA_GERAL <-
   function(Substancia.AMB = ".",
            Substancia.RAL = ".",
            CPF.CNPJ.Titular = ".",
-           Municipio.Mina = ".",
+           Municipio = ".",
            Nome.Mina = ".",
            Processo = ".",
            volume = "rom") {
@@ -86,7 +86,7 @@ producaoBRUTA_GERAL <-
           select(producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                  grepl(producaoBRUTA$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                  grepl(producaoBRUTA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                 grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                 grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio) == TRUE &
                                  grepl(producaoBRUTA$Processo, pattern = Processo) == TRUE &
                                  grepl(producaoBRUTA$Nome.da.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
             group_by(Ano.Base.Ral) %>%
@@ -104,7 +104,7 @@ producaoBRUTA_GERAL <-
             select(producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                    grepl(producaoBRUTA$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                    grepl(producaoBRUTA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                   grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                   grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio) == TRUE &
                                    grepl(producaoBRUTA$Processo, pattern = Processo) == TRUE &
                                    grepl(producaoBRUTA$Nome.da.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
               group_by(Ano.Base.Ral) %>%
@@ -121,7 +121,7 @@ producaoBRUTA_GERAL <-
               select(producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                      grepl(producaoBRUTA$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                      grepl(producaoBRUTA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                     grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                     grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio) == TRUE &
                                      grepl(producaoBRUTA$Processo, pattern = Processo) == TRUE &
                                      grepl(producaoBRUTA$Nome.da.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
                 group_by(Ano.Base.Ral) %>%
@@ -140,7 +140,7 @@ producaoBRUTA_GERAL <-
                 select(producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                        grepl(producaoBRUTA$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                        grepl(producaoBRUTA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                       grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                       grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio) == TRUE &
                                        grepl(producaoBRUTA$Processo, pattern = Processo) == TRUE &
                                        grepl(producaoBRUTA$Nome.da.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
                   group_by(Ano.Base.Ral) %>%
@@ -164,7 +164,7 @@ producaoBRUTA_groupBY_MINA <-
   function(Substancia.AMB = ".",
            Substancia.RAL = ".",
            CPF.CNPJ.Titular = ".",
-           Municipio.Mina = ".",
+           Municipio = ".",
            Nome.Mina = ".",
            Processo = ".",
            volume = "rom") {
@@ -174,7 +174,7 @@ producaoBRUTA_groupBY_MINA <-
           select(producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                  grepl(producaoBRUTA$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                  grepl(producaoBRUTA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                 grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                 grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio) == TRUE &
                                  grepl(producaoBRUTA$Processo, pattern = Processo) == TRUE &
                                  grepl(producaoBRUTA$Nome.da.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
             group_by(Ano.Base.Ral, Nome.Mina) %>%
@@ -192,7 +192,7 @@ producaoBRUTA_groupBY_MINA <-
             select(producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                    grepl(producaoBRUTA$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                    grepl(producaoBRUTA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                   grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                   grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio) == TRUE &
                                    grepl(producaoBRUTA$Processo, pattern = Processo) == TRUE &
                                    grepl(producaoBRUTA$Nome.da.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
               group_by(Ano.Base.Ral, Nome.Mina) %>%
@@ -209,7 +209,7 @@ producaoBRUTA_groupBY_MINA <-
               select(producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                      grepl(producaoBRUTA$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                      grepl(producaoBRUTA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                     grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                     grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio) == TRUE &
                                      grepl(producaoBRUTA$Processo, pattern = Processo) == TRUE &
                                      grepl(producaoBRUTA$Nome.da.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
                 group_by(Ano.Base.Ral, Nome.Mina) %>%
@@ -228,7 +228,7 @@ producaoBRUTA_groupBY_MINA <-
                 select(producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                        grepl(producaoBRUTA$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                        grepl(producaoBRUTA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                       grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                       grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio) == TRUE &
                                        grepl(producaoBRUTA$Processo, pattern = Processo) == TRUE &
                                        grepl(producaoBRUTA$Nome.da.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
                   group_by(Ano.Base.Ral, Nome.Mina) %>%
@@ -254,7 +254,7 @@ producaoBRUTA_groupBY_MUNICIPIO <-
   function(Substancia.AMB = ".",
            Substancia.RAL = ".",
            CPF.CNPJ.Titular = ".",
-           Municipio.Mina = ".",
+           Municipio = ".",
            Nome.Mina = ".",
            Processo = ".",
            volume = "rom") {
@@ -264,7 +264,7 @@ producaoBRUTA_groupBY_MUNICIPIO <-
           select(producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                  grepl(producaoBRUTA$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                  grepl(producaoBRUTA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                 grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                 grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio) == TRUE &
                                  grepl(producaoBRUTA$Processo, pattern = Processo) == TRUE &
                                  grepl(producaoBRUTA$Nome.da.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
             group_by(Ano.Base.Ral, Municipio.Mina) %>%
@@ -282,7 +282,7 @@ producaoBRUTA_groupBY_MUNICIPIO <-
             select(producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                    grepl(producaoBRUTA$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                    grepl(producaoBRUTA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                   grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                   grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio) == TRUE &
                                    grepl(producaoBRUTA$Processo, pattern = Processo) == TRUE &
                                    grepl(producaoBRUTA$Nome.da.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
               group_by(Ano.Base.Ral, Municipio.Mina) %>%
@@ -299,7 +299,7 @@ producaoBRUTA_groupBY_MUNICIPIO <-
               select(producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                      grepl(producaoBRUTA$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                      grepl(producaoBRUTA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                     grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                     grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio) == TRUE &
                                      grepl(producaoBRUTA$Processo, pattern = Processo) == TRUE &
                                      grepl(producaoBRUTA$Nome.da.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
                 group_by(Ano.Base.Ral, Municipio.Mina) %>%
@@ -318,7 +318,7 @@ producaoBRUTA_groupBY_MUNICIPIO <-
                 select(producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                        grepl(producaoBRUTA$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                        grepl(producaoBRUTA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                       grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                       grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio) == TRUE &
                                        grepl(producaoBRUTA$Processo, pattern = Processo) == TRUE &
                                        grepl(producaoBRUTA$Nome.da.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
                   group_by(Ano.Base.Ral, Municipio.Mina) %>%
@@ -343,7 +343,7 @@ producaoBRUTA_groupBY_PROCESSO <-
   function(Substancia.AMB = ".",
            Substancia.RAL = ".",
            CPF.CNPJ.Titular = ".",
-           Municipio.Mina = ".",
+           Municipio = ".",
            Nome.Mina = ".",
            Processo = ".",
            volume = "rom") {
@@ -353,7 +353,7 @@ producaoBRUTA_groupBY_PROCESSO <-
           select(producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                  grepl(producaoBRUTA$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                  grepl(producaoBRUTA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                 grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                 grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio) == TRUE &
                                  grepl(producaoBRUTA$Processo, pattern = Processo) == TRUE &
                                  grepl(producaoBRUTA$Nome.da.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
             group_by(Ano.Base.Ral, Processo) %>%
@@ -371,7 +371,7 @@ producaoBRUTA_groupBY_PROCESSO <-
             select(producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                    grepl(producaoBRUTA$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                    grepl(producaoBRUTA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                   grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                   grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio) == TRUE &
                                    grepl(producaoBRUTA$Processo, pattern = Processo) == TRUE &
                                    grepl(producaoBRUTA$Nome.da.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
               group_by(Ano.Base.Ral, Processo) %>%
@@ -388,7 +388,7 @@ producaoBRUTA_groupBY_PROCESSO <-
               select(producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                      grepl(producaoBRUTA$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                      grepl(producaoBRUTA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                     grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                     grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio) == TRUE &
                                      grepl(producaoBRUTA$Processo, pattern = Processo) == TRUE &
                                      grepl(producaoBRUTA$Nome.da.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
                 group_by(Ano.Base.Ral, Processo) %>%
@@ -407,7 +407,7 @@ producaoBRUTA_groupBY_PROCESSO <-
                 select(producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                        grepl(producaoBRUTA$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                        grepl(producaoBRUTA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                       grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                       grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio) == TRUE &
                                        grepl(producaoBRUTA$Processo, pattern = Processo) == TRUE &
                                        grepl(producaoBRUTA$Nome.da.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
                   group_by(Ano.Base.Ral, Processo) %>%
@@ -433,7 +433,7 @@ producaoBRUTA_groupBY_SUBSTANCIA.AMB <-
   function(Substancia.AMB = ".",
            Substancia.RAL = ".",
            CPF.CNPJ.Titular = ".",
-           Municipio.Mina = ".",
+           Municipio = ".",
            Nome.Mina = ".",
            Processo = ".",
            volume = "rom") {
@@ -443,7 +443,7 @@ producaoBRUTA_groupBY_SUBSTANCIA.AMB <-
           select(producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                  grepl(producaoBRUTA$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                  grepl(producaoBRUTA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                 grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                 grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio) == TRUE &
                                  grepl(producaoBRUTA$Processo, pattern = Processo) == TRUE &
                                  grepl(producaoBRUTA$Nome.da.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
             group_by(Ano.Base.Ral, Substancia.AMB) %>%
@@ -461,7 +461,7 @@ producaoBRUTA_groupBY_SUBSTANCIA.AMB <-
             select(producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                    grepl(producaoBRUTA$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                    grepl(producaoBRUTA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                   grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                   grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio) == TRUE &
                                    grepl(producaoBRUTA$Processo, pattern = Processo) == TRUE &
                                    grepl(producaoBRUTA$Nome.da.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
               group_by(Ano.Base.Ral, Substancia.AMB) %>%
@@ -478,7 +478,7 @@ producaoBRUTA_groupBY_SUBSTANCIA.AMB <-
               select(producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                      grepl(producaoBRUTA$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                      grepl(producaoBRUTA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                     grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                     grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio) == TRUE &
                                      grepl(producaoBRUTA$Processo, pattern = Processo) == TRUE &
                                      grepl(producaoBRUTA$Nome.da.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
                 group_by(Ano.Base.Ral, Substancia.AMB) %>%
@@ -497,7 +497,7 @@ producaoBRUTA_groupBY_SUBSTANCIA.AMB <-
                 select(producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                        grepl(producaoBRUTA$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                        grepl(producaoBRUTA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                       grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                       grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio) == TRUE &
                                        grepl(producaoBRUTA$Processo, pattern = Processo) == TRUE &
                                        grepl(producaoBRUTA$Nome.da.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
                   group_by(Ano.Base.Ral, Substancia.AMB) %>%
@@ -523,7 +523,7 @@ producaoBRUTA_groupBY_TITULAR <-
   function(Substancia.AMB = ".",
            Substancia.RAL = ".",
            CPF.CNPJ.Titular = ".",
-           Municipio.Mina = ".",
+           Municipio = ".",
            Nome.Mina = ".",
            Processo = ".",
            volume = "rom") {
@@ -533,7 +533,7 @@ producaoBRUTA_groupBY_TITULAR <-
           select(producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                  grepl(producaoBRUTA$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                  grepl(producaoBRUTA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                 grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                 grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio) == TRUE &
                                  grepl(producaoBRUTA$Processo, pattern = Processo) == TRUE &
                                  grepl(producaoBRUTA$Nome.da.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
             group_by(Ano.Base.Ral, CPF.CNPJ.Titular) %>%
@@ -551,7 +551,7 @@ producaoBRUTA_groupBY_TITULAR <-
             select(producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                    grepl(producaoBRUTA$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                    grepl(producaoBRUTA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                   grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                   grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio) == TRUE &
                                    grepl(producaoBRUTA$Processo, pattern = Processo) == TRUE &
                                    grepl(producaoBRUTA$Nome.da.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
               group_by(Ano.Base.Ral, CPF.CNPJ.Titular) %>%
@@ -568,7 +568,7 @@ producaoBRUTA_groupBY_TITULAR <-
               select(producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                      grepl(producaoBRUTA$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                      grepl(producaoBRUTA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                     grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                     grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio) == TRUE &
                                      grepl(producaoBRUTA$Processo, pattern = Processo) == TRUE &
                                      grepl(producaoBRUTA$Nome.da.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
                 group_by(Ano.Base.Ral, CPF.CNPJ.Titular) %>%
@@ -587,7 +587,7 @@ producaoBRUTA_groupBY_TITULAR <-
                 select(producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                        grepl(producaoBRUTA$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                        grepl(producaoBRUTA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                       grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                       grepl(producaoBRUTA$Municipio.Mina, pattern = Municipio) == TRUE &
                                        grepl(producaoBRUTA$Processo, pattern = Processo) == TRUE &
                                        grepl(producaoBRUTA$Nome.da.Mina, pattern = Nome.Mina) == TRUE,], everything()) %>%
                   group_by(Ano.Base.Ral, CPF.CNPJ.Titular) %>%
@@ -614,11 +614,11 @@ FUNA_visao_PRODUCAO_BENEFICIADA <-
            Nome.Usina = '.',
            Substancia.AMB = '.',
            produto = ".",
-           Municipio.Usina = ".") {
+           Municipio = ".") {
     producaoBENEFICIADA_groupBY_SUBSTANCIA.AMB(
       CPF.CNPJ.Titular = CPF.CNPJ.Titular,
       Nome.Usina = Nome.Usina,
-      Municipio.Usina = Municipio.Usina,
+      Municipio = Municipio,
       Substancia.AMB = Substancia.AMB,
       #produto = produto
     ) %>%
@@ -626,7 +626,7 @@ FUNA_visao_PRODUCAO_BENEFICIADA <-
     producaoBENEFICIADA_groupBY_USINA(
       CPF.CNPJ.Titular = CPF.CNPJ.Titular,
       Substancia.AMB = Substancia.AMB,
-      Municipio.Usina = Municipio.Usina,
+      Municipio = Municipio,
       Nome.Usina = Nome.Usina,
       #produto = produto
     ) %>%
@@ -635,7 +635,7 @@ FUNA_visao_PRODUCAO_BENEFICIADA <-
     #  CPF.CNPJ.Titular = CPF.CNPJ.Titular,
     #  Nome.Usina = Nome.Usina,
     #  Substancia.AMB = Substancia.AMB,
-    #  Municipio.Usina = Municipio.Usina,
+    #  Municipio = Municipio,
     #  produto = produto
     #) %>%
     #  print()
@@ -643,7 +643,7 @@ FUNA_visao_PRODUCAO_BENEFICIADA <-
       CPF.CNPJ.Titular = CPF.CNPJ.Titular,
       Nome.Usina = Nome.Usina,
       Substancia.AMB = Substancia.AMB,
-      Municipio.Usina = Municipio.Usina,
+      Municipio = Municipio,
       #produto = produto
     ) %>%
       print()
@@ -651,7 +651,7 @@ FUNA_visao_PRODUCAO_BENEFICIADA <-
       CPF.CNPJ.Titular = CPF.CNPJ.Titular,
       Nome.Usina = Nome.Usina,
       Substancia.AMB = Substancia.AMB,
-      Municipio.Usina = Municipio.Usina,
+      Municipio = Municipio,
       #produto = produto
     ) %>%
       print()
@@ -661,12 +661,12 @@ FUNA_visao_PRODUCAO_BENEFICIADA <-
       CPF.CNPJ.Titular = CPF.CNPJ.Titular,
       Nome.Usina = Nome.Usina,
       Substancia.AMB = Substancia.AMB,
-      Municipio.Usina = Municipio.Usina,
+      Municipio = Municipio,
       #produto = produto
-    ) %>% as.matrix() %>% barplot(main = a)
+    ) #%>% as.matrix() %>% barplot(main = a)
     # Reserva
     # reserva_groupBY_SUBSTANCIA.AMB(
-    #   Municipio.Usina = Municipio.Usina,
+    #   Municipio = Municipio,
     #   CPF.CNPJ.Titular = CPF.CNPJ.Titular,
     #   Nome.Mina = Nome.Mina,
     #   Substancia.AMB = Substancia.AMB
@@ -679,7 +679,7 @@ FUNA_visao_PRODUCAO_BENEFICIADA <-
 producaoBENEFICIADA_GERAL <-
   function(Substancia.AMB = ".",
            CPF.CNPJ.Titular = ".",
-           Municipio.Usina = ".",
+           Municipio = ".",
            Nome.Usina = ".",
            volume = "producao") {
     if (volume == "producao") {
@@ -688,7 +688,7 @@ producaoBENEFICIADA_GERAL <-
           select(producaoBENEFICIADA[grepl(producaoBENEFICIADA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                        #grepl(producaoBENEFICIADA$substancia.ral, pattern = Substancia.RAL) == TRUE &
                                        grepl(producaoBENEFICIADA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                       grepl(producaoBENEFICIADA$Municipio.Usina, pattern = Municipio.Usina) == TRUE &
+                                       grepl(producaoBENEFICIADA$Municipio.Usina, pattern = Municipio) == TRUE &
                                        #grepl(producaoBENEFICIADA$produto.beneficiado, pattern = produto) == TRUE &
                                        grepl(producaoBENEFICIADA$Nome.Usina, pattern = Nome.Usina) == TRUE,], everything()) %>%
             group_by(Ano.Base.Ral) %>%
@@ -706,7 +706,7 @@ producaoBENEFICIADA_GERAL <-
             select(producaoBENEFICIADA[grepl(producaoBENEFICIADA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                          #grepl(producaoBENEFICIADA$substancia.ral, pattern = Substancia.RAL) == TRUE &
                                          grepl(producaoBENEFICIADA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                         grepl(producaoBENEFICIADA$Municipio.Usina, pattern = Municipio.Usina) == TRUE &
+                                         grepl(producaoBENEFICIADA$Municipio.Usina, pattern = Municipio) == TRUE &
                                          #grepl(producaoBENEFICIADA$produto.beneficiado, pattern = produto) == TRUE &
                                          grepl(producaoBENEFICIADA$Nome.Usina, pattern = Nome.Usina) == TRUE,], everything()) %>%
               group_by(Ano.Base.Ral) %>%
@@ -723,7 +723,7 @@ producaoBENEFICIADA_GERAL <-
               select(producaoBENEFICIADA[grepl(producaoBENEFICIADA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                            #grepl(producaoBENEFICIADA$substancia.ral, pattern = Substancia.RAL) == TRUE &
                                            grepl(producaoBENEFICIADA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                           grepl(producaoBENEFICIADA$Municipio.Usina, pattern = Municipio.Usina) == TRUE &
+                                           grepl(producaoBENEFICIADA$Municipio.Usina, pattern = Municipio) == TRUE &
                                            #grepl(producaoBENEFICIADA$produto.beneficiado, pattern = produto) == TRUE &
                                            grepl(producaoBENEFICIADA$Nome.Usina, pattern = Nome.Usina) == TRUE,], everything()) %>%
                 group_by(Ano.Base.Ral) %>%
@@ -742,7 +742,7 @@ producaoBENEFICIADA_GERAL <-
                 select(producaoBENEFICIADA[grepl(producaoBENEFICIADA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                              #grepl(producaoBENEFICIADA$substancia.ral, pattern = Substancia.RAL) == TRUE &
                                              grepl(producaoBENEFICIADA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                             grepl(producaoBENEFICIADA$Municipio.Usina, pattern = Municipio.Usina) == TRUE &
+                                             grepl(producaoBENEFICIADA$Municipio.Usina, pattern = Municipio) == TRUE &
                                              #grepl(producaoBENEFICIADA$produto.beneficiado, pattern = produto) == TRUE &
                                              grepl(producaoBENEFICIADA$Nome.Usina, pattern = Nome.Usina) == TRUE,], everything()) %>%
                   group_by(Ano.Base.Ral) %>%
@@ -766,7 +766,7 @@ producaoBENEFICIADA_groupBY_USINA <-
   function(Substancia.AMB = ".",
            #Substancia.RAL = ".",
            CPF.CNPJ.Titular = ".",
-           Municipio.Usina = ".",
+           Municipio = ".",
            Nome.Usina = ".",
            #produto = ".",
            volume = "producao") {
@@ -776,7 +776,7 @@ producaoBENEFICIADA_groupBY_USINA <-
           select(producaoBENEFICIADA[grepl(producaoBENEFICIADA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                        #grepl(producaoBENEFICIADA$substancia.ral, pattern = Substancia.RAL) == TRUE &
                                        grepl(producaoBENEFICIADA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                       grepl(producaoBENEFICIADA$Municipio.Usina, pattern = Municipio.Usina) == TRUE &
+                                       grepl(producaoBENEFICIADA$Municipio.Usina, pattern = Municipio) == TRUE &
                                        #grepl(producaoBENEFICIADA$produto.beneficiado, pattern = produto) == TRUE &
                                        grepl(producaoBENEFICIADA$Nome.Usina, pattern = Nome.Usina) == TRUE,], everything()) %>%
             group_by(Ano.Base.Ral, Nome.Usina) %>%
@@ -794,7 +794,7 @@ producaoBENEFICIADA_groupBY_USINA <-
             select(producaoBENEFICIADA[grepl(producaoBENEFICIADA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                          #grepl(producaoBENEFICIADA$substancia.ral, pattern = Substancia.RAL) == TRUE &
                                          grepl(producaoBENEFICIADA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                         grepl(producaoBENEFICIADA$Municipio.Usina, pattern = Municipio.Usina) == TRUE &
+                                         grepl(producaoBENEFICIADA$Municipio.Usina, pattern = Municipio) == TRUE &
                                          #grepl(producaoBENEFICIADA$produto.beneficiado, pattern = produto) == TRUE &
                                          grepl(producaoBENEFICIADA$Nome.Usina, pattern = Nome.Usina) == TRUE,], everything()) %>%
               group_by(Ano.Base.Ral, Nome.Usina) %>%
@@ -811,7 +811,7 @@ producaoBENEFICIADA_groupBY_USINA <-
               select(producaoBENEFICIADA[grepl(producaoBENEFICIADA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                            #grepl(producaoBENEFICIADA$substancia.ral, pattern = Substancia.RAL) == TRUE &
                                            grepl(producaoBENEFICIADA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                           grepl(producaoBENEFICIADA$Municipio.Usina, pattern = Municipio.Usina) == TRUE &
+                                           grepl(producaoBENEFICIADA$Municipio.Usina, pattern = Municipio) == TRUE &
                                            #grepl(producaoBENEFICIADA$produto.beneficiado, pattern = produto) == TRUE &
                                            grepl(producaoBENEFICIADA$Nome.Usina, pattern = Nome.Usina) == TRUE,], everything()) %>%
                 group_by(Ano.Base.Ral, Nome.Usina) %>%
@@ -830,7 +830,7 @@ producaoBENEFICIADA_groupBY_USINA <-
                 select(producaoBENEFICIADA[grepl(producaoBENEFICIADA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                              #grepl(producaoBENEFICIADA$substancia.ral, pattern = Substancia.RAL) == TRUE &
                                              grepl(producaoBENEFICIADA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                             grepl(producaoBENEFICIADA$Municipio.Usina, pattern = Municipio.Usina) == TRUE &
+                                             grepl(producaoBENEFICIADA$Municipio.Usina, pattern = Municipio) == TRUE &
                                              #grepl(producaoBENEFICIADA$produto.beneficiado, pattern = produto) == TRUE &
                                              grepl(producaoBENEFICIADA$Nome.Usina, pattern = Nome.Usina) == TRUE,], everything()) %>%
                   group_by(Ano.Base.Ral, Nome.Usina) %>%
@@ -856,7 +856,7 @@ producaoBENEFICIADA_groupBY_MUNICIPIO <-
   function(Substancia.AMB = ".",
            #Substancia.RAL = ".",
            CPF.CNPJ.Titular = ".",
-           Municipio.Usina = ".",
+           Municipio = ".",
            Nome.Usina = ".",
            #produto = ".",
            volume = "producao") {
@@ -866,7 +866,7 @@ producaoBENEFICIADA_groupBY_MUNICIPIO <-
           select(producaoBENEFICIADA[grepl(producaoBENEFICIADA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                        #grepl(producaoBENEFICIADA$substancia.ral, pattern = Substancia.RAL) == TRUE &
                                        grepl(producaoBENEFICIADA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                       grepl(producaoBENEFICIADA$Municipio.Usina, pattern = Municipio.Usina) == TRUE &
+                                       grepl(producaoBENEFICIADA$Municipio.Usina, pattern = Municipio) == TRUE &
                                        #grepl(producaoBENEFICIADA$produto.beneficiado, pattern = produto) == TRUE &
                                        grepl(producaoBENEFICIADA$Nome.Usina, pattern = Nome.Usina) == TRUE,], everything()) %>%
             group_by(Ano.Base.Ral, Municipio.Usina) %>%
@@ -884,7 +884,7 @@ producaoBENEFICIADA_groupBY_MUNICIPIO <-
             select(producaoBENEFICIADA[grepl(producaoBENEFICIADA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                          #grepl(producaoBENEFICIADA$substancia.ral, pattern = Substancia.RAL) == TRUE &
                                          grepl(producaoBENEFICIADA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                         grepl(producaoBENEFICIADA$Municipio.Usina, pattern = Municipio.Usina) == TRUE &
+                                         grepl(producaoBENEFICIADA$Municipio.Usina, pattern = Municipio) == TRUE &
                                          #grepl(producaoBENEFICIADA$produto.beneficiado, pattern = produto) == TRUE &
                                          grepl(producaoBENEFICIADA$Nome.Usina, pattern = Nome.Usina) == TRUE,], everything()) %>%
               group_by(Ano.Base.Ral, Municipio.Usina) %>%
@@ -901,7 +901,7 @@ producaoBENEFICIADA_groupBY_MUNICIPIO <-
               select(producaoBENEFICIADA[grepl(producaoBENEFICIADA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                            #grepl(producaoBENEFICIADA$substancia.ral, pattern = Substancia.RAL) == TRUE &
                                            grepl(producaoBENEFICIADA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                           grepl(producaoBENEFICIADA$Municipio.Usina, pattern = Municipio.Usina) == TRUE &
+                                           grepl(producaoBENEFICIADA$Municipio.Usina, pattern = Municipio) == TRUE &
                                            #grepl(producaoBENEFICIADA$produto.beneficiado, pattern = produto) == TRUE &
                                            grepl(producaoBENEFICIADA$Nome.Usina, pattern = Nome.Usina) == TRUE,], everything()) %>%
                 group_by(Ano.Base.Ral, Municipio.Usina) %>%
@@ -920,7 +920,7 @@ producaoBENEFICIADA_groupBY_MUNICIPIO <-
                 select(producaoBENEFICIADA[grepl(producaoBENEFICIADA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                              #grepl(producaoBENEFICIADA$substancia.ral, pattern = Substancia.RAL) == TRUE &
                                              grepl(producaoBENEFICIADA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                             grepl(producaoBENEFICIADA$Municipio.Usina, pattern = Municipio.Usina) == TRUE &
+                                             grepl(producaoBENEFICIADA$Municipio.Usina, pattern = Municipio) == TRUE &
                                              #grepl(producaoBENEFICIADA$produto.beneficiado, pattern = produto) == TRUE &
                                              grepl(producaoBENEFICIADA$Nome.Usina, pattern = Nome.Usina) == TRUE,], everything()) %>%
                   group_by(Ano.Base.Ral, Municipio.Usina) %>%
@@ -945,7 +945,7 @@ producaoBENEFICIADA_groupBY_MUNICIPIO <-
 #  function(Substancia.AMB = ".",
 #           Substancia.RAL = ".",
 #           CPF.CNPJ.Titular = ".",
-#           Municipio.Usina = ".",
+#           Municipio = ".",
 #           Nome.Usina = ".",
 #           produto = ".",
 #           volume = "producao") {
@@ -955,7 +955,7 @@ producaoBENEFICIADA_groupBY_MUNICIPIO <-
 #          select(producaoBENEFICIADA[grepl(producaoBENEFICIADA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
 #                                       #grepl(producaoBENEFICIADA$substancia.ral, pattern = Substancia.RAL) == TRUE &
 #                                       grepl(producaoBENEFICIADA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-#                                       grepl(producaoBENEFICIADA$Municipio.Usina, pattern = Municipio.Usina) == TRUE &
+#                                       grepl(producaoBENEFICIADA$Municipio.Usina, pattern = Municipio) == TRUE &
 #                                       #grepl(producaoBENEFICIADA$produto.beneficiado, pattern = produto) == TRUE &
 #                                       grepl(producaoBENEFICIADA$Nome.Usina, pattern = Nome.Usina) == TRUE,], everything()) %>%
 #            group_by(Ano.Base.Ral, produto.beneficiado) %>%
@@ -973,7 +973,7 @@ producaoBENEFICIADA_groupBY_MUNICIPIO <-
 #            select(producaoBENEFICIADA[grepl(producaoBENEFICIADA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
 #                                         #grepl(producaoBENEFICIADA$substancia.ral, pattern = Substancia.RAL) == TRUE &
 #                                         grepl(producaoBENEFICIADA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-#                                         grepl(producaoBENEFICIADA$Municipio.Usina, pattern = Municipio.Usina) == TRUE &
+#                                         grepl(producaoBENEFICIADA$Municipio.Usina, pattern = Municipio) == TRUE &
 #                                         #grepl(producaoBENEFICIADA$produto.beneficiado, pattern = produto) == TRUE &
 #                                         grepl(producaoBENEFICIADA$Nome.Usina, pattern = Nome.Usina) == TRUE,], everything()) %>%
 #              group_by(Ano.Base.Ral, produto.beneficiado) %>%
@@ -990,7 +990,7 @@ producaoBENEFICIADA_groupBY_MUNICIPIO <-
 #              select(producaoBENEFICIADA[grepl(producaoBENEFICIADA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
 #                                           #grepl(producaoBENEFICIADA$substancia.ral, pattern = Substancia.RAL) == TRUE &
 #                                           grepl(producaoBENEFICIADA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-#                                           grepl(producaoBENEFICIADA$Municipio.Usina, pattern = Municipio.Usina) == TRUE &
+#                                           grepl(producaoBENEFICIADA$Municipio.Usina, pattern = Municipio) == TRUE &
 #                                           #grepl(producaoBENEFICIADA$produto.beneficiado, pattern = produto) == TRUE &
 #                                           grepl(producaoBENEFICIADA$Nome.Usina, pattern = Nome.Usina) == TRUE,], everything()) %>%
 #                group_by(Ano.Base.Ral, produto.beneficiado) %>%
@@ -1009,7 +1009,7 @@ producaoBENEFICIADA_groupBY_MUNICIPIO <-
 #                select(producaoBENEFICIADA[grepl(producaoBENEFICIADA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
 #                                             #grepl(producaoBENEFICIADA$substancia.ral, pattern = Substancia.RAL) == TRUE &
 #                                             grepl(producaoBENEFICIADA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-#                                             grepl(producaoBENEFICIADA$Municipio.Usina, pattern = Municipio.Usina) == TRUE &
+#                                             grepl(producaoBENEFICIADA$Municipio.Usina, pattern = Municipio) == TRUE &
 #                                             #grepl(producaoBENEFICIADA$produto.beneficiado, pattern = produto) == TRUE &
 #                                             grepl(producaoBENEFICIADA$Nome.Usina, pattern = Nome.Usina) == TRUE,], everything()) %>%
 #                  group_by(Ano.Base.Ral, produto.beneficiado) %>%
@@ -1035,7 +1035,7 @@ producaoBENEFICIADA_groupBY_SUBSTANCIA.AMB <-
   function(Substancia.AMB = ".",
            #Substancia.RAL = ".",
            CPF.CNPJ.Titular = ".",
-           Municipio.Usina = ".",
+           Municipio = ".",
            Nome.Usina = ".",
            #produto = ".",
            volume = "producao") {
@@ -1045,7 +1045,7 @@ producaoBENEFICIADA_groupBY_SUBSTANCIA.AMB <-
           select(producaoBENEFICIADA[grepl(producaoBENEFICIADA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                        #grepl(producaoBENEFICIADA$substancia.ral, pattern = Substancia.RAL) == TRUE &
                                        grepl(producaoBENEFICIADA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                       grepl(producaoBENEFICIADA$Municipio.Usina, pattern = Municipio.Usina) == TRUE &
+                                       grepl(producaoBENEFICIADA$Municipio.Usina, pattern = Municipio) == TRUE &
                                        #grepl(producaoBENEFICIADA$produto.beneficiado, pattern = produto) == TRUE &
                                        grepl(producaoBENEFICIADA$Nome.Usina, pattern = Nome.Usina) == TRUE,], everything()) %>%
             group_by(Ano.Base.Ral, Substancia.AMB) %>%
@@ -1063,7 +1063,7 @@ producaoBENEFICIADA_groupBY_SUBSTANCIA.AMB <-
             select(producaoBENEFICIADA[grepl(producaoBENEFICIADA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                          #grepl(producaoBENEFICIADA$substancia.ral, pattern = Substancia.RAL) == TRUE &
                                          grepl(producaoBENEFICIADA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                         grepl(producaoBENEFICIADA$Municipio.Usina, pattern = Municipio.Usina) == TRUE &
+                                         grepl(producaoBENEFICIADA$Municipio.Usina, pattern = Municipio) == TRUE &
                                          #grepl(producaoBENEFICIADA$produto.beneficiado, pattern = produto) == TRUE &
                                          grepl(producaoBENEFICIADA$Nome.Usina, pattern = Nome.Usina) == TRUE,], everything()) %>%
               group_by(Ano.Base.Ral, Substancia.AMB) %>%
@@ -1080,7 +1080,7 @@ producaoBENEFICIADA_groupBY_SUBSTANCIA.AMB <-
               select(producaoBENEFICIADA[grepl(producaoBENEFICIADA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                            #grepl(producaoBENEFICIADA$substancia.ral, pattern = Substancia.RAL) == TRUE &
                                            grepl(producaoBENEFICIADA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                           grepl(producaoBENEFICIADA$Municipio.Usina, pattern = Municipio.Usina) == TRUE &
+                                           grepl(producaoBENEFICIADA$Municipio.Usina, pattern = Municipio) == TRUE &
                                            #grepl(producaoBENEFICIADA$produto.beneficiado, pattern = produto) == TRUE &
                                            grepl(producaoBENEFICIADA$Nome.Usina, pattern = Nome.Usina) == TRUE,], everything()) %>%
                 group_by(Ano.Base.Ral, Substancia.AMB) %>%
@@ -1099,7 +1099,7 @@ producaoBENEFICIADA_groupBY_SUBSTANCIA.AMB <-
                 select(producaoBENEFICIADA[grepl(producaoBENEFICIADA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                              #grepl(producaoBENEFICIADA$substancia.ral, pattern = Substancia.RAL) == TRUE &
                                              grepl(producaoBENEFICIADA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                             grepl(producaoBENEFICIADA$Municipio.Usina, pattern = Municipio.Usina) == TRUE &
+                                             grepl(producaoBENEFICIADA$Municipio.Usina, pattern = Municipio) == TRUE &
                                              #grepl(producaoBENEFICIADA$produto.beneficiado, pattern = produto) == TRUE &
                                              grepl(producaoBENEFICIADA$Nome.Usina, pattern = Nome.Usina) == TRUE,], everything()) %>%
                   group_by(Ano.Base.Ral, Substancia.AMB) %>%
@@ -1125,7 +1125,7 @@ producaoBENEFICIADA_groupBY_TITULAR <-
   function(Substancia.AMB = ".",
            #Substancia.RAL = ".",
            CPF.CNPJ.Titular = ".",
-           Municipio.Usina = ".",
+           Municipio = ".",
            Nome.Usina = ".",
            #produto = ".",
            volume = "producao") {
@@ -1135,7 +1135,7 @@ producaoBENEFICIADA_groupBY_TITULAR <-
           select(producaoBENEFICIADA[grepl(producaoBENEFICIADA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                        #grepl(producaoBENEFICIADA$substancia.ral, pattern = Substancia.RAL) == TRUE &
                                        grepl(producaoBENEFICIADA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                       grepl(producaoBENEFICIADA$Municipio.Usina, pattern = Municipio.Usina) == TRUE &
+                                       grepl(producaoBENEFICIADA$Municipio.Usina, pattern = Municipio) == TRUE &
                                        #grepl(producaoBENEFICIADA$produto.beneficiado, pattern = produto) == TRUE &
                                        grepl(producaoBENEFICIADA$Nome.Usina, pattern = Nome.Usina) == TRUE,], everything()) %>%
             group_by(Ano.Base.Ral, CPF.CNPJ.Titular) %>%
@@ -1153,7 +1153,7 @@ producaoBENEFICIADA_groupBY_TITULAR <-
             select(producaoBENEFICIADA[grepl(producaoBENEFICIADA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                          #grepl(producaoBENEFICIADA$substancia.ral, pattern = Substancia.RAL) == TRUE &
                                          grepl(producaoBENEFICIADA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                         grepl(producaoBENEFICIADA$Municipio.Usina, pattern = Municipio.Usina) == TRUE &
+                                         grepl(producaoBENEFICIADA$Municipio.Usina, pattern = Municipio) == TRUE &
                                          #grepl(producaoBENEFICIADA$produto.beneficiado, pattern = produto) == TRUE &
                                          grepl(producaoBENEFICIADA$Nome.Usina, pattern = Nome.Usina) == TRUE,], everything()) %>%
               group_by(Ano.Base.Ral, CPF.CNPJ.Titular) %>%
@@ -1170,7 +1170,7 @@ producaoBENEFICIADA_groupBY_TITULAR <-
               select(producaoBENEFICIADA[grepl(producaoBENEFICIADA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                            #grepl(producaoBENEFICIADA$substancia.ral, pattern = Substancia.RAL) == TRUE &
                                            grepl(producaoBENEFICIADA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                           grepl(producaoBENEFICIADA$Municipio.Usina, pattern = Municipio.Usina) == TRUE &
+                                           grepl(producaoBENEFICIADA$Municipio.Usina, pattern = Municipio) == TRUE &
                                            #grepl(producaoBENEFICIADA$produto.beneficiado, pattern = produto) == TRUE &
                                            grepl(producaoBENEFICIADA$Nome.Usina, pattern = Nome.Usina) == TRUE,], everything()) %>%
                 group_by(Ano.Base.Ral, CPF.CNPJ.Titular) %>%
@@ -1189,7 +1189,7 @@ producaoBENEFICIADA_groupBY_TITULAR <-
                 select(producaoBENEFICIADA[grepl(producaoBENEFICIADA$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                              #grepl(producaoBENEFICIADA$substancia.ral, pattern = Substancia.RAL) == TRUE &
                                              grepl(producaoBENEFICIADA$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                             grepl(producaoBENEFICIADA$Municipio.Usina, pattern = Municipio.Usina) == TRUE &
+                                             grepl(producaoBENEFICIADA$Municipio.Usina, pattern = Municipio) == TRUE &
                                              #grepl(producaoBENEFICIADA$produto.beneficiado, pattern = produto) == TRUE &
                                              grepl(producaoBENEFICIADA$Nome.Usina, pattern = Nome.Usina) == TRUE,], everything()) %>%
                   group_by(Ano.Base.Ral, CPF.CNPJ.Titular) %>%

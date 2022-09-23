@@ -233,7 +233,7 @@ producaoBENEFICIADA <-
  VPM_QuantidadeValorCOMERCIALIZADO$Produto.Comercializado <-
    VPM_QuantidadeValorCOMERCIALIZADO$Produto.Comercializado |> iconv(from = "UTF-8", to = "ASCII//TRANSLIT")
  
- VPM_QuantidadeValorCOMERCIALIZADO$Municipio.Mina <-
+ VPM_QuantidadeValorCOMERCIALIZADO$Municipio <-
    VPM_QuantidadeValorCOMERCIALIZADO$Municipio |> iconv(from = "UTF-8", to = "ASCII//TRANSLIT")
  
  VPM_QuantidadeValorCOMERCIALIZADO$Nome <-
@@ -266,21 +266,21 @@ producaoBENEFICIADA <-
 #     "titular",
 #     "cpfcnpj",
 #     "Nome.Mina",
-#     "Municipio.Mina",
+#     "Municipio",
 #     "uf",
 #     "substancias.amb.Nome.Mina",
 #     "Minerio",
 #     "nome.comprador",
 #     "uso.destinacao",
-#     "Municipio.Mina.comprador",
+#     "Municipio.comprador",
 #     "uf.comprador",
 #     "quantidade.compra",
 #     "valor.compra"
 #   ) |> tolower()
 # 
 # 
-# consumidoresMINA$Municipio.Mina <-
-#   consumidoresMINA$Municipio.Mina |> iconv(from = "UTF-8", to = "ASCII//TRANSLIT") |> tolower()
+# consumidoresMINA$Municipio <-
+#   consumidoresMINA$Municipio |> iconv(from = "UTF-8", to = "ASCII//TRANSLIT") |> tolower()
 # 
 # consumidoresMINA$titular <-
 #   consumidoresMINA$titular |> iconv(from = "UTF-8", to = "ASCII//TRANSLIT") |> tolower()

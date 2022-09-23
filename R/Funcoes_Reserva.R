@@ -76,7 +76,7 @@ reserva_GERAL <-
   function(Substancia.AMB = ".",
            Substancia.RAL = ".",
            CPF.CNPJ.Titular = ".",
-           Municipio.Mina = ".",
+           Municipio = ".",
            Nome.Mina = ".",
            Processo = ".",
            reserva = "medida") {
@@ -86,7 +86,7 @@ reserva_GERAL <-
           select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                               grepl(reserva_AMB$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                               grepl(reserva_AMB$Municipio.Mina, pattern = Municipio) == TRUE &
                                grepl(reserva_AMB$Processo, pattern = Processo) == TRUE &
                                grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina) == TRUE, ], everything()) %>%
             group_by(Ano.Base.Ral) %>%
@@ -104,7 +104,7 @@ reserva_GERAL <-
             select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                  grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                  grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                 grepl(reserva_AMB$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                 grepl(reserva_AMB$Municipio.Mina, pattern = Municipio) == TRUE &
                                  grepl(reserva_AMB$Processo, pattern = Processo) == TRUE &
                                  grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina) == TRUE, ], everything()) %>%
               group_by(Ano.Base.Ral) %>%
@@ -121,7 +121,7 @@ reserva_GERAL <-
               select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                    grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                    grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                   grepl(reserva_AMB$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                   grepl(reserva_AMB$Municipio.Mina, pattern = Municipio) == TRUE &
                                    grepl(reserva_AMB$Processo, pattern = Processo) == TRUE &
                                    grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina) == TRUE, ], everything()) %>%
                 group_by(Ano.Base.Ral) %>%
@@ -138,7 +138,7 @@ reserva_GERAL <-
                 select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                      grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                      grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                     grepl(reserva_AMB$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                     grepl(reserva_AMB$Municipio.Mina, pattern = Municipio) == TRUE &
                                      grepl(reserva_AMB$Processo, pattern = Processo) == TRUE &
                                      grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina) == TRUE, ], everything()) %>%
                   group_by(Ano.Base.Ral) %>%
@@ -161,7 +161,7 @@ reserva_groupBY_MINA <-
   function(Substancia.AMB = ".",
            Substancia.RAL = ".",
            CPF.CNPJ.Titular = ".",
-           Municipio.Mina = ".",
+           Municipio = ".",
            Nome.Mina = ".",
            Processo = ".",
            reserva = "medida") {
@@ -171,7 +171,7 @@ reserva_groupBY_MINA <-
           select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                               grepl(reserva_AMB$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                               grepl(reserva_AMB$Municipio.Mina, pattern = Municipio) == TRUE &
                                grepl(reserva_AMB$Processo, pattern = Processo) == TRUE &
                                grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina) == TRUE, ], everything()) %>%
             group_by(Ano.Base.Ral, Nome.Mina) %>%
@@ -189,7 +189,7 @@ reserva_groupBY_MINA <-
             select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                  grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                  grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                 grepl(reserva_AMB$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                 grepl(reserva_AMB$Municipio.Mina, pattern = Municipio) == TRUE &
                                  grepl(reserva_AMB$Processo, pattern = Processo) == TRUE &
                                  grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina) == TRUE, ], everything()) %>%
               group_by(Ano.Base.Ral, Nome.Mina) %>%
@@ -206,7 +206,7 @@ reserva_groupBY_MINA <-
               select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                    grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                    grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                   grepl(reserva_AMB$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                   grepl(reserva_AMB$Municipio.Mina, pattern = Municipio) == TRUE &
                                    grepl(reserva_AMB$Processo, pattern = Processo) == TRUE &
                                    grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina) == TRUE, ], everything()) %>%
                 group_by(Ano.Base.Ral, Nome.Mina) %>%
@@ -223,7 +223,7 @@ reserva_groupBY_MINA <-
                 select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                      grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                      grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                     grepl(reserva_AMB$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                     grepl(reserva_AMB$Municipio.Mina, pattern = Municipio) == TRUE &
                                      grepl(reserva_AMB$Processo, pattern = Processo) == TRUE &
                                      grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina) == TRUE, ], everything()) %>%
                   group_by(Ano.Base.Ral, Nome.Mina) %>%
@@ -245,7 +245,7 @@ reserva_groupBY_MUNICIPIO <-
   function(Substancia.AMB = ".",
            Substancia.RAL = ".",
            CPF.CNPJ.Titular = ".",
-           Municipio.Mina = ".",
+           Municipio = ".",
            Nome.Mina = ".",
            Processo = ".",
            reserva = "medida") {
@@ -255,7 +255,7 @@ reserva_groupBY_MUNICIPIO <-
           select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                               grepl(reserva_AMB$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                               grepl(reserva_AMB$Municipio.Mina, pattern = Municipio) == TRUE &
                                grepl(reserva_AMB$Processo, pattern = Processo) == TRUE &
                                grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina) == TRUE, ], everything()) %>%
             group_by(Ano.Base.Ral, Municipio.Mina) %>%
@@ -273,7 +273,7 @@ reserva_groupBY_MUNICIPIO <-
             select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                  grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                  grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                 grepl(reserva_AMB$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                 grepl(reserva_AMB$Municipio.Mina, pattern = Municipio) == TRUE &
                                  grepl(reserva_AMB$Processo, pattern = Processo) == TRUE &
                                  grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina) == TRUE, ], everything()) %>%
               group_by(Ano.Base.Ral, Municipio.Mina) %>%
@@ -290,7 +290,7 @@ reserva_groupBY_MUNICIPIO <-
               select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                    grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                    grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                   grepl(reserva_AMB$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                   grepl(reserva_AMB$Municipio.Mina, pattern = Municipio) == TRUE &
                                    grepl(reserva_AMB$Processo, pattern = Processo) == TRUE &
                                    grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina) == TRUE, ], everything()) %>%
                 group_by(Ano.Base.Ral, Municipio.Mina) %>%
@@ -307,7 +307,7 @@ reserva_groupBY_MUNICIPIO <-
                 select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                      grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                      grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                     grepl(reserva_AMB$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                     grepl(reserva_AMB$Municipio.Mina, pattern = Municipio) == TRUE &
                                      grepl(reserva_AMB$Processo, pattern = Processo) == TRUE &
                                      grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina) == TRUE, ], everything()) %>%
                   group_by(Ano.Base.Ral, Municipio.Mina) %>%
@@ -329,7 +329,7 @@ reserva_groupBY_PROCESSO <-
   function(Substancia.AMB = ".",
            Substancia.RAL = ".",
            CPF.CNPJ.Titular = ".",
-           Municipio.Mina = ".",
+           Municipio = ".",
            Nome.Mina = ".",
            Processo = ".",
            reserva = "medida") {
@@ -339,7 +339,7 @@ reserva_groupBY_PROCESSO <-
           select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                               grepl(reserva_AMB$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                               grepl(reserva_AMB$Municipio.Mina, pattern = Municipio) == TRUE &
                                grepl(reserva_AMB$Processo, pattern = Processo) == TRUE &
                                grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina) == TRUE, ], everything()) %>%
             group_by(Ano.Base.Ral, Processo) %>%
@@ -357,7 +357,7 @@ reserva_groupBY_PROCESSO <-
             select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                  grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                  grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                 grepl(reserva_AMB$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                 grepl(reserva_AMB$Municipio.Mina, pattern = Municipio) == TRUE &
                                  grepl(reserva_AMB$Processo, pattern = Processo) == TRUE &
                                  grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina) == TRUE, ], everything()) %>%
               group_by(Ano.Base.Ral, Processo) %>%
@@ -374,7 +374,7 @@ reserva_groupBY_PROCESSO <-
               select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                    grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                    grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                   grepl(reserva_AMB$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                   grepl(reserva_AMB$Municipio.Mina, pattern = Municipio) == TRUE &
                                    grepl(reserva_AMB$Processo, pattern = Processo) == TRUE &
                                    grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina) == TRUE, ], everything()) %>%
                 group_by(Ano.Base.Ral, Processo) %>%
@@ -391,7 +391,7 @@ reserva_groupBY_PROCESSO <-
                 select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                      grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                      grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                     grepl(reserva_AMB$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                     grepl(reserva_AMB$Municipio.Mina, pattern = Municipio) == TRUE &
                                      grepl(reserva_AMB$Processo, pattern = Processo) == TRUE &
                                      grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina) == TRUE, ], everything()) %>%
                   group_by(Ano.Base.Ral, Processo) %>%
@@ -413,7 +413,7 @@ reserva_groupBY_SUBSTANCIA.AMB <-
   function(Substancia.AMB = ".",
            Substancia.RAL = ".",
            CPF.CNPJ.Titular = ".",
-           Municipio.Mina = ".",
+           Municipio = ".",
            Nome.Mina = ".",
            Processo = ".",
            reserva = "medida") {
@@ -423,7 +423,7 @@ reserva_groupBY_SUBSTANCIA.AMB <-
           select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                               grepl(reserva_AMB$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                               grepl(reserva_AMB$Municipio.Mina, pattern = Municipio) == TRUE &
                                grepl(reserva_AMB$Processo, pattern = Processo) == TRUE &
                                grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina) == TRUE, ], everything()) %>%
             group_by(Ano.Base.Ral, Substancia.AMB) %>%
@@ -441,7 +441,7 @@ reserva_groupBY_SUBSTANCIA.AMB <-
             select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                  grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                  grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                 grepl(reserva_AMB$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                 grepl(reserva_AMB$Municipio.Mina, pattern = Municipio) == TRUE &
                                  grepl(reserva_AMB$Processo, pattern = Processo) == TRUE &
                                  grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina) == TRUE, ], everything()) %>%
               group_by(Ano.Base.Ral, Substancia.AMB) %>%
@@ -458,7 +458,7 @@ reserva_groupBY_SUBSTANCIA.AMB <-
               select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                    grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                    grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                   grepl(reserva_AMB$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                   grepl(reserva_AMB$Municipio.Mina, pattern = Municipio) == TRUE &
                                    grepl(reserva_AMB$Processo, pattern = Processo) == TRUE &
                                    grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina) == TRUE, ], everything()) %>%
                 group_by(Ano.Base.Ral, Substancia.AMB) %>%
@@ -475,7 +475,7 @@ reserva_groupBY_SUBSTANCIA.AMB <-
                 select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                      grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                      grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                     grepl(reserva_AMB$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                     grepl(reserva_AMB$Municipio.Mina, pattern = Municipio) == TRUE &
                                      grepl(reserva_AMB$Processo, pattern = Processo) == TRUE &
                                      grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina) == TRUE, ], everything()) %>%
                   group_by(Ano.Base.Ral, Substancia.AMB) %>%
@@ -498,7 +498,7 @@ reserva_groupBY_TITULAR <-
   function(Substancia.AMB = ".",
            Substancia.RAL = ".",
            CPF.CNPJ.Titular = ".",
-           Municipio.Mina = ".",
+           Municipio = ".",
            Nome.Mina = ".",
            Processo = ".",
            reserva = "medida") {
@@ -508,7 +508,7 @@ reserva_groupBY_TITULAR <-
           select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                               grepl(reserva_AMB$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                               grepl(reserva_AMB$Municipio.Mina, pattern = Municipio) == TRUE &
                                grepl(reserva_AMB$Processo, pattern = Processo) == TRUE &
                                grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina) == TRUE, ], everything()) %>%
             group_by(Ano.Base.Ral, CPF.CNPJ.Titular) %>%
@@ -526,7 +526,7 @@ reserva_groupBY_TITULAR <-
             select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                  grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                  grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                 grepl(reserva_AMB$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                 grepl(reserva_AMB$Municipio.Mina, pattern = Municipio) == TRUE &
                                  grepl(reserva_AMB$Processo, pattern = Processo) == TRUE &
                                  grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina) == TRUE, ], everything()) %>%
               group_by(Ano.Base.Ral, CPF.CNPJ.Titular) %>%
@@ -543,7 +543,7 @@ reserva_groupBY_TITULAR <-
               select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                    grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                    grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                   grepl(reserva_AMB$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                   grepl(reserva_AMB$Municipio.Mina, pattern = Municipio) == TRUE &
                                    grepl(reserva_AMB$Processo, pattern = Processo) == TRUE &
                                    grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina) == TRUE, ], everything()) %>%
                 group_by(Ano.Base.Ral, CPF.CNPJ.Titular) %>%
@@ -560,7 +560,7 @@ reserva_groupBY_TITULAR <-
                 select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
                                      grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
                                      grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                     grepl(reserva_AMB$Municipio.Mina, pattern = Municipio.Mina) == TRUE &
+                                     grepl(reserva_AMB$Municipio.Mina, pattern = Municipio) == TRUE &
                                      grepl(reserva_AMB$Processo, pattern = Processo) == TRUE &
                                      grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina) == TRUE, ], everything()) %>%
                   group_by(Ano.Base.Ral, CPF.CNPJ.Titular) %>%
