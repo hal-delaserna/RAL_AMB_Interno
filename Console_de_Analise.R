@@ -9,7 +9,7 @@ source(file = "./R/graficos_AMB.R")
 source(file = "./R/Funcoes_Producao.R", encoding = "UTF-8")
 source(file = "./R/Funcoes_Reserva.R", encoding = "UTF-8")
 source(file = "./R/Abatimento_Reserva_Producao.R", encoding = "UTF-8")
-#     CORRIGIR FUNÇÕES VPM = Vendas + Consumo Pr?prio + Transfer?ncias (p/ transforma??o, tratamento ou consumo)
+#     CORRIGIR FUNÇÕES VPM = Vendas + Consumo Próprio + Transferências (p/ transformação, tratamento ou consumo)
 source(file = "./R/Funcoes_VPM.R", encoding = "UTF-8")
 source(file = "./R/carregamento_Bases_AMB_outras.r", encoding = "UTF-8")
 # source(file = "./Rastreamento_de_Inconsistencias/Municipios_inconsistencia.R")
@@ -144,7 +144,7 @@ source(file = "./R/carregamento_Bases_AMB_outras.r", encoding = "UTF-8")
 
    
      Substancia.AMB <- '.'
-     CPF.CNPJ.Titular <- '38.282.487/0001-15'
+     CPF.CNPJ.Titular <- '01.290.096/0001-32'
      Municipio <- '.'
      Nome.Mina <- '.'
      Nome.Usina <- '.'
@@ -167,9 +167,10 @@ source(file = "./R/carregamento_Bases_AMB_outras.r", encoding = "UTF-8")
  
  
  Substancia.AMB <- "Calcario"
- probs <- 0.8
+ probs <- 0.995
  
- FUNA_PRODUCAO_Quantil_WIDE(Substancia.AMB = Substancia.AMB, probs = probs)
+ FUNA_PRODUCAO_Quantil_WIDE(Substancia.AMB = Substancia.AMB, probs = probs) |> 
+   arrange(desc(`2021`))
 
  
 #_____CONSUMIDORES  ------------------------------------------------------------------

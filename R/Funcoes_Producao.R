@@ -1244,11 +1244,18 @@ FUNA_PRODUCAO_Quantil_WIDE <-
       left_join(df_a, df_b,
                 by = "id_subs.ano")
     
-    df_a <-
-      filter(df_a, Quantidade.Producao.Substancia.com.Ajuste > Quantil)
+    df_a$id_titular_municipio_subs <-
+      paste(df_a$CPF.CNPJ.Titular,
+            df_a$Municipio.Usina,
+            df_a$Substancia.AMB,
+            sep = "_")
     
-    df_a <-
-      pivot_wider(df_a[, c(
+    lista_ID_titular <-
+      unique(df_a[df_a$Quantidade.Producao.Substancia.com.Ajuste >
+                    df_a$Quantil, ]$id_titular_municipio_subs)
+    
+        df_a <-
+      pivot_wider(df_a[df_a$id_titular_municipio_subs %in% lista_ID_titular, c(
         "CPF.CNPJ.Titular",
         "Municipio.Usina",
         "Substancia.AMB",

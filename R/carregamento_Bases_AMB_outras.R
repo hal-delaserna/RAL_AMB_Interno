@@ -5,11 +5,20 @@ library(tidyverse)
 # CARREGANDO Reserva AMB ----
 
 reserva_AMB <-
-  read.table(
-    "./data/DBAMB_Reserva.csv",
-      header = TRUE, sep = "\t",dec = ",",
-    fill = TRUE, quote = "",
-    fileEncoding = 'latin1')
+  read.table("./data/CubosDBAMB_Reserva.csv",
+             header = TRUE, sep = ",",dec = ",",
+             fill = TRUE, quote = "\"",
+             fileEncoding = 'UTF-8')
+  
+  # read.table(
+  #   "./data/DBAMB_Reserva.csv",
+  #     header = TRUE, sep = "\t",dec = ",",
+  #   fill = TRUE, quote = "",
+  #   fileEncoding = 'latin1')
+
+
+
+
 
  colnames(reserva_AMB) <-
    colnames(reserva_AMB) |> iconv(from = "UTF-8", to = "ASCII//TRANSLIT")
@@ -65,10 +74,10 @@ for (i in 1:nrow(reserva_AMB)) {
 
 producaoBRUTA <-
   read.table(
-    "./data/DBAMB_MovimentacaoProducaoBruta.csv",
-    header = TRUE, sep = "\t",dec = ",",
-    fill = TRUE, quote = "",
-    fileEncoding = 'latin1', encoding = 'UTF-8')
+    "./data/CubosDBAMB_MovimentacaoProducaoBruta.csv",
+    header = TRUE, sep = ",",dec = ",",
+    fill = TRUE, quote = "\"",
+    fileEncoding = 'UTF-8')
 
 
 colnames(producaoBRUTA) <-
@@ -123,9 +132,10 @@ producaoBRUTA$preco <-
 
 producaoBENEFICIADA <-
   read.table(
-    "./data/DBAMB_MovimentacaoProducaoBeneficiada.csv",
-    header = TRUE, sep = "\t",dec = ",",
-    fileEncoding = 'latin1',fill = TRUE, quote = "")
+    "./data/CubosDBAMB_MovimentacaoProducaoBeneficiada.csv",
+    header = TRUE, sep = ",",dec = ",",
+    fill = TRUE, quote = "\"",
+    fileEncoding = 'UTF-8')
 
 colnames(producaoBENEFICIADA) <- 
   colnames(producaoBENEFICIADA) |> iconv(from = "UTF-8",  to = "ASCII//TRANSLIT")
