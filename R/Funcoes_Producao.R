@@ -1212,7 +1212,10 @@ producaoBENEFICIADA_groupBY_TITULAR <-
 
 FUNA_PRODUCAO_Quantil_WIDE <-
   function(Substancia.AMB = Substancia.AMB,
-           probs = probs) {
+           probs = probs, 
+           producao_Beneficiada = TRUE) {
+    
+    if (producao_Beneficiada == TRUE) {
     
     df_a <-
       producaoBENEFICIADA[producaoBENEFICIADA$Substancia.AMB == Substancia.AMB,
@@ -1229,14 +1232,14 @@ FUNA_PRODUCAO_Quantil_WIDE <-
           Substancia.AMB,
           id_subs.ano,
           Ano.Base.Ral),
-        "Quantidade.Producao.Substancia.com.Ajuste" =
-          sum(Quantidade.Producao.Substancia.com.Ajuste))
+        "Quantidade.Producao.Com.Ajuste" =
+          sum(Quantidade.Producao.Com.Ajuste))
     
     df_b <-
       summarise(
         group_by(df_a, id_subs.ano),
         "Quantil" = quantile(
-          Quantidade.Producao.Substancia.com.Ajuste,
+          Quantidade.Producao.Com.Ajuste,
           probs = probs,
           na.rm = TRUE))
     
@@ -1251,7 +1254,7 @@ FUNA_PRODUCAO_Quantil_WIDE <-
             sep = "_")
     
     lista_ID_titular <-
-      unique(df_a[df_a$Quantidade.Producao.Substancia.com.Ajuste >
+      unique(df_a[df_a$Quantidade.Producao.Com.Ajuste >
                     df_a$Quantil, ]$id_titular_municipio_subs)
     
         df_a <-
@@ -1260,14 +1263,69 @@ FUNA_PRODUCAO_Quantil_WIDE <-
         "Municipio.Usina",
         "Substancia.AMB",
         "Ano.Base.Ral",
-        "Quantidade.Producao.Substancia.com.Ajuste"
+        "Quantidade.Producao.Com.Ajuste"
       )],
       names_from = Ano.Base.Ral,
-      values_from = Quantidade.Producao.Substancia.com.Ajuste)
+      values_from = Quantidade.Producao.Com.Ajuste)
     
     return(df_a)
-    
-  }
+        
+    } else {
+      
+      df_a <-
+        producaoBRUTA[producaoBRUTA$Substancia.AMB == Substancia.AMB,
+                            c("Municipio.Mina","Ano.Base.Ral","CPF.CNPJ.Titular",
+                              "id_subs.ano","Substancia.AMB",
+                              "Quantidade.Producao.Com.Ajuste")]
+      
+      df_a <-
+        summarise(
+          group_by(
+            df_a,
+            CPF.CNPJ.Titular,
+            Municipio.Mina,
+            Substancia.AMB,
+            id_subs.ano,
+            Ano.Base.Ral),
+          "Quantidade.Producao.Com.Ajuste" =
+            sum(Quantidade.Producao.Com.Ajuste))
+      
+      df_b <-
+        summarise(
+          group_by(df_a, id_subs.ano),
+          "Quantil" = quantile(
+            Quantidade.Producao.Com.Ajuste,
+            probs = probs,
+            na.rm = TRUE))
+      
+      df_a <-
+        left_join(df_a, df_b,
+                  by = "id_subs.ano")
+      
+      df_a$id_titular_municipio_subs <-
+        paste(df_a$CPF.CNPJ.Titular,
+              df_a$Municipio.Mina,
+              df_a$Substancia.AMB,
+              sep = "_")
+      
+      lista_ID_titular <-
+        unique(df_a[df_a$Quantidade.Producao.Com.Ajuste >
+                      df_a$Quantil, ]$id_titular_municipio_subs)
+      
+      df_a <-
+        pivot_wider(df_a[df_a$id_titular_municipio_subs %in% lista_ID_titular, c(
+          "CPF.CNPJ.Titular",
+          "Municipio.Mina",
+          "Substancia.AMB",
+          "Ano.Base.Ral",
+          "Quantidade.Producao.Com.Ajuste"
+        )],
+        names_from = Ano.Base.Ral,
+        values_from = Quantidade.Producao.Com.Ajuste)
+      
+      return(df_a)
+      }
+    }
 
 
 

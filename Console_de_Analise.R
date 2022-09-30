@@ -144,7 +144,7 @@ source(file = "./R/carregamento_Bases_AMB_outras.r", encoding = "UTF-8")
 
    
      Substancia.AMB <- '.'
-     CPF.CNPJ.Titular <- '01.290.096/0001-32'
+     CPF.CNPJ.Titular <- '76.495.902/0001-08'
      Municipio <- '.'
      Nome.Mina <- '.'
      Nome.Usina <- '.'
@@ -166,11 +166,12 @@ source(file = "./R/carregamento_Bases_AMB_outras.r", encoding = "UTF-8")
  # FUNA_PRODUCAO_Quantil_SPREAD(Substancia.AMB = 'filito', producao = 'bruta', GroupBY = 'Nome.Mina') %>% FUNA_BARPLOT()
  
  
- Substancia.AMB <- "Calcario"
- probs <- 0.995
+ Substancia.AMB <- "Brita e Cascalho"
+ probs <- 0.95
  
- FUNA_PRODUCAO_Quantil_WIDE(Substancia.AMB = Substancia.AMB, probs = probs) |> 
-   arrange(desc(`2021`))
+ FUNA_PRODUCAO_Quantil_WIDE(Substancia.AMB = Substancia.AMB, probs = probs, 
+                            producao_Beneficiada = F) |> 
+   arrange(desc(`2021`)) |> FUNA_BARPLOT()
 
  
 #_____CONSUMIDORES  ------------------------------------------------------------------
