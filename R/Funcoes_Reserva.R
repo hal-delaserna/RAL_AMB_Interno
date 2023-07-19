@@ -5,6 +5,7 @@ FUNA_visao_RESERVA <-
            CPF.CNPJ.Titular = '.',
            Nome.Mina = '.',
            Substancia.AMB = '.') {
+    print("reserva_groupBY_SUBSTANCIA.AMB:")
     reserva_groupBY_SUBSTANCIA.AMB(
       Processo = Processo,
       CPF.CNPJ.Titular = CPF.CNPJ.Titular,
@@ -13,6 +14,7 @@ FUNA_visao_RESERVA <-
     ) %>%
       #FUNA_numerosFormatados() %>%
       print()
+    print("reserva_groupBY_MINA:")
     reserva_groupBY_MINA(
       Processo = Processo,
       CPF.CNPJ.Titular = CPF.CNPJ.Titular,
@@ -21,6 +23,7 @@ FUNA_visao_RESERVA <-
     ) %>%
       #FUNA_numerosFormatados() %>%
       print()
+    print("reserva_groupBY_PROCESSO:")
     reserva_groupBY_PROCESSO(
       Processo = Processo,
       CPF.CNPJ.Titular = CPF.CNPJ.Titular,
@@ -29,6 +32,7 @@ FUNA_visao_RESERVA <-
     ) %>%
       #FUNA_numerosFormatados() %>%
       print()
+    print("reserva_groupBY_MUNICIPIO:")
     reserva_groupBY_MUNICIPIO(
       Processo = Processo,
       CPF.CNPJ.Titular = CPF.CNPJ.Titular,
@@ -37,6 +41,7 @@ FUNA_visao_RESERVA <-
     ) %>%
       #FUNA_numerosFormatados() %>%
       print()
+    print("reserva_groupBY_TITULAR:")
     reserva_groupBY_TITULAR(
       Processo = Processo,
       CPF.CNPJ.Titular = CPF.CNPJ.Titular,
@@ -49,6 +54,7 @@ FUNA_visao_RESERVA <-
       paste("reserva ", paste(Processo, 
                               paste(CPF.CNPJ.Titular, 
                                     paste(Nome.Mina, Substancia.AMB)))) # t?tulo do gr?fico
+    
     reserva_GERAL(
       Processo = Processo,
       CPF.CNPJ.Titular = CPF.CNPJ.Titular,
@@ -56,6 +62,7 @@ FUNA_visao_RESERVA <-
       Substancia.AMB = Substancia.AMB
     ) %>% as.matrix() %>% barplot(main = a)
     # prodBruta
+    print("producaoBRUTA_groupBY_SUBSTANCIA.AMB:")
     producaoBRUTA_groupBY_SUBSTANCIA.AMB(
       Processo = Processo,
       CPF.CNPJ.Titular = CPF.CNPJ.Titular,
@@ -83,12 +90,12 @@ reserva_GERAL <-
     if (reserva == "medida") {
       x <-
         spread(
-          select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
-                               grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
-                               grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                               grepl(reserva_AMB$Municipio.Mina, pattern = Municipio) == TRUE &
-                               grepl(reserva_AMB$Processo, pattern = Processo) == TRUE &
-                               grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina) == TRUE, ], everything()) %>%
+          select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB, ignore.case = TRUE) == TRUE &
+                               grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL, ignore.case = TRUE) == TRUE &
+                               grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular, ignore.case = TRUE) == TRUE &
+                               grepl(reserva_AMB$Municipio.Mina, pattern = Municipio, ignore.case = TRUE) == TRUE &
+                               grepl(reserva_AMB$Processo, pattern = Processo, ignore.case = TRUE) == TRUE &
+                               grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina, ignore.case = TRUE) == TRUE, ], everything()) %>%
             group_by(Ano.Base.Ral) %>%
             summarise(soma = sum(Massa.Medida)),
           key = Ano.Base.Ral,
@@ -101,12 +108,12 @@ reserva_GERAL <-
       if (reserva == "indicada") {
         x <-
           spread(
-            select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
-                                 grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
-                                 grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                 grepl(reserva_AMB$Municipio.Mina, pattern = Municipio) == TRUE &
-                                 grepl(reserva_AMB$Processo, pattern = Processo) == TRUE &
-                                 grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina) == TRUE, ], everything()) %>%
+            select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB, ignore.case = TRUE) == TRUE &
+                                 grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL, ignore.case = TRUE) == TRUE &
+                                 grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular, ignore.case = TRUE) == TRUE &
+                                 grepl(reserva_AMB$Municipio.Mina, pattern = Municipio, ignore.case = TRUE) == TRUE &
+                                 grepl(reserva_AMB$Processo, pattern = Processo, ignore.case = TRUE) == TRUE &
+                                 grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina, ignore.case = TRUE) == TRUE, ], everything()) %>%
               group_by(Ano.Base.Ral) %>%
               summarise(soma = sum(Massa.Indicada)),
             key = Ano.Base.Ral,
@@ -118,12 +125,12 @@ reserva_GERAL <-
         if (reserva == "inferida") {
           x <-
             spread(
-              select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
-                                   grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
-                                   grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                   grepl(reserva_AMB$Municipio.Mina, pattern = Municipio) == TRUE &
-                                   grepl(reserva_AMB$Processo, pattern = Processo) == TRUE &
-                                   grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina) == TRUE, ], everything()) %>%
+              select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB, ignore.case = TRUE) == TRUE &
+                                   grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL, ignore.case = TRUE) == TRUE &
+                                   grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular, ignore.case = TRUE) == TRUE &
+                                   grepl(reserva_AMB$Municipio.Mina, pattern = Municipio, ignore.case = TRUE) == TRUE &
+                                   grepl(reserva_AMB$Processo, pattern = Processo, ignore.case = TRUE) == TRUE &
+                                   grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina, ignore.case = TRUE) == TRUE, ], everything()) %>%
                 group_by(Ano.Base.Ral) %>%
                 summarise(soma = sum(Massa.Inferida)),
               key = Ano.Base.Ral,
@@ -135,12 +142,12 @@ reserva_GERAL <-
           if (reserva == "lavravel") {
             x <-
               spread(
-                select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
-                                     grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
-                                     grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                     grepl(reserva_AMB$Municipio.Mina, pattern = Municipio) == TRUE &
-                                     grepl(reserva_AMB$Processo, pattern = Processo) == TRUE &
-                                     grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina) == TRUE, ], everything()) %>%
+                select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB, ignore.case = TRUE) == TRUE &
+                                     grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL, ignore.case = TRUE) == TRUE &
+                                     grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular, ignore.case = TRUE) == TRUE &
+                                     grepl(reserva_AMB$Municipio.Mina, pattern = Municipio, ignore.case = TRUE) == TRUE &
+                                     grepl(reserva_AMB$Processo, pattern = Processo, ignore.case = TRUE) == TRUE &
+                                     grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina, ignore.case = TRUE) == TRUE, ], everything()) %>%
                   group_by(Ano.Base.Ral) %>%
                   summarise(soma = sum(Massa.Lavravel)),
                 key = Ano.Base.Ral,
@@ -149,9 +156,27 @@ reserva_GERAL <-
             
             return(x)
             
+          } else if (reserva == "contido") {
+            x <-
+              spread(
+                select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB, ignore.case = TRUE) == TRUE &
+                                     grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL, ignore.case = TRUE) == TRUE &
+                                     grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular, ignore.case = TRUE) == TRUE &
+                                     grepl(reserva_AMB$Municipio.Mina, pattern = Municipio, ignore.case = TRUE) == TRUE &
+                                     grepl(reserva_AMB$Processo, pattern = Processo, ignore.case = TRUE) == TRUE &
+                                     grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina, ignore.case = TRUE) == TRUE, ], everything()) %>%
+                  group_by(Ano.Base.Ral) %>%
+                  summarise(soma = sum(Contido.Medido)),
+                key = Ano.Base.Ral,
+                value = soma
+              )
+            
+            return(x)
+            
           }
-        }
+        
       }
+    }
     }
   }
 
@@ -168,12 +193,12 @@ reserva_groupBY_MINA <-
     if (reserva == "medida") {
       x <-
         spread(
-          select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
-                               grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
-                               grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                               grepl(reserva_AMB$Municipio.Mina, pattern = Municipio) == TRUE &
-                               grepl(reserva_AMB$Processo, pattern = Processo) == TRUE &
-                               grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina) == TRUE, ], everything()) %>%
+          select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB, ignore.case = TRUE) == TRUE &
+                               grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL, ignore.case = TRUE) == TRUE &
+                               grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular, ignore.case = TRUE) == TRUE &
+                               grepl(reserva_AMB$Municipio.Mina, pattern = Municipio, ignore.case = TRUE) == TRUE &
+                               grepl(reserva_AMB$Processo, pattern = Processo, ignore.case = TRUE) == TRUE &
+                               grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina, ignore.case = TRUE) == TRUE, ], everything()) %>%
             group_by(Ano.Base.Ral, Nome.Mina) %>%
             summarise(soma = sum(Massa.Medida)),
           key = Ano.Base.Ral,
@@ -186,12 +211,12 @@ reserva_groupBY_MINA <-
       if (reserva == "indicada") {
         x <-
           spread(
-            select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
-                                 grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
-                                 grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                 grepl(reserva_AMB$Municipio.Mina, pattern = Municipio) == TRUE &
-                                 grepl(reserva_AMB$Processo, pattern = Processo) == TRUE &
-                                 grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina) == TRUE, ], everything()) %>%
+            select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB, ignore.case = TRUE) == TRUE &
+                                 grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL, ignore.case = TRUE) == TRUE &
+                                 grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular, ignore.case = TRUE) == TRUE &
+                                 grepl(reserva_AMB$Municipio.Mina, pattern = Municipio, ignore.case = TRUE) == TRUE &
+                                 grepl(reserva_AMB$Processo, pattern = Processo, ignore.case = TRUE) == TRUE &
+                                 grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina, ignore.case = TRUE) == TRUE, ], everything()) %>%
               group_by(Ano.Base.Ral, Nome.Mina) %>%
               summarise(soma = sum(Massa.Indicada)),
             key = Ano.Base.Ral,
@@ -203,12 +228,12 @@ reserva_groupBY_MINA <-
         if (reserva == "inferida") {
           x <-
             spread(
-              select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
-                                   grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
-                                   grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                   grepl(reserva_AMB$Municipio.Mina, pattern = Municipio) == TRUE &
-                                   grepl(reserva_AMB$Processo, pattern = Processo) == TRUE &
-                                   grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina) == TRUE, ], everything()) %>%
+              select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB, ignore.case = TRUE) == TRUE &
+                                   grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL, ignore.case = TRUE) == TRUE &
+                                   grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular, ignore.case = TRUE) == TRUE &
+                                   grepl(reserva_AMB$Municipio.Mina, pattern = Municipio, ignore.case = TRUE) == TRUE &
+                                   grepl(reserva_AMB$Processo, pattern = Processo, ignore.case = TRUE) == TRUE &
+                                   grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina, ignore.case = TRUE) == TRUE, ], everything()) %>%
                 group_by(Ano.Base.Ral, Nome.Mina) %>%
                 summarise(soma = sum(Massa.Inferida)),
               key = Ano.Base.Ral,
@@ -220,14 +245,32 @@ reserva_groupBY_MINA <-
           if (reserva == "lavravel") {
             x <-
               spread(
-                select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
-                                     grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
-                                     grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                     grepl(reserva_AMB$Municipio.Mina, pattern = Municipio) == TRUE &
-                                     grepl(reserva_AMB$Processo, pattern = Processo) == TRUE &
-                                     grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina) == TRUE, ], everything()) %>%
+                select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB, ignore.case = TRUE) == TRUE &
+                                     grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL, ignore.case = TRUE) == TRUE &
+                                     grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular, ignore.case = TRUE) == TRUE &
+                                     grepl(reserva_AMB$Municipio.Mina, pattern = Municipio, ignore.case = TRUE) == TRUE &
+                                     grepl(reserva_AMB$Processo, pattern = Processo, ignore.case = TRUE) == TRUE &
+                                     grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina, ignore.case = TRUE) == TRUE, ], everything()) %>%
                   group_by(Ano.Base.Ral, Nome.Mina) %>%
                   summarise(soma = sum(Massa.Lavravel)),
+                key = Ano.Base.Ral,
+                value = soma
+              )
+            
+            return(x)
+            
+          } else {
+          if (reserva == "contido") {
+            x <-
+              spread(
+                select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB, ignore.case = TRUE) == TRUE &
+                                     grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL, ignore.case = TRUE) == TRUE &
+                                     grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular, ignore.case = TRUE) == TRUE &
+                                     grepl(reserva_AMB$Municipio.Mina, pattern = Municipio, ignore.case = TRUE) == TRUE &
+                                     grepl(reserva_AMB$Processo, pattern = Processo, ignore.case = TRUE) == TRUE &
+                                     grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina, ignore.case = TRUE) == TRUE, ], everything()) %>%
+                  group_by(Ano.Base.Ral, Nome.Mina) %>%
+                  summarise(soma = sum(Contido.Medido)),
                 key = Ano.Base.Ral,
                 value = soma
               )
@@ -237,6 +280,7 @@ reserva_groupBY_MINA <-
           }
         }
       }
+    }
     }
   }
 
@@ -252,12 +296,12 @@ reserva_groupBY_MUNICIPIO <-
     if (reserva == "medida") {
       x <-
         spread(
-          select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
-                               grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
-                               grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                               grepl(reserva_AMB$Municipio.Mina, pattern = Municipio) == TRUE &
-                               grepl(reserva_AMB$Processo, pattern = Processo) == TRUE &
-                               grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina) == TRUE, ], everything()) %>%
+          select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB, ignore.case = TRUE) == TRUE &
+                               grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL, ignore.case = TRUE) == TRUE &
+                               grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular, ignore.case = TRUE) == TRUE &
+                               grepl(reserva_AMB$Municipio.Mina, pattern = Municipio, ignore.case = TRUE) == TRUE &
+                               grepl(reserva_AMB$Processo, pattern = Processo, ignore.case = TRUE) == TRUE &
+                               grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina, ignore.case = TRUE) == TRUE, ], everything()) %>%
             group_by(Ano.Base.Ral, Municipio.Mina) %>%
             summarise(soma = sum(Massa.Medida)),
           key = Ano.Base.Ral,
@@ -270,12 +314,12 @@ reserva_groupBY_MUNICIPIO <-
       if (reserva == "indicada") {
         x <-
           spread(
-            select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
-                                 grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
-                                 grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                 grepl(reserva_AMB$Municipio.Mina, pattern = Municipio) == TRUE &
-                                 grepl(reserva_AMB$Processo, pattern = Processo) == TRUE &
-                                 grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina) == TRUE, ], everything()) %>%
+            select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB, ignore.case = TRUE) == TRUE &
+                                 grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL, ignore.case = TRUE) == TRUE &
+                                 grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular, ignore.case = TRUE) == TRUE &
+                                 grepl(reserva_AMB$Municipio.Mina, pattern = Municipio, ignore.case = TRUE) == TRUE &
+                                 grepl(reserva_AMB$Processo, pattern = Processo, ignore.case = TRUE) == TRUE &
+                                 grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina, ignore.case = TRUE) == TRUE, ], everything()) %>%
               group_by(Ano.Base.Ral, Municipio.Mina) %>%
               summarise(soma = sum(Massa.Indicada)),
             key = Ano.Base.Ral,
@@ -287,12 +331,12 @@ reserva_groupBY_MUNICIPIO <-
         if (reserva == "inferida") {
           x <-
             spread(
-              select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
-                                   grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
-                                   grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                   grepl(reserva_AMB$Municipio.Mina, pattern = Municipio) == TRUE &
-                                   grepl(reserva_AMB$Processo, pattern = Processo) == TRUE &
-                                   grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina) == TRUE, ], everything()) %>%
+              select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB, ignore.case = TRUE) == TRUE &
+                                   grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL, ignore.case = TRUE) == TRUE &
+                                   grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular, ignore.case = TRUE) == TRUE &
+                                   grepl(reserva_AMB$Municipio.Mina, pattern = Municipio, ignore.case = TRUE) == TRUE &
+                                   grepl(reserva_AMB$Processo, pattern = Processo, ignore.case = TRUE) == TRUE &
+                                   grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina, ignore.case = TRUE) == TRUE, ], everything()) %>%
                 group_by(Ano.Base.Ral, Municipio.Mina) %>%
                 summarise(soma = sum(Massa.Inferida)),
               key = Ano.Base.Ral,
@@ -304,12 +348,12 @@ reserva_groupBY_MUNICIPIO <-
           if (reserva == "lavravel") {
             x <-
               spread(
-                select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
-                                     grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
-                                     grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                     grepl(reserva_AMB$Municipio.Mina, pattern = Municipio) == TRUE &
-                                     grepl(reserva_AMB$Processo, pattern = Processo) == TRUE &
-                                     grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina) == TRUE, ], everything()) %>%
+                select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB, ignore.case = TRUE) == TRUE &
+                                     grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL, ignore.case = TRUE) == TRUE &
+                                     grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular, ignore.case = TRUE) == TRUE &
+                                     grepl(reserva_AMB$Municipio.Mina, pattern = Municipio, ignore.case = TRUE) == TRUE &
+                                     grepl(reserva_AMB$Processo, pattern = Processo, ignore.case = TRUE) == TRUE &
+                                     grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina, ignore.case = TRUE) == TRUE, ], everything()) %>%
                   group_by(Ano.Base.Ral, Municipio.Mina) %>%
                   summarise(soma = sum(Massa.Lavravel)),
                 key = Ano.Base.Ral,
@@ -318,6 +362,25 @@ reserva_groupBY_MUNICIPIO <-
             
             return(x)
             
+          }  else {
+            if (reserva == "contido") {
+              x <-
+                spread(
+                  select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB, ignore.case = TRUE) == TRUE &
+                                       grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL, ignore.case = TRUE) == TRUE &
+                                       grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular, ignore.case = TRUE) == TRUE &
+                                       grepl(reserva_AMB$Municipio.Mina, pattern = Municipio, ignore.case = TRUE) == TRUE &
+                                       grepl(reserva_AMB$Processo, pattern = Processo, ignore.case = TRUE) == TRUE &
+                                       grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina, ignore.case = TRUE) == TRUE, ], everything()) %>%
+                    group_by(Ano.Base.Ral, Municipio.Mina) %>%
+                    summarise(soma = sum(Contido.Medido)),
+                  key = Ano.Base.Ral,
+                  value = soma
+                )
+              
+              return(x)
+              
+            }
           }
         }
       }
@@ -336,12 +399,12 @@ reserva_groupBY_PROCESSO <-
     if (reserva == "medida") {
       x <-
         spread(
-          select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
-                               grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
-                               grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                               grepl(reserva_AMB$Municipio.Mina, pattern = Municipio) == TRUE &
-                               grepl(reserva_AMB$Processo, pattern = Processo) == TRUE &
-                               grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina) == TRUE, ], everything()) %>%
+          select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB, ignore.case = TRUE) == TRUE &
+                               grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL, ignore.case = TRUE) == TRUE &
+                               grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular, ignore.case = TRUE) == TRUE &
+                               grepl(reserva_AMB$Municipio.Mina, pattern = Municipio, ignore.case = TRUE) == TRUE &
+                               grepl(reserva_AMB$Processo, pattern = Processo, ignore.case = TRUE) == TRUE &
+                               grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina, ignore.case = TRUE) == TRUE, ], everything()) %>%
             group_by(Ano.Base.Ral, Processo) %>%
             summarise(soma = sum(Massa.Medida)),
           key = Ano.Base.Ral,
@@ -354,12 +417,12 @@ reserva_groupBY_PROCESSO <-
       if (reserva == "indicada") {
         x <-
           spread(
-            select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
-                                 grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
-                                 grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                 grepl(reserva_AMB$Municipio.Mina, pattern = Municipio) == TRUE &
-                                 grepl(reserva_AMB$Processo, pattern = Processo) == TRUE &
-                                 grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina) == TRUE, ], everything()) %>%
+            select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB, ignore.case = TRUE) == TRUE &
+                                 grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL, ignore.case = TRUE) == TRUE &
+                                 grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular, ignore.case = TRUE) == TRUE &
+                                 grepl(reserva_AMB$Municipio.Mina, pattern = Municipio, ignore.case = TRUE) == TRUE &
+                                 grepl(reserva_AMB$Processo, pattern = Processo, ignore.case = TRUE) == TRUE &
+                                 grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina, ignore.case = TRUE) == TRUE, ], everything()) %>%
               group_by(Ano.Base.Ral, Processo) %>%
               summarise(soma = sum(Massa.Indicada)),
             key = Ano.Base.Ral,
@@ -371,12 +434,12 @@ reserva_groupBY_PROCESSO <-
         if (reserva == "inferida") {
           x <-
             spread(
-              select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
-                                   grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
-                                   grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                   grepl(reserva_AMB$Municipio.Mina, pattern = Municipio) == TRUE &
-                                   grepl(reserva_AMB$Processo, pattern = Processo) == TRUE &
-                                   grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina) == TRUE, ], everything()) %>%
+              select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB, ignore.case = TRUE) == TRUE &
+                                   grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL, ignore.case = TRUE) == TRUE &
+                                   grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular, ignore.case = TRUE) == TRUE &
+                                   grepl(reserva_AMB$Municipio.Mina, pattern = Municipio, ignore.case = TRUE) == TRUE &
+                                   grepl(reserva_AMB$Processo, pattern = Processo, ignore.case = TRUE) == TRUE &
+                                   grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina, ignore.case = TRUE) == TRUE, ], everything()) %>%
                 group_by(Ano.Base.Ral, Processo) %>%
                 summarise(soma = sum(Massa.Inferida)),
               key = Ano.Base.Ral,
@@ -388,12 +451,12 @@ reserva_groupBY_PROCESSO <-
           if (reserva == "lavravel") {
             x <-
               spread(
-                select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
-                                     grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
-                                     grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                     grepl(reserva_AMB$Municipio.Mina, pattern = Municipio) == TRUE &
-                                     grepl(reserva_AMB$Processo, pattern = Processo) == TRUE &
-                                     grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina) == TRUE, ], everything()) %>%
+                select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB, ignore.case = TRUE) == TRUE &
+                                     grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL, ignore.case = TRUE) == TRUE &
+                                     grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular, ignore.case = TRUE) == TRUE &
+                                     grepl(reserva_AMB$Municipio.Mina, pattern = Municipio, ignore.case = TRUE) == TRUE &
+                                     grepl(reserva_AMB$Processo, pattern = Processo, ignore.case = TRUE) == TRUE &
+                                     grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina, ignore.case = TRUE) == TRUE, ], everything()) %>%
                   group_by(Ano.Base.Ral, Processo) %>%
                   summarise(soma = sum(Massa.Lavravel)),
                 key = Ano.Base.Ral,
@@ -402,6 +465,25 @@ reserva_groupBY_PROCESSO <-
             
             return(x)
             
+          } else {
+            if (reserva == "contido") {
+              x <-
+                spread(
+                  select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB, ignore.case = TRUE) == TRUE &
+                                       grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL, ignore.case = TRUE) == TRUE &
+                                       grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular, ignore.case = TRUE) == TRUE &
+                                       grepl(reserva_AMB$Municipio.Mina, pattern = Municipio, ignore.case = TRUE) == TRUE &
+                                       grepl(reserva_AMB$Processo, pattern = Processo, ignore.case = TRUE) == TRUE &
+                                       grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina, ignore.case = TRUE) == TRUE, ], everything()) %>%
+                    group_by(Ano.Base.Ral, Processo) %>%
+                    summarise(soma = sum(Contido.Medido)),
+                  key = Ano.Base.Ral,
+                  value = soma
+                )
+              
+              return(x)
+              
+            }
           }
         }
       }
@@ -420,12 +502,12 @@ reserva_groupBY_SUBSTANCIA.AMB <-
     if (reserva == "medida") {
       x <-
         spread(
-          select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
-                               grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
-                               grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                               grepl(reserva_AMB$Municipio.Mina, pattern = Municipio) == TRUE &
-                               grepl(reserva_AMB$Processo, pattern = Processo) == TRUE &
-                               grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina) == TRUE, ], everything()) %>%
+          select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB, ignore.case = TRUE) == TRUE &
+                               grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL, ignore.case = TRUE) == TRUE &
+                               grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular, ignore.case = TRUE) == TRUE &
+                               grepl(reserva_AMB$Municipio.Mina, pattern = Municipio, ignore.case = TRUE) == TRUE &
+                               grepl(reserva_AMB$Processo, pattern = Processo, ignore.case = TRUE) == TRUE &
+                               grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina, ignore.case = TRUE) == TRUE, ], everything()) %>%
             group_by(Ano.Base.Ral, Substancia.AMB) %>%
             summarise(soma = sum(Massa.Medida)),
           key = Ano.Base.Ral,
@@ -438,12 +520,12 @@ reserva_groupBY_SUBSTANCIA.AMB <-
       if (reserva == "indicada") {
         x <-
           spread(
-            select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
-                                 grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
-                                 grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                 grepl(reserva_AMB$Municipio.Mina, pattern = Municipio) == TRUE &
-                                 grepl(reserva_AMB$Processo, pattern = Processo) == TRUE &
-                                 grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina) == TRUE, ], everything()) %>%
+            select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB, ignore.case = TRUE) == TRUE &
+                                 grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL, ignore.case = TRUE) == TRUE &
+                                 grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular, ignore.case = TRUE) == TRUE &
+                                 grepl(reserva_AMB$Municipio.Mina, pattern = Municipio, ignore.case = TRUE) == TRUE &
+                                 grepl(reserva_AMB$Processo, pattern = Processo, ignore.case = TRUE) == TRUE &
+                                 grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina, ignore.case = TRUE) == TRUE, ], everything()) %>%
               group_by(Ano.Base.Ral, Substancia.AMB) %>%
               summarise(soma = sum(Massa.Indicada)),
             key = Ano.Base.Ral,
@@ -455,12 +537,12 @@ reserva_groupBY_SUBSTANCIA.AMB <-
         if (reserva == "inferida") {
           x <-
             spread(
-              select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
-                                   grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
-                                   grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                   grepl(reserva_AMB$Municipio.Mina, pattern = Municipio) == TRUE &
-                                   grepl(reserva_AMB$Processo, pattern = Processo) == TRUE &
-                                   grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina) == TRUE, ], everything()) %>%
+              select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB, ignore.case = TRUE) == TRUE &
+                                   grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL, ignore.case = TRUE) == TRUE &
+                                   grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular, ignore.case = TRUE) == TRUE &
+                                   grepl(reserva_AMB$Municipio.Mina, pattern = Municipio, ignore.case = TRUE) == TRUE &
+                                   grepl(reserva_AMB$Processo, pattern = Processo, ignore.case = TRUE) == TRUE &
+                                   grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina, ignore.case = TRUE) == TRUE, ], everything()) %>%
                 group_by(Ano.Base.Ral, Substancia.AMB) %>%
                 summarise(soma = sum(Massa.Inferida)),
               key = Ano.Base.Ral,
@@ -472,12 +554,12 @@ reserva_groupBY_SUBSTANCIA.AMB <-
           if (reserva == "lavravel") {
             x <-
               spread(
-                select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
-                                     grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
-                                     grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                     grepl(reserva_AMB$Municipio.Mina, pattern = Municipio) == TRUE &
-                                     grepl(reserva_AMB$Processo, pattern = Processo) == TRUE &
-                                     grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina) == TRUE, ], everything()) %>%
+                select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB, ignore.case = TRUE) == TRUE &
+                                     grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL, ignore.case = TRUE) == TRUE &
+                                     grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular, ignore.case = TRUE) == TRUE &
+                                     grepl(reserva_AMB$Municipio.Mina, pattern = Municipio, ignore.case = TRUE) == TRUE &
+                                     grepl(reserva_AMB$Processo, pattern = Processo, ignore.case = TRUE) == TRUE &
+                                     grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina, ignore.case = TRUE) == TRUE, ], everything()) %>%
                   group_by(Ano.Base.Ral, Substancia.AMB) %>%
                   summarise(soma = sum(Massa.Lavravel)),
                 key = Ano.Base.Ral,
@@ -486,6 +568,25 @@ reserva_groupBY_SUBSTANCIA.AMB <-
             
             return(x)
             
+          } else {
+            if (reserva == "contido") {
+              x <-
+                spread(
+                  select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB, ignore.case = TRUE) == TRUE &
+                                       grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL, ignore.case = TRUE) == TRUE &
+                                       grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular, ignore.case = TRUE) == TRUE &
+                                       grepl(reserva_AMB$Municipio.Mina, pattern = Municipio, ignore.case = TRUE) == TRUE &
+                                       grepl(reserva_AMB$Processo, pattern = Processo, ignore.case = TRUE) == TRUE &
+                                       grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina, ignore.case = TRUE) == TRUE, ], everything()) %>%
+                    group_by(Ano.Base.Ral, Substancia.AMB) %>%
+                    summarise(soma = sum(Contido.Medido)),
+                  key = Ano.Base.Ral,
+                  value = soma
+                )
+              
+              return(x)
+              
+            }
           }
         }
       }
@@ -505,12 +606,12 @@ reserva_groupBY_TITULAR <-
     if (reserva == "medida") {
       x <-
         spread(
-          select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
-                               grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
-                               grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                               grepl(reserva_AMB$Municipio.Mina, pattern = Municipio) == TRUE &
-                               grepl(reserva_AMB$Processo, pattern = Processo) == TRUE &
-                               grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina) == TRUE, ], everything()) %>%
+          select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB, ignore.case = TRUE) == TRUE &
+                               grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL, ignore.case = TRUE) == TRUE &
+                               grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular, ignore.case = TRUE) == TRUE &
+                               grepl(reserva_AMB$Municipio.Mina, pattern = Municipio, ignore.case = TRUE) == TRUE &
+                               grepl(reserva_AMB$Processo, pattern = Processo, ignore.case = TRUE) == TRUE &
+                               grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina, ignore.case = TRUE) == TRUE, ], everything()) %>%
             group_by(Ano.Base.Ral, CPF.CNPJ.Titular) %>%
             summarise(soma = sum(Massa.Medida)),
           key = Ano.Base.Ral,
@@ -523,12 +624,12 @@ reserva_groupBY_TITULAR <-
       if (reserva == "indicada") {
         x <-
           spread(
-            select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
-                                 grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
-                                 grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                 grepl(reserva_AMB$Municipio.Mina, pattern = Municipio) == TRUE &
-                                 grepl(reserva_AMB$Processo, pattern = Processo) == TRUE &
-                                 grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina) == TRUE, ], everything()) %>%
+            select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB, ignore.case = TRUE) == TRUE &
+                                 grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL, ignore.case = TRUE) == TRUE &
+                                 grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular, ignore.case = TRUE) == TRUE &
+                                 grepl(reserva_AMB$Municipio.Mina, pattern = Municipio, ignore.case = TRUE) == TRUE &
+                                 grepl(reserva_AMB$Processo, pattern = Processo, ignore.case = TRUE) == TRUE &
+                                 grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina, ignore.case = TRUE) == TRUE, ], everything()) %>%
               group_by(Ano.Base.Ral, CPF.CNPJ.Titular) %>%
               summarise(soma = sum(Massa.Indicada)),
             key = Ano.Base.Ral,
@@ -540,12 +641,12 @@ reserva_groupBY_TITULAR <-
         if (reserva == "inferida") {
           x <-
             spread(
-              select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
-                                   grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
-                                   grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                   grepl(reserva_AMB$Municipio.Mina, pattern = Municipio) == TRUE &
-                                   grepl(reserva_AMB$Processo, pattern = Processo) == TRUE &
-                                   grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina) == TRUE, ], everything()) %>%
+              select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB, ignore.case = TRUE) == TRUE &
+                                   grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL, ignore.case = TRUE) == TRUE &
+                                   grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular, ignore.case = TRUE) == TRUE &
+                                   grepl(reserva_AMB$Municipio.Mina, pattern = Municipio, ignore.case = TRUE) == TRUE &
+                                   grepl(reserva_AMB$Processo, pattern = Processo, ignore.case = TRUE) == TRUE &
+                                   grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina, ignore.case = TRUE) == TRUE, ], everything()) %>%
                 group_by(Ano.Base.Ral, CPF.CNPJ.Titular) %>%
                 summarise(soma = sum(Massa.Inferida)),
               key = Ano.Base.Ral,
@@ -557,12 +658,12 @@ reserva_groupBY_TITULAR <-
           if (reserva == "lavravel") {
             x <-
               spread(
-                select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB) == TRUE &
-                                     grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL) == TRUE &
-                                     grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular) == TRUE &
-                                     grepl(reserva_AMB$Municipio.Mina, pattern = Municipio) == TRUE &
-                                     grepl(reserva_AMB$Processo, pattern = Processo) == TRUE &
-                                     grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina) == TRUE, ], everything()) %>%
+                select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB, ignore.case = TRUE) == TRUE &
+                                     grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL, ignore.case = TRUE) == TRUE &
+                                     grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular, ignore.case = TRUE) == TRUE &
+                                     grepl(reserva_AMB$Municipio.Mina, pattern = Municipio, ignore.case = TRUE) == TRUE &
+                                     grepl(reserva_AMB$Processo, pattern = Processo, ignore.case = TRUE) == TRUE &
+                                     grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina, ignore.case = TRUE) == TRUE, ], everything()) %>%
                   group_by(Ano.Base.Ral, CPF.CNPJ.Titular) %>%
                   summarise(soma = sum(Massa.Lavravel)),
                 key = Ano.Base.Ral,
@@ -571,6 +672,25 @@ reserva_groupBY_TITULAR <-
             
             return(x)
             
+          } else {
+            if (reserva == "contido") {
+              x <-
+                spread(
+                  select(reserva_AMB[grepl(reserva_AMB$Substancia.AMB, pattern = Substancia.AMB, ignore.case = TRUE) == TRUE &
+                                       grepl(reserva_AMB$Substancia.RAL, pattern = Substancia.RAL, ignore.case = TRUE) == TRUE &
+                                       grepl(reserva_AMB$CPF.CNPJ.Titular, pattern = CPF.CNPJ.Titular, ignore.case = TRUE) == TRUE &
+                                       grepl(reserva_AMB$Municipio.Mina, pattern = Municipio, ignore.case = TRUE) == TRUE &
+                                       grepl(reserva_AMB$Processo, pattern = Processo, ignore.case = TRUE) == TRUE &
+                                       grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina, ignore.case = TRUE) == TRUE, ], everything()) %>%
+                    group_by(Ano.Base.Ral, CPF.CNPJ.Titular) %>%
+                    summarise(soma = sum(Contido.Medido)),
+                  key = Ano.Base.Ral,
+                  value = soma
+                )
+              
+              return(x)
+              
+            }
           }
         }
       }

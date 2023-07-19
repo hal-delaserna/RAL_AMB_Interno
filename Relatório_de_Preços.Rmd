@@ -1,0 +1,416 @@
+---
+title: "Preços de Brita e Areia"
+output:
+  prettydoc::html_pretty:
+    theme: Leonids  
+    highlight: github
+---
+
+
+```{r setup, include=FALSE}
+rm(list = ls())
+library(tidyverse)
+library(rmarkdown)
+library(DT)
+library(ipeadatar)
+library(lubridate)
+options(editor = 'notepad')
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r subsetting substancia, include=FALSE}
+
+SUBSTANCIAS <-
+  c("Areia", "Brita e Cascalho"
+    )
+
+ANO_0 <- 2010
+```
+
+```{r carregamento RM, include=FALSE}
+
+RM <-
+  read.table(
+    "./data/Regiões_Metropolitanas_IBGE.csv",
+    header = TRUE, sep = ";",
+    fill = TRUE, quote = "",
+    fileEncoding = 'UTF-8', encoding = "Latin1")
+
+colnames(RM)[5] <- c("RegMet")
+
+
+# chave primária
+RM$id <- 
+  paste0("ID_",
+         RM$NOME_MUN |> iconv(from = "UTF-8", to = 'ASCII//TRANSLIT') |> 
+           gsub(pattern = "'", replacement = "") |> 
+           stringr::str_squish() |> gsub(pattern = " ", replacement = ""),
+         RM$SIGLA_UF)
+
+```
+
+```{r carregamento INCC, include=FALSE}
+
+INCC <- 
+  ipeadatar::ipeadata(code = 'IGP_INCCG')
+
+INCC$ano <- year(INCC$date)
+
+INCC <- INCC[INCC$ano > 2009,]
+INCC$indice <- NA
+
+
+# Índices, se ano base no FIM do período:
+
+INCC[INCC$ano == max(INCC$ano),]$indice <- 1
+
+  for (i in nrow(INCC):2) {
+    
+    INCC[i - 1,c("indice")] <-
+      INCC[i,c("indice")] / (1 + (INCC[i,c("value")] / 100))
+    }
+
+
+ 
+# Índices, se ano base no COMEÇO do período:
+# 
+# INCC[INCC$ano == min(INCC$ano),]$indice <- 1
+# 
+#    for (i in 2:nrow(INCC)) {
+#      INCC[i,c("indice")] <-
+#        INCC[i-1,c("indice")] * (1 + (INCC[i,c("value")] / 100))
+#      }
+
+
+
+
+# Fator de deflação (numerador fixado na data alvo da atualização)
+
+INCC$fator <- NA
+
+for (i in 1:nrow(INCC)) {
+  
+  INCC[i,c("fator")] <- INCC[nrow(INCC),c("indice")]/INCC[i,c("indice")]
+  
+}
+
+
+Fator <- INCC[,c("fator", "ano")]
+
+
+```
+
+```{r carregamento producaoBRUTA, include=FALSE}
+
+producaoBRUTA <-
+  read.table(
+    "./data/CubosDBAMB_MovimentacaoProducaoBruta_AGREGADOS.csv",
+    header = TRUE, sep = ",",dec = ".",
+    fill = TRUE, quote = "",
+    fileEncoding = 'UTF-8')
+
+
+# Subsetting
+producaoBRUTA <- 
+  producaoBRUTA[producaoBRUTA$Substância.AMB %in% c("Areia") &
+                  producaoBRUTA$Ano.Base.Ral >= ANO_0,] #SUBSTANCIAS,]
+
+
+# Formatando colunas de grandezas como numeric
+producaoBRUTA$Quantidade.Producão.Substância.com.Ajuste <- 
+  gsub(producaoBRUTA$Quantidade.Producão.Substância.com.Ajuste, 
+       pattern = ",", replacement = "") |> as.numeric()
+
+producaoBRUTA$Quantidade.Venda.Substância.com.Ajuste <- 
+  gsub(producaoBRUTA$Quantidade.Venda.Substância.com.Ajuste, 
+       pattern = ",", replacement = "") |> as.numeric()
+
+producaoBRUTA$Valor.Venda.com.Ajuste.por.Substância <- 
+  gsub(producaoBRUTA$Valor.Venda.com.Ajuste.por.Substância, 
+       pattern = ",", replacement = "") |> as.numeric()
+
+# Vetor de preços
+producaoBRUTA$Preço <- 
+  ifelse(producaoBRUTA$Valor.Venda.com.Ajuste.por.Substância == 0 |
+         producaoBRUTA$Quantidade.Venda.Substância.com.Ajuste < 1, NA, 
+         round((producaoBRUTA$Valor.Venda.com.Ajuste.por.Substância/
+          producaoBRUTA$Quantidade.Venda.Substância.com.Ajuste), 2))
+
+producaoBRUTA$Núcleo_CNPJCPF <- 
+  ifelse(
+    str_count(producaoBRUTA$CPF.CNPJ.Titular) > 14, 
+    yes = gsub(producaoBRUTA$CPF.CNPJ.Titular, pattern = "........$", replacement = ""), 
+    producaoBRUTA$CPF.CNPJ.Titular)
+
+
+# chave primária
+producaoBRUTA$id <- 
+  paste0("ID_",
+         producaoBRUTA$Município.Mina |> iconv(from = "UTF-8", to = 'ASCII//TRANSLIT') |> 
+           gsub(pattern = "'", replacement = "") |> 
+           stringr::str_squish() |> gsub(pattern = " ", replacement = ""),
+         producaoBRUTA$UF.Mina)
+
+# Unindo Produção Bruta à RM
+producaoBRUTA <- 
+  left_join(producaoBRUTA, RM, by = c("id"))
+
+
+# Unindo Produção Bruta ao INCC
+producaoBRUTA <- 
+  left_join(producaoBRUTA, Fator, by = c("Ano.Base.Ral" = "ano"))
+
+
+```
+
+```{r carregamento producaoBeneficiada, include=FALSE}
+
+producaoBeneficiada <-
+  read.table(
+    "./data/CubosDBAMB_MovimentacaoProducaoBeneficiada.csv",
+    header = TRUE, sep = ",",dec = ".",
+    fill = TRUE, quote = "",
+    fileEncoding = 'UTF-8')
+
+# Subsetting
+producaoBeneficiada <- 
+  producaoBeneficiada[producaoBeneficiada$Substância.AMB %in% c("Brita e Cascalho") & producaoBeneficiada$Ano.Base.Ral >= ANO_0,] #SUBSTANCIAS,]
+
+# Formatando colunas de grandezas como numeric
+producaoBeneficiada$Quantidade.Produção.Substância.com.Ajuste <- 
+  gsub(producaoBeneficiada$Quantidade.Produção.Substância.com.Ajuste, 
+       pattern = ",", replacement = "") |> as.numeric()
+
+producaoBeneficiada$Quantidade.Venda.Substância.com.Ajuste <- 
+  gsub(producaoBeneficiada$Quantidade.Venda.Substância.com.Ajuste, 
+       pattern = ",", replacement = "") |> as.numeric()
+
+producaoBeneficiada$Valor.Venda.com.Ajuste.por.Substância <- 
+  gsub(producaoBeneficiada$Valor.Venda.com.Ajuste.por.Substância, 
+       pattern = ",", replacement = "") |> as.numeric()
+
+# Vetor de preços
+producaoBeneficiada$Preço <- 
+  ifelse(producaoBeneficiada$Valor.Venda.com.Ajuste.por.Substância == 0 |
+         producaoBeneficiada$Quantidade.Venda.Substância.com.Ajuste < 1, NA, 
+         round((producaoBeneficiada$Valor.Venda.com.Ajuste.por.Substância/
+          producaoBeneficiada$Quantidade.Venda.Substância.com.Ajuste), 2))
+
+# Núcleo dos CNPJs
+
+producaoBeneficiada$Núcleo_CNPJCPF <- 
+  ifelse(
+    str_count(producaoBeneficiada$CPF.CNPJ.Titular) > 14, 
+    yes = gsub(producaoBeneficiada$CPF.CNPJ.Titular, pattern = "........$", replacement = ""), 
+    producaoBeneficiada$CPF.CNPJ.Titular)
+
+# chave primária
+producaoBeneficiada$id <- 
+  paste0("ID_",
+         producaoBeneficiada$Município.Usina |> iconv(from = "UTF-8", to = 'ASCII//TRANSLIT') |> 
+           gsub(pattern = "'", replacement = "") |> 
+           stringr::str_squish() |> gsub(pattern = " ", replacement = ""),
+         producaoBeneficiada$UF.Usina)
+
+# Unindo Producao Beneficiada à RM
+producaoBeneficiada <- 
+  left_join(producaoBeneficiada, RM, by = c("id"))
+
+# Unindo Producao Beneficiada ao INCC
+producaoBeneficiada <- 
+  left_join(producaoBeneficiada, Fator, by = c("Ano.Base.Ral" = "ano"))
+
+```
+
+```{r Areia UF, include=FALSE}
+
+Areia_UF <- 
+  summarise(
+    group_by(producaoBRUTA, Ano.Base.Ral, UF.Mina, Substância.AMB), 
+    "Preço_Mediano" = median(Preço, na.rm = T) |> round(2),
+    "Preço_Médio" = mean(Preço, na.rm = T) |> round(2),
+    "Preço_Real" = round(median(Preço, na.rm = T)* median(fator),2),
+    "Minas" = length(Preço),
+    "Produtores" = length(unique(Núcleo_CNPJCPF))
+    )
+
+
+   # write.table(Areia_UF, './Areia_UF.csv', sep = ";", row.names = F, fileEncoding = "Latin1", dec = ",")
+   
+   
+   
+  #  Areia_Mediana_UF <- 
+  # spread(Areia_UF[,-c(5,6)], key = Ano.Base.Ral, value = Preço_Mediano)
+  # 
+  #  write.table(Areia_Mediana_UF, './Areia_Mediana_UF.csv', sep = ";", row.names = F, fileEncoding = "Latin1", dec = ",")
+   
+```
+
+```{r Areia RM, include=FALSE}
+
+Areia_RM <- 
+  summarise(
+    group_by(na.omit(producaoBRUTA), Ano.Base.Ral, RegMet, Substância.AMB), 
+    "Preço_Mediano" = median(Preço, na.rm = T) |> round(2),
+    "Preço_Médio" = mean(Preço, na.rm = T) |> round(2),
+    "Preço_Real" = round(median(Preço, na.rm = T)* median(fator),2),
+    "Minas" = length(Preço),
+    "Produtores" = length(unique(Núcleo_CNPJCPF))
+    )
+
+    # write.table(Areia_RM, './Areia_RM.csv', sep = ";", row.names = F, fileEncoding = "Latin1", dec = ",")
+   # 
+
+
+
+    
+  # Areia_Mediana_RM <- 
+  #   spread(Areia_RM[,-c(5,6)], key = Ano.Base.Ral, value = Preço_Mediano)    
+  #   
+  #   write.table(Areia_Mediana_RM, './Areia_Mediana_RM.csv', sep = ";", row.names = F, fileEncoding = "Latin1", dec = ",")
+
+```
+
+```{r Brita UF, include=FALSE}
+
+Brita_UF <- 
+  summarise(
+    group_by(filter(producaoBeneficiada, Produto.Beneficiado == "Brita (agregado)"),  
+             Ano.Base.Ral, UF.Usina, Produto.Beneficiado), 
+    "Preço_Mediano" = median(Preço, na.rm = T) |> round(2),
+    "Preço_Médio" = mean(Preço, na.rm = T) |> round(2),
+    "Preço_Real" = round(median(Preço, na.rm = T)* median(fator),2),
+    "Usinas" = length(Preço),
+    "Produtores" = length(unique(Núcleo_CNPJCPF))
+    )
+
+
+# write.table(Brita_UF, './Brita_UF.csv', 
+#             sep = ";", row.names = F, fileEncoding = "Latin1", 
+#             dec = ",")
+
+
+
+
+
+# wide
+# Brita_Mediana_UF <- 
+#   spread(Brita_UF[,-c(5,6)], key = Ano.Base.Ral, value = Preço_Mediano)
+# 
+# 
+#  write.table(Brita_Mediana_UF, './Brita_Mediana_UF.csv', sep = ";", row.names = F, fileEncoding = "Latin1", dec = ",")
+
+```
+
+```{r Brita RM, include=FALSE}
+
+Brita_RM <- 
+  summarise(
+    group_by(filter(producaoBeneficiada, Produto.Beneficiado == "Brita (agregado)"),  
+             Ano.Base.Ral, RegMet, Produto.Beneficiado), 
+    "Preço_Mediano" = median(Preço, na.rm = T) |> round(2),
+    "Preço_Médio" = mean(Preço, na.rm = T) |> round(2),
+    "Preço_Real" = round(median(Preço, na.rm = T)* median(fator),2),
+    "Usinas" = length(Preço),
+    "Produtores" = length(unique(Núcleo_CNPJCPF))
+    )
+
+
+# write.table(Brita_RM, './Brita_RM.csv', 
+#             sep = ";", row.names = F, fileEncoding = "Latin1", 
+#             dec = ",")
+
+
+# wide
+# Brita_Mediana_RM <- 
+#   spread(Brita_RM[,-c(5,6)], key = Ano.Base.Ral, value = Preço_Mediano)
+# 
+#  write.table(Brita_Mediana_RM, './Brita_Mediana_RM.csv', sep = ";", row.names = F, fileEncoding = "Latin1", dec = ",")
+
+```
+
+
+## Areia por UF 
+
+```{r Areia por UF, echo=FALSE, warning=FALSE}
+
+datatable(Areia_UF, extensions = 'Buttons',rownames = F,
+            options = list(dom = 'Blfrtip', 
+                           buttons = c('excel'),
+                           columnDefs = 
+                           list(list(className = 'dt-center', 
+                                     targets = "_all"))))
+
+```
+
+<br />
+
+## Areia por Região Metropolitana 
+
+```{r Areia por RM, echo=FALSE, warning=FALSE}
+DT::datatable(
+  Areia_RM, extensions = 'Buttons',rownames = F,
+            options = list(dom = 'Blfrtip', 
+                           buttons = c('excel'),
+                           columnDefs = 
+                           list(list(className = 'dt-center', 
+                                     targets = "_all"))))
+```
+
+<br />
+
+## Brita por UF 
+
+```{r Brita por UF, echo=FALSE, warning=FALSE}
+DT::datatable(
+  Brita_UF, extensions = 'Buttons',rownames = F,
+            options = list(dom = 'Blfrtip', 
+                           buttons = c('excel'),
+                           columnDefs = 
+                           list(list(className = 'dt-center', 
+                                     targets = "_all"))))
+```
+
+<br />
+
+## Brita por Região Metropolitana
+
+```{r Brita por RM, echo=FALSE, warning=FALSE}
+DT::datatable(
+  Brita_RM, extensions = 'Buttons',rownames = F,
+            options = list(dom = 'Blfrtip', 
+                           buttons = c('excel'),
+                           columnDefs = 
+                           list(list(className = 'dt-center', 
+                                     targets = "_all"))))
+```
+
+
+```{r Graf Brita RM, echo=F, warning=FALSE}
+
+ggplot(Brita_RM[Brita_RM$RegMet %in% c("RM de Belo Horizonte (MG)", "RM de Fortaleza (CE)", "RM de Porto Alegre (RS)", "RM de São Paulo (SP)", "RM do Rio de Janeiro (RJ)"),], aes(x = Ano.Base.Ral, y = Preço_Real, group = RegMet, color = RegMet)) +
+  geom_line(linewidth = 1.2) +
+    geom_point(size = 2.8)
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

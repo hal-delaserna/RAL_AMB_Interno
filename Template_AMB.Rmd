@@ -1,142 +1,475 @@
----          
-title: ""
+---
+title: " COEMI/SGR"
+subtitle: "<br /><br /><br /><br /> Produção de Areia no RJ <br />"
+date: "`r Sys.Date()`"
 output:
-  pagedown::html_paged:
-    # change to true for a self-contained document, but it'll be a litte slower for Pandoc to render
-    css:
-      - anm_identidade_visual.css
-      - default-page
-      - default
-    toc: true
-    number-lines: true
-    self_contained: true
-# Produce HTML and PDF in RStudio:
-#knit: pagedown::chrome_print
+  # rmdformats::downcute:  
+   rmdformats::robobook:    
+     self_contained: true
+     default_style: "light"
+     downcute_theme: "default"
+     highlight: kate
 editor_options: 
-  chunk_output_type: inline
+  chunk_output_type: console
 ---
 
 ```{r setup, include=FALSE}
 #       rm(list = ls())
-
 library(tidyverse)
 library(rmarkdown)
-library(kableExtra)
+library(DT)
 options(editor = 'notepad')
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{r carregamento, include=FALSE}
+```{r subsettting, echo=FALSE}
+SUBSTANCIA_Bruta <- "^Areia$"
+SUBSTANCIA_Beneficiada <- "^Areia$"
+ANO_0 <- 2018
+UF_Alvo <- "^RJ$"
+Mun_Alvo <- "." #"^São Paulo$"
+```
+
+```{r carregando bases externas, include=FALSE}
 # ________ Bases
-# source('D:/Users/humberto.serna/Documents/D_Lake/Dados_Abertos_ANM/AMB_Dados_Abertos.R')
-# source('D:/Users/humberto.serna/Documents/D_Lake/CBO.R')
-# source('D:/Users/humberto.serna/Documents/D_Lake/CNAE.R')
-# source('D:/Users/humberto.serna/Documents/D_Lake/geocod.R')
 
-# source('D:/Users/humberto.serna/Documents/D_Lake/Dados_Abertos_ANM/SCM_Microdados_CadMIN.R')
-# cfem <- read_rds('D:/Users/humberto.serna/Documents/D_Lake/CFEM_Dados_Abertos.RDATA')
-processos_SCM <- read_rds('D:/Users/humberto.serna/Documents/D_Lake/Processos_ANM_Dados_Abertos.RDATA')
+# source('./R/CBO.R')
+# source('./R/CNAE.R')
+ source('./R/geocod.R')
 
+  geocod$id_municipio_UF <- 
+    paste("id", 
+          toupper(
+            gsub(
+              iconv(geocod$Município, from = 'Latin1', to = "ASCII//TRANSLIT"), pattern = "'", replacement = "")),
+          geocod$UF_sigla, sep = "_")
+  
+
+# RM <- read.table("./data/Regiões_Metropolitanas_IBGE.csv",header = TRUE, sep = ";",fill = TRUE, quote = "",fileEncoding = 'UTF-8', encoding = "Latin1")
+
+```
+
+```{r carregando Funções, echo=FALSE}
 # ________ Funções
-source('D:/Users/humberto.serna/Desktop/Anuario_Mineral_Brasileiro/Funcoes_de_Formatacao_Estilo/Funcoes_de_Formatacao_Estilo.R')
-# source('D:/Users/humberto.serna/Desktop/Anuario_Mineral_Brasileiro/Funcoes_de_Formatacao_Estilo/Compatibilizacao_processos_CADMIN_SIGMINE.R')
+source('./R/Funcoes_de_Formatacao_Estilo.R')
+# source('./R/Compatibilizacao_processos_CADMIN_SIGMINE.R')
+
+```
+
+```{r carregando Bases INTERNAS, echo=FALSE}
+# source('./data/Dados_Abertos_ANM/AMB_Dados_Abertos.R')
+
+# source('./data/Dados_Abertos_ANM/SCM_Microdados_CadMIN.R')
+# cfem <- read_rds('./data/CFEM_Dados_Abertos.RDATA')
+# processos_SCM <- read_rds('./data/Processos_ANM_Dados_Abertos.RDATA')
+
+```
+
+```{r carregando Produção BRUTA RAL, echo=FALSE, eval=FALSE}
+
+producaoBRUTA <-
+  read.table(
+    "./data/CubosDBAMB_MovimentacaoProducaoBruta_AGREGADOS.csv", header = TRUE, sep = ",",dec = ".",
+    fill = TRUE, quote = "", fileEncoding = 'UTF-8')
+
+df <-
+  read.table(
+    "./data/CubosDBAMB_MovimentacaoProducaoBruta.csv", header = TRUE, sep = ",",dec = ".",
+    fill = TRUE, quote = "", fileEncoding = 'UTF-8')
+
+producaoBRUTA <- rbind(producaoBRUTA, df)
+
+
+# Subsetting
+producaoBRUTA <- 
+  producaoBRUTA[grepl(producaoBRUTA$Substância.AMB, pattern = SUBSTANCIA_Bruta) & producaoBRUTA$Ano.Base.Ral >= ANO_0 & grepl(producaoBRUTA$UF.Mina, pattern = UF_Alvo),] 
+
+# Formatando colunas de grandezas como numeric
+producaoBRUTA$Quantidade.Producão.Substância.com.Ajuste <- 
+  gsub(producaoBRUTA$Quantidade.Producão.Substância.com.Ajuste, 
+       pattern = ",", replacement = "") |> as.numeric()
+
+producaoBRUTA$Quantidade.Venda.Substância.com.Ajuste <- 
+  gsub(producaoBRUTA$Quantidade.Venda.Substância.com.Ajuste, 
+       pattern = ",", replacement = "") |> as.numeric()
+
+producaoBRUTA$Valor.Venda.com.Ajuste.por.Substância <- 
+  gsub(producaoBRUTA$Valor.Venda.com.Ajuste.por.Substância, 
+       pattern = ",", replacement = "") |> as.numeric()
+
+# Ajustando Municípios como chave primária
+
+producaoBRUTA$id_municipio_UF <- 
+  paste("id",
+        gsub(
+          iconv(producaoBRUTA$Município.Mina, from = 'UTF-8', to = "ASCII//TRANSLIT"), 
+          pattern = "'", replacement = ""),
+        producaoBRUTA$UF.Mina, sep = "_")
+
+# Unindo Produção Bruta à RM/GeoCod
+# producaoBRUTA <- left_join(producaoBRUTA, RM, by = c("id"))
+# Unindo Produção Bruta à RM
+ producaoBRUTA <- left_join(producaoBRUTA, geocod, by = c("id_municipio_UF"))
+
+
+
+# Vetor de preços
+producaoBRUTA$Preço <- 
+  ifelse(producaoBRUTA$Valor.Venda.com.Ajuste.por.Substância == 0 |
+         producaoBRUTA$Quantidade.Venda.Substância.com.Ajuste < 1, NA, 
+         round((producaoBRUTA$Valor.Venda.com.Ajuste.por.Substância/
+          producaoBRUTA$Quantidade.Venda.Substância.com.Ajuste), 2))
+
+
+
+
+```
+
+```{r carregando Produção BENEFICIADA RAL, echo=FALSE, eval=FALSE}
+
+producaoBENEFICIADA <-
+  read.table(
+    "./data/CubosDBAMB_MovimentacaoProducaoBeneficiada.csv", header = TRUE, sep = ",", dec = ".",
+    fill = TRUE, quote = "", fileEncoding = 'UTF-8')
+
+# Subsetting
+producaoBENEFICIADA <- 
+  producaoBENEFICIADA[grepl(producaoBENEFICIADA$Substância.AMB, pattern = SUBSTANCIA_Beneficiada) & producaoBENEFICIADA$Ano.Base.Ral >= ANO_0 & grepl(producaoBENEFICIADA$UF.Usina, pattern = UF_Alvo),] 
+
+# Formatando colunas de grandezas como numeric
+producaoBENEFICIADA$Quantidade.Produção.Substância.com.Ajuste <- 
+  gsub(producaoBENEFICIADA$Quantidade.Produção.Substância.com.Ajuste, 
+       pattern = ",", replacement = "") |> as.numeric()
+
+producaoBENEFICIADA$Quantidade.Venda.Substância.com.Ajuste <- 
+  gsub(producaoBENEFICIADA$Quantidade.Venda.Substância.com.Ajuste, 
+       pattern = ",", replacement = "") |> as.numeric()
+
+producaoBENEFICIADA$Valor.Venda.com.Ajuste.por.Substância <- 
+  gsub(producaoBENEFICIADA$Valor.Venda.com.Ajuste.por.Substância, 
+       pattern = ",", replacement = "") |> as.numeric()
+
+# Ajustando Municípios como chave primária
+
+producaoBENEFICIADA$id_municipio_UF <- 
+  paste("id",
+        gsub(
+          iconv(producaoBENEFICIADA$Município.Usina, from = 'UTF-8', to = "ASCII//TRANSLIT"), 
+          pattern = "'", replacement = ""),
+        producaoBENEFICIADA$UF.Usina, sep = "_")
+
+# Unindo Produção Bruta à RM/GeoCod
+# producaoBENEFICIADA <- left_join(producaoBENEFICIADA, RM, by = c("id"))
+# Unindo Produção Bruta à RM
+ producaoBENEFICIADA <- left_join(producaoBENEFICIADA, geocod, by = c("id_municipio_UF"))
+
+# Vetor de preços
+producaoBENEFICIADA$Preço <- 
+  ifelse(producaoBENEFICIADA$Valor.Venda.com.Ajuste.por.Substância == 0 |
+         producaoBENEFICIADA$Quantidade.Venda.Substância.com.Ajuste < 1, NA, 
+         round((producaoBENEFICIADA$Valor.Venda.com.Ajuste.por.Substância/
+          producaoBENEFICIADA$Quantidade.Venda.Substância.com.Ajuste), 2))
+
+```
+
+```{r Ajuste de Outliers, echo=FALSE, eval=FALSE}
+
+sort(producaoBRUTA$Quantidade.Producão.Com.Ajuste) |> plot()
+summary(producaoBRUTA$Quantidade.Producão.Com.Ajuste)
+
+producaoBRUTA[order(producaoBRUTA$Quantidade.Producão.Com.Ajuste, decreasing = TRUE),] |> head() |> View()
+
+
+qcc::
+
+```
+
+```{r carregando Quantidade E Valor, echo=FALSE}
+
+QuantidadeEValor <-
+  read.table(
+    "./data/CubosDBAMB_QuantidadeEhValordaProducaoMineralComercializada_AGREGADOS_I.csv", header = TRUE, sep = "\t",dec = ".",
+    fill = TRUE, quote = "", fileEncoding = 'UTF-8')
+
+# df_1 <-
+#   read.table(
+#     "./data/CubosDBAMB_QuantidadeEhValordaProducaoMineralComercializada_AGREGADOS_II.csv", header = TRUE, sep = "\t",dec = ".",
+#     fill = TRUE, quote = "", fileEncoding = 'UTF-8')
+# 
+# 
+# df_2 <-
+#   read.table(
+#     "./data/CubosDBAMB_QuantidadeEhValordaProducaoMineralComercializada.csv", header = TRUE, sep = "\t",dec = ".",
+#     fill = TRUE, quote = "", fileEncoding = 'UTF-8')
+
+# QuantidadeEValor <- rbind(QuantidadeEValor, df_1, df_2)
+
+
+# Subsetting
+QuantidadeEValor <- 
+  QuantidadeEValor[grepl(QuantidadeEValor$Substância.AMB, pattern = SUBSTANCIA_Bruta) & QuantidadeEValor$Ano.Base.Ral >= ANO_0 & grepl(QuantidadeEValor$Sigla.Estado, pattern = UF_Alvo),] 
+
+# Formatando colunas de grandezas como numeric
+QuantidadeEValor$Quantidade.Produção.Comercializada...Produto <- 
+  gsub(QuantidadeEValor$Quantidade.Produção.Comercializada...Produto, 
+       pattern = ",", replacement = "") |> as.numeric()
+
+QuantidadeEValor$Quantidade.Produção.Comercializada...Substância <- 
+  gsub(QuantidadeEValor$Quantidade.Produção.Comercializada...Substância, 
+       pattern = ",", replacement = "") |> as.numeric()
+
+QuantidadeEValor$Valor.Produção.Comercializada...Produto <- 
+  gsub(QuantidadeEValor$Valor.Produção.Comercializada...Produto, 
+       pattern = ",", replacement = "") |> as.numeric()
+
+QuantidadeEValor$Valor.Produção.Comercializada.Substância.AMB <- 
+  gsub(QuantidadeEValor$Valor.Produção.Comercializada.Substância.AMB, 
+       pattern = ",", replacement = "") |> as.numeric()
+
+# Ajustando Municípios como chave primária
+
+QuantidadeEValor$id_municipio_UF <- 
+  paste("id",
+        gsub(
+          iconv(QuantidadeEValor$Municipio, from = 'UTF-8', to = "ASCII//TRANSLIT"), 
+          pattern = "'", replacement = ""),
+        QuantidadeEValor$Sigla.Estado, sep = "_")
+
+# Unindo Produção Bruta à RM/GeoCod
+# QuantidadeEValor <- left_join(QuantidadeEValor, RM, by = c("id"))
+# Unindo Produção Bruta à RM
+ QuantidadeEValor <- left_join(QuantidadeEValor, geocod, by = c("id_municipio_UF"))
+
+
+
+# Vetor de preços
+QuantidadeEValor$Preço <- 
+  ifelse(QuantidadeEValor$Valor.Produção.Comercializada.Substância.AMB == 0 |
+         QuantidadeEValor$Quantidade.Produção.Comercializada...Substância < 1, NA, 
+         round((QuantidadeEValor$Valor.Produção.Comercializada.Substância.AMB/
+          QuantidadeEValor$Quantidade.Produção.Comercializada...Substância), 2))
+
+
+
 
 ```
 
 
 
-<div class="titulo_secao"> Lorem Ipsum </div>
+```{css, echo = FALSE, eval = T}
+
+.page-inner section#content.normal {
+  background-image: url("./img/anm315x66azul.png");
+  background-position: top right;
+  background-size: 20%;
+  background-repeat: no-repeat;
+}
+
+.body-inner {
+  background-image: url("./img/barra_horizontal_palito.png");
+  background-position: bottom;
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+
+.title {
+  color: #004C78;
+  font-family: acumin-pro, sans-serif; 
+  font-size: 30px;
+  font-weight: bold;
+  font-stretch: condensed;
+  text-align:left;
+    text-align:left;
+    border-left: 7.5px solid #004C78;
+    padding-left: 20px;
+    height: 45px;
+} 
+
+.subtitle {
+  color: #004C78;
+  font-family: acumin-pro, sans-serif; 
+  font-size: 70px;
+  font-weight: bold;
+  font-stretch: condensed;
+  text-align:center;
+}
+
+
+.section.level1 h1 {
+  color: #004C78;
+  font-family: acumin-pro, sans-serif; 
+  font-size: 20pt;
+  font-weight: bold;
+  font-stretch: condensed;
+  text-align:left;
+    border-left: 3.2px solid #004C78;
+    padding-left: 8px;
+    height: 35px;
+}
+
+
+.section.level2 h2 {
+  color: #004C78;
+  font-family: acumin-pro, sans-serif; 
+  font-size: 18pt;
+  font-weight: normal;
+  font-stretch: condensed;
+  text-align:left;
+}
+
+.h3,h4,h5,h6 {
+  color: #004C78;
+    font-family: acumin-pro, sans-serif;
+  font-size: 24px;
+  font-weight: medium;
+  font-stretch: condensed;
+  text-align:left;
+}
+
+p {
+  text-align: justify;
+}
+
+caption {
+	color: #262626;
+	font-family: acumin-pro, sans-serif;
+	font-size: 18px;
+	font-weight: lighter;
+	font-stretch: ultra-condensed;
+	text-align: center;
+	background-color: #dbd7d7;
+	border: 0mm;
+	padding: 12px;
+	margin: 0mm;
+}
+
+.dataTables_wrapper .dt-buttons {
+  float:none;  
+  text-align:center;
+}
+
+```
+
+
+
+Os dados foram são oriundos de declarações das declarações anuais prestadas pelos mineradores.
+
+<!-- Em virtude da Lei Geral de Proteção de Dados Pessoais (**Lei 13.709 de 14/Ago/18**) e da Instrução Normativa que Institui a Política de Proteção de Dados Pessoais (**IN/ANM nº8 de 3/Fev/23**), que versam sobre a proteção dos dados de pessoas físicas e/ou jurídicas, as informações estatísticas da ANM são divulgados agregadamente. Julgou-se que para a informação ora prestada a circunscrição por microrregiões  IBGE, atende aos quesitos de anonimização.   -->
+
 
 <br />
 
-<div class="titulo_subsecao"> 1&nbsp;&nbsp;&nbsp;The standard Lorem Ipsum passage </div>
-<p>
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
-
-</p>
-
-<table class = "tabela_frontao"><tr><th class = "tabela_frontao_numero"> TABELA 1 </th><th class="tabela_frontao_titulo"> TÍTULO DA TABELA 1  </th></tr></table>
-```{r RESERVA_PRODUÇÃO_MUNDIAL_A, eval=A, echo=FALSE, message=FALSE, warning=FALSE}
+## Quantidade e Valor da Produção Mineral Comercializada
 
 
-processos_SCM <- 
-  separate(processos_SCM, col = CPF.CNPJ.do.titular, into = c("CNPJ_Raíz", "UF_CNPJ"), sep = "/")
+A tabela 1 abarca as produções bruta e beneficiada comercializadas que foram destinadas ao mercado (por meio de vendas, consumo ou transferências para transformação) no ano analisado.
 
-processos_SCM$CNPJ_Raíz |> gsub(pattern = "*", replacement = "") |> table()
+O valor da produção mineral (VPM) é o valor efetivamente apurado com a venda (preço) ou com a transferência/consumo (valor de transferência e/ou custo) das produções comercializadas bruta e beneficiada.
 
-gsub(pattern = )
+```{r QuantidadeEValor-Ano, echo=FALSE, message=FALSE}
 
-kableExtra::kable(
-  Producao_Reserva_PAIS[, c(2, 8, 3:5)],
-  format.args = c(big.mark = ".", decimal.mark = ","),
-  digits = 1, align = c("l","c","c","c","c"),
-  col.names = c(" País", "2019", ANO - 2, ANO - 1, ANO)
-)  %>%
-  kable_styling(htmltable_class = "tabela_sumario") %>%
-  add_header_above(c(" ", "Reserva (t)" = 1, "Produção (t)" = 3), 
-  extra_css = "white-space: nowrap; padding: 6px; border-bottom: 2px solid #ffffff;", line = FALSE)
+df_C <- 
+  summarise(
+    group_by(QuantidadeEValor,
+             Município, # Microrregião, 
+             Ano.Base.Ral),
+    "Produção(t)" = round(sum(Quantidade.Produção.Comercializada...Substância),0),#sum(Quantidade.Producão.Com.Ajuste)),
+    "VPM(R$)" = round(sum(Valor.Produção.Comercializada.Substância.AMB),2))#sum(Quantidade.Producão.Com.Ajuste))
 
-```
-
-```{r RESERVA_PRODUÇÃO_MUNDIAL_B, eval=B, echo=FALSE, message=FALSE, warning=FALSE}
-kableExtra::kable(
-  Producao_Reserva_PAIS[, c(2, 8, 3:5)],
-  format.args = c(big.mark = ".", decimal.mark = ","),
-  digits = 1, align = c("l","c","c","c","c"),
-  col.names = c(" País", "2019", ANO - 2, ANO - 1, ANO)
-)  %>%
-  kable_styling(htmltable_class = "tabela_sumario") %>%
-  add_header_above(c(" ", "Reserva (10³ t)" = 1, "Produção (10³ t)" = 3), 
-  extra_css = "white-space: nowrap; padding: 6px; border-bottom: 2px solid #ffffff;", line = FALSE)
+DT::datatable(
+  df_C,
+  extensions = 'Buttons',
+  caption = 'Tabela 1: Quantidade e Valor da Produção de Areia(t) no Estado do RJ',
+  rownames = F,
+  escape=FALSE,
+  filter = list(position = 'top', clear = FALSE),
+  options = list(
+    dom = 'Blfrtip',
+    buttons = c('excel'),
+    columnDefs = list(list(className = 'dt-center', targets = 1:3)),
+    searching = T,
+    paging = TRUE,
+    info= FALSE
+    ))
 
 ```
 
-```{r RESERVA_PRODUÇÃO_MUNDIAL_C, eval=C, echo=FALSE, message=FALSE, warning=FALSE}
-kableExtra::kable(
-  Producao_Reserva_PAIS[, c(2, 3:5)],
-  format.args = c(big.mark = ".", decimal.mark = ","),
-  digits = 1, align = c("l","c","c", "c"),
-  col.names = c(" País", ANO - 2, ANO - 1, ANO)
-)  %>%
-  kable_styling(htmltable_class = "tabela_sumario") %>%
-  add_header_above(c(" ", "Produção (10³ t)" = 3), 
-  extra_css = "white-space: nowrap; padding: 6px; border-bottom: 2px solid #ffffff;", line = FALSE)
 
-```
 <br />
 
-<p>
-`r paste0("No Brasil as reservas de ",SUBS," atingiram ", format(round(ReservaMedida,1), big.mark = ".", decimal.mark = ",", scientific = FALSE), " ", escala_ReservaMedida, " t em ", ANO, " representando ",ifelse(VariacaoReservaMedida > 0, yes = "um aumento de ", no = "uma queda de "),format(round(Mod(VariacaoReservaMedida),1),big.mark = ".",decimal.mark = ","),"% em relação ao ano anterior (",format(ReservaMedida_Ano_Anterior,big.mark = ".",decimal.mark = ",",scientific = FALSE, digits = 1), " ", escala_ReservaMedida_Ano_Anterior," t","). ",ifelse(is.na(ReservaMedida_UF[2, 1]),yes = paste0("Os maiores jazimentos estão em ",ReservaMedida_UF[1, 1]," (",format(round(ReservaMedida_UF[1, 2], digits = 1),big.mark = ".",decimal.mark = ",",scientific = FALSE)," ", escala_ReservaMedida_UF, " t).",ifelse(is.na(ReservaMedida_MUN[2, 1]),no = paste0(ReservaMedida_MUN[1, 1]," (",format(round(ReservaMedida_MUN[1, 2], digits = 1),big.mark = ".",decimal.mark = ",",scientific = FALSE)," ", escala_ReservaMedida_UF, " t) e ",ReservaMedida_MUN[2, 1]," (",format(round(ReservaMedida_MUN[2, 2], digits = 1),big.mark = ".",decimal.mark = ",",scientific = FALSE)," ", escala_ReservaMedida_UF, " t). "),yes = paste0("Estão concentrados no município de ",ReservaMedida_MUN[1, 1]," (",format(round(ReservaMedida_MUN[1, 2], digits = 1),big.mark = ".",decimal.mark = ",",scientific = FALSE)," ", escala_ReservaMedida_UF, " t)."))),no = paste0("Os maiores jazimentos estão em ",ReservaMedida_UF[1, 1]," (",format(round(ReservaMedida_UF[1, 2], digits = 1),big.mark = ".",decimal.mark = ",",scientific = FALSE)," ", escala_ReservaMedida_UF, " t) e ",ReservaMedida_UF[2, 1]," (",format(round(ReservaMedida_UF[2, 2], digits = 1),big.mark = ".",decimal.mark = ",",scientific = FALSE)," ", escala_ReservaMedida_UF, " t). Entre os municípios são destaques ",ReservaMedida_MUN[1, 1]," (",format(round(ReservaMedida_MUN[1, 2], digits = 1),big.mark = ".",decimal.mark = ",",scientific = FALSE)," ", escala_ReservaMedida_UF, " t) e ",ReservaMedida_MUN[2, 1]," (",format(round(ReservaMedida_MUN[2, 2], digits = 1),big.mark = ".",decimal.mark = ",",scientific = FALSE)," ", escala_ReservaMedida_UF, " t).")))`
-</p>
-\newpage
-<div class="titulo_subsecao"> 2&nbsp;&nbsp;&nbsp;De Finibus Bonorum et Malorum </div>
-<p>
-Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
-</p>
-<table class = "tabela_frontao"><tr><th class = "tabela_frontao_numero"> Tabela 3 </th><th class="tabela_frontao_titulo"> Principais Estados Produtores de `r SUBS` - (`r paste0(ifelse(escala_ProducaoBENEFICIADA =="mil","10³ "," "), unidade_ProducaoBENEFICIADA)`) </th></tr></table>
-```{r ProducaoBENEFICIADA_UF, echo=FALSE, warning=FALSE}
-kableExtra::kable(
-  head(ProducaoBENEFICIADA_UF, 5),
-  format.args = c(big.mark = ".", decimal.mark = ","),
-  digits = 1, align = c("l","c","c"),
-  col.names = c("Estado", "Quantidade", "Participação (%)")
-) %>% kable_styling(htmltable_class = "tabela_sumario")
-```
-<br />
-<p>
-Recentemente a produção apresentou o comportamento a seguir indicado:
-</p>
-<table class = "tabela_frontao"><tr><th class = "tabela_frontao_numero"> Tabela 4 </th><th class="tabela_frontao_titulo"> Produção Brasileira de `r SUBS` - (`r paste0(ifelse(escala_ProducaoBENEFICIADA =="mil","10³ "," "), unidade_ProducaoBENEFICIADA)`)</th></tr></table>
-```{r ProducaoBENEFICIADA_ANO, echo=FALSE, warning=FALSE}
-kable(
-  ProducaoBENEFICIADA_ANO,
-  format.args = c(big.mark = ".", decimal.mark = ","),
-  digits = 1, align = c("l","c"),
-  col.names = c("Ano", "Quantidade")
-) %>%
-  kable_styling(htmltable_class = "tabela_sumario")
-```
-<br />
-\newpage
 
+## Produção Bruta
+
+
+A produção bruta de minério (ROM) é a quantidade de minério bruto produzido no ano, obtido diretamente da mina, sem sofrer qualquer tipo de beneficiamento
+
+
+```{r producaoBRUTA-Ano, echo=FALSE, message=FALSE, eval=FALSE}
+
+df_A <- 
+  summarise(
+    group_by(producaoBRUTA, Microrregião, Ano.Base.Ral),
+    "Produção" = round(sum(Quantidade.Producão.Com.Ajuste),0)) #sum(Quantidade.Producão.Com.Ajuste))
+
+df_A <- 
+  pivot_wider(df_A, names_from = Ano.Base.Ral, values_from = Produção)
+
+DT::datatable(
+  df_A,
+  extensions = 'Buttons',
+  caption = 'Tabela 2: Produção Bruta (t) de Areia no Estado do RJ',
+  rownames = F,
+  escape=FALSE,
+  options = list(
+    dom = 'Blfrtip',
+    buttons = c('excel'),
+    columnDefs = list(list(className = 'dt-center',targets = "_all")),
+    searching = FALSE,
+    paging = FALSE,
+    info= FALSE
+    ))
+
+```
+
+<br />
+
+## Produção Beneficiada
+
+A produção beneficiada é a produção anual das usinas de tratamento, que são instalações que realizam os seguintes processos sobre as substâncias minerais brutas: i) **de beneficiamento**, abarcando fragmentação, pulverização, classificação, concentração (inclusive por separação magnética e flotação), homogeneização, desaguamento (inclusive secagem, desidratação e filtragem) e levigação; ii) **de aglomeração**, compreendendo briquetagem, nodulação, sinterização e pelotização; e iii) **de beneficiamento com adição de outras substâncias**, desde que não resulte modificação essencial na identidade das substâncias minerais processadas.
+
+
+```{r producaoBENEFICIADA-Ano, echo=FALSE, message=FALSE, eval=FALSE}
+
+df_B <- 
+  summarise(
+    group_by(filter(producaoBENEFICIADA, Microrregião == "Lagos") , #producaoBENEFICIADA,
+             Microrregião, Ano.Base.Ral),
+    "Produção" = round(sum(Quantidade.Producão.Com.Ajuste),0))#sum(Quantidade.Producão.Com.Ajuste))
+
+df_B <- 
+  pivot_wider(df_B, names_from = Ano.Base.Ral, values_from = Produção)
+
+DT::datatable(
+  df_B,
+  extensions = 'Buttons',
+  caption = 'Tabela 3: Produção Beneficiada (t) de Areia no Estado do RJ',
+  rownames = F,
+  escape=FALSE,
+  options = list(
+    dom = 'Blfrtip',
+    buttons = c('excel'),
+    columnDefs = list(list(className = 'dt-center',targets = "_all")),
+    searching = FALSE,
+    paging = FALSE,
+    info= FALSE
+    ))
+
+```
+
+
+
+<br />
+
+
+<br /><br /><br />

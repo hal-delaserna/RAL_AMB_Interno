@@ -6,7 +6,7 @@ library(tidyverse)
 
 reserva_AMB <-
   read.table("./data/CubosDBAMB_Reserva.csv",
-             header = TRUE, sep = ",",dec = ",",
+             header = TRUE, sep = ",",dec = ".",
              fill = TRUE, quote = "\"",
              fileEncoding = 'UTF-8')
   
@@ -45,6 +45,15 @@ reserva_AMB$Municipio.Mina <-
        replacement = "sao luis do paraitinga")
 
 
+# Teor Reserva Medida
+
+reserva_AMB$teor_medido <- NA
+Substancias_teor <- c("Ferro","Barita","Prata (Primaria)","Pirocloro","Niquel","Cobre","Diamante (Secundario)","Fosfato","Cassiterita (Primaria)","Ouro (Primario)","Uranio","Ilmenita","Monazita","Rutilo","Zirconita (Secundaria)","Diamante (Primario)","Cassiterita (Secundaria)","Bauxita Refrataria","Manganes","Terras-Raras","Ouro (Secundario)","Potassio","Bauxita Metalurgica","Tungstenio","Gemas (Primaria)","Gemas (Secundaria)","Anatasio","Chumbo","Cromo","Vermiculita e Perlita","Zinco","Grafita","Fluorita","Tantalo (Columbita-Tantalita)-Secundario","Cobalto","Agatas Calcedonia etc..","Zirconita (Primaria)","Molibdenio","Turmalina Industrial","Crisotila","Vanadio","Petalita","Espodumenio","Berilio","Enxofre","Tantalo (Columbita-Tantalita)-Primario","Lepidolita","Zirconio (Oxidos)","Djalmaita","Niobio (Columbita-Tantalita)-Primaria","Geodos de Ametista","Criolita","Niobio (Columbita-Tantalita)-Secundaria","Cadmio","Prata (Secundaria)","Corindon","Paladio","Platina","Bismuto","Nao Informado")
+
+reserva_AMB$teor_medido <- 
+  ifelse(reserva_AMB$Substancia.AMB %in% Substancias_teor, 
+         round(100*(reserva_AMB$Contido.Medido/reserva_AMB$Massa.Medida)), NA)
+
 #_____acrescentando percentil de reserva ----
 reserva_AMB$id_subs.ano <-
   paste(reserva_AMB$Substancia.AMB, reserva_AMB$Ano.Base.Ral, sep = "_")
@@ -75,19 +84,33 @@ for (i in 1:nrow(reserva_AMB)) {
 producaoBRUTA <-
   read.table(
     "./data/CubosDBAMB_MovimentacaoProducaoBruta.csv",
-    header = TRUE, sep = ",",dec = ",",
-    fill = TRUE, quote = "\"",
+    header = TRUE, sep = ",",dec = ".",
+    fill = TRUE, quote = "",
     fileEncoding = 'UTF-8')
-
 
 colnames(producaoBRUTA) <-
   colnames(producaoBRUTA) |> iconv(from = "UTF-8", to = "ASCII//TRANSLIT")
+
+producaoBRUTA$Quantidade.Producao.Com.Ajuste <- 
+  as.numeric(producaoBRUTA$Quantidade.Producao.Com.Ajuste)
+
+producaoBRUTA$Quantidade.Venda.com.Ajuste <- 
+  as.numeric(producaoBRUTA$Quantidade.Venda.com.Ajuste)
+
+producaoBRUTA$Valor.Venda.com.Ajuste.por.Minerio <- 
+  as.numeric(producaoBRUTA$Valor.Venda.com.Ajuste.por.Minerio)
+
+producaoBRUTA$Contido.Substancia <- 
+  as.numeric(producaoBRUTA$Contido.Substancia)
 
 producaoBRUTA$Municipio.Mina <-
   producaoBRUTA$Municipio.Mina |> iconv(from = "UTF-8", to = "ASCII//TRANSLIT") |> tolower()
 
 producaoBRUTA$Substancia.AMB <-
   producaoBRUTA$Substancia.AMB |> iconv(from = "UTF-8", to = "ASCII//TRANSLIT")
+
+producaoBRUTA$Substancia.Agrupadora <-
+  producaoBRUTA$Substancia.Agrupadora |> iconv(from = "UTF-8", to = "ASCII//TRANSLIT")
 
 producaoBRUTA$Substancia.RAL <-
   producaoBRUTA$Substancia.RAL |> iconv(from = "UTF-8", to = "ASCII//TRANSLIT")
@@ -97,6 +120,18 @@ producaoBRUTA$Minerio <-
 
 producaoBRUTA$Nome.Mina <-
   producaoBRUTA$Nome.Mina |> iconv(from = "UTF-8", to = "ASCII//TRANSLIT") |> tolower() |> stringr::str_squish()
+
+
+
+# Teor Reserva Medida
+
+producaoBRUTA$teor_medido <- NA
+Substancias_teor <- c("Ferro","Barita","Prata (Primaria)","Pirocloro","Niquel","Cobre","Diamante (Secundario)","Fosfato","Cassiterita (Primaria)","Ouro (Primario)","Uranio","Ilmenita","Monazita","Rutilo","Zirconita (Secundaria)","Diamante (Primario)","Cassiterita (Secundaria)","Bauxita Refrataria","Manganes","Terras-Raras","Ouro (Secundario)","Potassio","Bauxita Metalurgica","Tungstenio","Gemas (Primaria)","Gemas (Secundaria)","Anatasio","Chumbo","Cromo","Vermiculita e Perlita","Zinco","Grafita","Fluorita","Tantalo (Columbita-Tantalita)-Secundario","Cobalto","Agatas Calcedonia etc..","Zirconita (Primaria)","Molibdenio","Turmalina Industrial","Crisotila","Vanadio","Petalita","Espodumenio","Berilio","Enxofre","Tantalo (Columbita-Tantalita)-Primario","Lepidolita","Zirconio (Oxidos)","Djalmaita","Niobio (Columbita-Tantalita)-Primaria","Geodos de Ametista","Criolita","Niobio (Columbita-Tantalita)-Secundaria","Cadmio","Prata (Secundaria)","Corindon","Paladio","Platina","Bismuto","Nao Informado")
+
+producaoBRUTA$teor_medido <- 
+  ifelse(producaoBRUTA$Substancia.AMB %in% Substancias_teor, 
+         round(100*(producaoBRUTA$Contido.Substancia/producaoBRUTA$Quantidade.Producao.Com.Ajuste)), NA)
+
 
 
 #_____acrescentando percentil de produção ----
@@ -116,13 +151,15 @@ producaoBRUTA <-
 producaoBRUTA$pareto <- 0
 for (i in 1:nrow(producaoBRUTA)) {
   
+  if (is.na(producaoBRUTA$Quantidade.Producao.Com.Ajuste[i]) == FALSE) {
+  
   if (producaoBRUTA$Quantidade.Producao.Com.Ajuste[i] > producaoBRUTA$percentil_80[i]) {
     producaoBRUTA$pareto[i] <- 1   
-  }} 
+  }} }
 
 # Valor Unitário de Venda
 producaoBRUTA$preco <-
-  round(producaoBRUTA$Valor.Venda.com.Ajuste.por.Substancia / 
+  round(producaoBRUTA$Valor.Venda.com.Ajuste.por.Minerio / 
           producaoBRUTA$Quantidade.Venda.com.Ajuste, digits = 1)
 
 
@@ -133,8 +170,8 @@ producaoBRUTA$preco <-
 producaoBENEFICIADA <-
   read.table(
     "./data/CubosDBAMB_MovimentacaoProducaoBeneficiada.csv",
-    header = TRUE, sep = ",",dec = ",",
-    fill = TRUE, quote = "\"",
+    header = TRUE, sep = ",",dec = ".",
+    fill = TRUE, quote = "",
     fileEncoding = 'UTF-8')
 
 colnames(producaoBENEFICIADA) <- 
@@ -154,10 +191,14 @@ producaoBENEFICIADA$Nome.Usina <-
 producaoBENEFICIADA$Substancia.AMB <-
   producaoBENEFICIADA$Substancia.AMB |> iconv(from = "UTF-8", to = "ASCII//TRANSLIT")
 
+producaoBENEFICIADA$Substancia.Agrupadora <-
+  producaoBENEFICIADA$Substancia.Agrupadora |> iconv(from = "UTF-8", to = "ASCII//TRANSLIT")
+
 producaoBENEFICIADA$Produto.Beneficiado <-
   producaoBENEFICIADA$Produto.Beneficiado |> iconv(from = "UTF-8", to = "ASCII//TRANSLIT")
 
-
+producaoBENEFICIADA$Produto.Pre.beneficiado...Minerio <-
+  producaoBENEFICIADA$Produto.Pre.beneficiado...Minerio |> iconv(from = "UTF-8", to = "ASCII//TRANSLIT")
 
 # ID cpf/cnpj- USINA
 
@@ -168,6 +209,15 @@ producaoBENEFICIADA$id_cpfcnpj.usina <-
 
 producaoBENEFICIADA$id_cpfcnpj.municipio <- 
   paste(producaoBENEFICIADA$CPF.CNPJ.Titular, producaoBENEFICIADA$Municipio.Usina, sep = "_")
+
+# Teor Reserva Medida
+
+producaoBENEFICIADA$teor_medido <- NA
+Substancias_teor <- c("Ferro","Barita","Prata (Primaria)","Pirocloro","Niquel","Cobre","Diamante (Secundario)","Fosfato","Cassiterita (Primaria)","Ouro (Primario)","Uranio","Ilmenita","Monazita","Rutilo","Zirconita (Secundaria)","Diamante (Primario)","Cassiterita (Secundaria)","Bauxita Refrataria","Manganes","Terras-Raras","Ouro (Secundario)","Potassio","Bauxita Metalurgica","Tungstenio","Gemas (Primaria)","Gemas (Secundaria)","Anatasio","Chumbo","Cromo","Vermiculita e Perlita","Zinco","Grafita","Fluorita","Tantalo (Columbita-Tantalita)-Secundario","Cobalto","Agatas Calcedonia etc..","Zirconita (Primaria)","Molibdenio","Turmalina Industrial","Crisotila","Vanadio","Petalita","Espodumenio","Berilio","Enxofre","Tantalo (Columbita-Tantalita)-Primario","Lepidolita","Zirconio (Oxidos)","Djalmaita","Niobio (Columbita-Tantalita)-Primaria","Geodos de Ametista","Criolita","Niobio (Columbita-Tantalita)-Secundaria","Cadmio","Prata (Secundaria)","Corindon","Paladio","Platina","Bismuto","Nao Informado")
+
+producaoBENEFICIADA$teor_medido <- 
+  ifelse(producaoBENEFICIADA$Substancia.AMB %in% Substancias_teor, 
+         round(100*(producaoBENEFICIADA$Contido.Substancia/producaoBENEFICIADA$Quantidade.Producao.Com.Ajuste)), NA)
 
 
 #_____acrescentando percentil de produção ----
@@ -187,28 +237,25 @@ producaoBENEFICIADA <-
 producaoBENEFICIADA$pareto <- 0
 for (i in 1:nrow(producaoBENEFICIADA)) {
   
+  if (is.na(producaoBENEFICIADA$Quantidade.Producao.Com.Ajuste[i]) == FALSE) {
+  
   if (producaoBENEFICIADA$Quantidade.Producao.Com.Ajuste[i] > producaoBENEFICIADA$percentil_80[i]) {
     producaoBENEFICIADA$pareto[i] <- 1   
-  }} 
+  }} }
 
 
 # Valor Unitário de Venda
 producaoBENEFICIADA$preco <-
-  round(producaoBENEFICIADA$Valor.Venda.com.Ajuste.por.Substancia / 
-          producaoBENEFICIADA$Quantidade.Venda.Substancia.com.Ajuste, digits = 1)
+  round(producaoBENEFICIADA$Valor.Venda.com.Ajuste.por.Produto.Pre.beneficiado...Valor / 
+          producaoBENEFICIADA$Quantidade.Venda.com.Ajuste, digits = 1)
 
 # excluindo usinas sem produção (inclusive as usinas autom?ticas criadas redundantemente)
 linhas <- list()
 for (i in 1:nrow(producaoBENEFICIADA)) {
   if (sum(
     producaoBENEFICIADA[i, c(
-      "Quantidade.Producao.Substancia.com.Ajuste",
-      "Contido.Substancia",
-      "Quantidade.Venda.Substancia.com.Ajuste",
-      "Valor.Venda.com.Ajuste.por.Substancia",
-      "Quantidade.Producao.Com.Ajuste",
-      "Quantidade.Venda.com.Ajuste",
-      "Valor.Venda.com.Ajuste.por.Produto.Pre.beneficiado...Valor"
+        "Quantidade.Venda.com.Ajuste", 
+        "Quantidade.Producao.Com.Ajuste"
     )], na.rm = TRUE) == 0) {
     linhas[i] <- i
   }
@@ -218,6 +265,11 @@ linhas <- do.call(what = 'rbind',args = linhas)
 
 producaoBENEFICIADA <-
   producaoBENEFICIADA[-linhas, ]
+
+
+
+
+
 
 # CARREGANDO Produção QUANTIDADE_E_VALOR_DA_PRODUÇÃO_COMERCIALIZADA ----
 
