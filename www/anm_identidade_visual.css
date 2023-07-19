@@ -9,9 +9,12 @@
 font-size: 12pt;
 
 }
+
+/*
 .markdown-body {
   background: mintcream;
 }
+*/
 @page{
   margin-top: 30mm;
   border-top-width: 0mm;
