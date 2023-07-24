@@ -1494,7 +1494,7 @@ FUNA_VALOR_Quantil_WIDE <-
         paste0(df$Substancia.Agrupadora, df$Ano.Base.Ral)
       
       df_a <-
-        producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = Substancia.AMB),
+        producaoBRUTA[grepl(producaoBRUTA$Substancia.AMB, pattern = Substancia.AMB, ignore.case = TRUE),
                       c("Processo","Ano.Base.Ral","CPF.CNPJ.Titular",
                         "id_subs.ano","Substancia.AMB",
                         "Valor.Venda.com.Ajuste.por.Minerio")]

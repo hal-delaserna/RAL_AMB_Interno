@@ -15,12 +15,19 @@ source(file = "./R/carregamento_Bases_AMB_outras.r", encoding = "UTF-8")
 # source(file = "./Rastreamento_de_Inconsistencias/Municipios_inconsistencia.R")
 #__________________________________________________________________----
 
+
+ano_inicial <- 2016
+reserva_AMB <- filter(reserva_AMB, Ano.Base.Ral >= ano_inicial)
+producaoBRUTA <- filter(producaoBRUTA, Ano.Base.Ral >= ano_inicial)
+producaoBENEFICIADA <- filter(producaoBENEFICIADA, Ano.Base.Ral >= ano_inicial)
+
+
 # RESERVA ----
 
  #_____Reserva visão ---- 
    Nome.Mina <- '.'
-   CPF.CNPJ.Titular <- '01.637.895/0106-00'
-   Substancia.AMB <- '.'
+   CPF.CNPJ.Titular <- '.'
+   Substancia.AMB <- 'Cassiterita'
    Processo <- '.'
 
    FUNA_visao_RESERVA(Substancia.AMB = Substancia.AMB, Processo = Processo, CPF.CNPJ.Titular = CPF.CNPJ.Titular, Nome.Mina = Nome.Mina)
