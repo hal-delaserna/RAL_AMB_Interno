@@ -6,8 +6,8 @@ library(tidyverse)
 
 reserva_AMB <-
   read.table("./data/CubosDBAMB_Reserva.csv",
-             header = TRUE, sep = ",",dec = ".",
-             fill = TRUE, quote = "\"",
+             header = TRUE, sep = "\t",dec = ".",
+             fill = TRUE, quote = "",
              fileEncoding = 'UTF-8')
   
   # read.table(
@@ -29,6 +29,9 @@ reserva_AMB$Municipio.Mina <-
 
 reserva_AMB$Substancia.AMB <-
   reserva_AMB$Substancia.AMB |> iconv(from = "UTF-8", to = "ASCII//TRANSLIT")
+
+reserva_AMB$Substancia.Agrupadora <-
+  reserva_AMB$Substancia.Agrupadora |> iconv(from = "UTF-8", to = "ASCII//TRANSLIT")
 
 reserva_AMB$Substancia.RAL <-
   reserva_AMB$Substancia.RAL |> iconv(from = "UTF-8", to = "ASCII//TRANSLIT")
@@ -84,7 +87,7 @@ for (i in 1:nrow(reserva_AMB)) {
 producaoBRUTA <-
   read.table(
     "./data/CubosDBAMB_MovimentacaoProducaoBruta.csv",
-    header = TRUE, sep = ",",dec = ".",
+    header = TRUE, sep = "\t",dec = ".",
     fill = TRUE, quote = "",
     fileEncoding = 'UTF-8')
 
@@ -104,7 +107,7 @@ producaoBRUTA$Contido.Substancia <-
   as.numeric(producaoBRUTA$Contido.Substancia)
 
 producaoBRUTA$Municipio.Mina <-
-  producaoBRUTA$Municipio.Mina |> iconv(from = "UTF-8", to = "ASCII//TRANSLIT") |> tolower()
+  producaoBRUTA$Municipio |> iconv(from = "UTF-8", to = "ASCII//TRANSLIT") |> tolower()
 
 producaoBRUTA$Substancia.AMB <-
   producaoBRUTA$Substancia.AMB |> iconv(from = "UTF-8", to = "ASCII//TRANSLIT")
@@ -123,7 +126,7 @@ producaoBRUTA$Nome.Mina <-
 
 
 
-# Teor Reserva Medida
+# Teor 
 
 producaoBRUTA$teor_medido <- NA
 Substancias_teor <- c("Ferro","Barita","Prata (Primaria)","Pirocloro","Niquel","Cobre","Diamante (Secundario)","Fosfato","Cassiterita (Primaria)","Ouro (Primario)","Uranio","Ilmenita","Monazita","Rutilo","Zirconita (Secundaria)","Diamante (Primario)","Cassiterita (Secundaria)","Bauxita Refrataria","Manganes","Terras-Raras","Ouro (Secundario)","Potassio","Bauxita Metalurgica","Tungstenio","Gemas (Primaria)","Gemas (Secundaria)","Anatasio","Chumbo","Cromo","Vermiculita e Perlita","Zinco","Grafita","Fluorita","Tantalo (Columbita-Tantalita)-Secundario","Cobalto","Agatas Calcedonia etc..","Zirconita (Primaria)","Molibdenio","Turmalina Industrial","Crisotila","Vanadio","Petalita","Espodumenio","Berilio","Enxofre","Tantalo (Columbita-Tantalita)-Primario","Lepidolita","Zirconio (Oxidos)","Djalmaita","Niobio (Columbita-Tantalita)-Primaria","Geodos de Ametista","Criolita","Niobio (Columbita-Tantalita)-Secundaria","Cadmio","Prata (Secundaria)","Corindon","Paladio","Platina","Bismuto","Nao Informado")
@@ -170,7 +173,7 @@ producaoBRUTA$preco <-
 producaoBENEFICIADA <-
   read.table(
     "./data/CubosDBAMB_MovimentacaoProducaoBeneficiada.csv",
-    header = TRUE, sep = ",",dec = ".",
+    header = TRUE, sep = "\t",dec = ".",
     fill = TRUE, quote = "",
     fileEncoding = 'UTF-8')
 
@@ -197,20 +200,17 @@ producaoBENEFICIADA$Substancia.Agrupadora <-
 producaoBENEFICIADA$Produto.Beneficiado <-
   producaoBENEFICIADA$Produto.Beneficiado |> iconv(from = "UTF-8", to = "ASCII//TRANSLIT")
 
-producaoBENEFICIADA$Produto.Pre.beneficiado...Minerio <-
-  producaoBENEFICIADA$Produto.Pre.beneficiado...Minerio |> iconv(from = "UTF-8", to = "ASCII//TRANSLIT")
-
 # ID cpf/cnpj- USINA
 
 producaoBENEFICIADA$id_cpfcnpj.usina <- 
-  paste(producaoBENEFICIADA$CPF.CNPJ.Titular, producaoBENEFICIADA$Nome.Usina, sep = "_")
+  paste(producaoBENEFICIADA$CPF.CNPJ.Titular, producaoBENEFICIADA$Nome, sep = "_")
 
 # ID cpf/cnpj- Municipio
 
 producaoBENEFICIADA$id_cpfcnpj.municipio <- 
   paste(producaoBENEFICIADA$CPF.CNPJ.Titular, producaoBENEFICIADA$Municipio.Usina, sep = "_")
 
-# Teor Reserva Medida
+# Teor 
 
 producaoBENEFICIADA$teor_medido <- NA
 Substancias_teor <- c("Ferro","Barita","Prata (Primaria)","Pirocloro","Niquel","Cobre","Diamante (Secundario)","Fosfato","Cassiterita (Primaria)","Ouro (Primario)","Uranio","Ilmenita","Monazita","Rutilo","Zirconita (Secundaria)","Diamante (Primario)","Cassiterita (Secundaria)","Bauxita Refrataria","Manganes","Terras-Raras","Ouro (Secundario)","Potassio","Bauxita Metalurgica","Tungstenio","Gemas (Primaria)","Gemas (Secundaria)","Anatasio","Chumbo","Cromo","Vermiculita e Perlita","Zinco","Grafita","Fluorita","Tantalo (Columbita-Tantalita)-Secundario","Cobalto","Agatas Calcedonia etc..","Zirconita (Primaria)","Molibdenio","Turmalina Industrial","Crisotila","Vanadio","Petalita","Espodumenio","Berilio","Enxofre","Tantalo (Columbita-Tantalita)-Primario","Lepidolita","Zirconio (Oxidos)","Djalmaita","Niobio (Columbita-Tantalita)-Primaria","Geodos de Ametista","Criolita","Niobio (Columbita-Tantalita)-Secundaria","Cadmio","Prata (Secundaria)","Corindon","Paladio","Platina","Bismuto","Nao Informado")
@@ -327,10 +327,10 @@ producaoBENEFICIADA <-
 #     "ano",
 #     "titular",
 #     "cpfcnpj",
-#     "Nome.Mina",
+#     "Nome",
 #     "Municipio",
 #     "uf",
-#     "substancias.amb.Nome.Mina",
+#     "substancias.amb.Nome",
 #     "Minerio",
 #     "nome.comprador",
 #     "uso.destinacao",
@@ -347,14 +347,14 @@ producaoBENEFICIADA <-
 # consumidoresMINA$titular <-
 #   consumidoresMINA$titular |> iconv(from = "UTF-8", to = "ASCII//TRANSLIT") |> tolower()
 # 
-# consumidoresMINA$substancias.amb.Nome.Mina <-
-#   consumidoresMINA$substancias.amb.Nome.Mina |> iconv(from = "UTF-8", to = "ASCII//TRANSLIT") |> tolower() |> stringr::str_squish()
+# consumidoresMINA$substancias.amb.Nome <-
+#   consumidoresMINA$substancias.amb.Nome |> iconv(from = "UTF-8", to = "ASCII//TRANSLIT") |> tolower() |> stringr::str_squish()
 # 
 # consumidoresMINA$Minerio <-
 #   consumidoresMINA$Minerio |> iconv(from = "UTF-8", to = "ASCII//TRANSLIT") |> tolower() |> stringr::str_squish()
 # 
-# consumidoresMINA$Nome.Mina <-
-#   consumidoresMINA$Nome.Mina |> iconv(from = "UTF-8", to = "ASCII//TRANSLIT") |> tolower() |> stringr::str_squish()
+# consumidoresMINA$Nome <-
+#   consumidoresMINA$Nome |> iconv(from = "UTF-8", to = "ASCII//TRANSLIT") |> tolower() |> stringr::str_squish()
 # 
 # consumidoresMINA$preco <-
 #   round(consumidoresMINA$valor.compra / consumidoresMINA$quantidade.compra,
