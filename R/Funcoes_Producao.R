@@ -793,9 +793,9 @@ producaoBENEFICIADA_GERAL <-
                                              #grepl(producaoBENEFICIADA$produto.beneficiado, pattern = produto, ignore.case = TRUE) == TRUE &
                                              grepl(producaoBENEFICIADA$Nome.Usina, pattern = Nome.Usina, ignore.case = TRUE) == TRUE,], everything()) %>%
                   group_by(Ano.Base.Ral) %>%
-                  summarise(soma = sum(Contido.Substancia)/sum(Quantidade.Producao.Com.Ajuste)),
+                  summarise('teor' = teor_medido),
                 key = Ano.Base.Ral,
-                value = soma
+                value = teor
               )
             
             return(x)
@@ -904,9 +904,9 @@ producaoBENEFICIADA_groupBY_USINA <-
                                              #grepl(producaoBENEFICIADA$produto.beneficiado, pattern = produto, ignore.case = TRUE) == TRUE &
                                              grepl(producaoBENEFICIADA$Nome.Usina, pattern = Nome.Usina, ignore.case = TRUE) == TRUE,], everything()) %>%
                   group_by(Ano.Base.Ral, Nome.Usina) %>%
-                  summarise(soma = sum(Contido.Substancia)/sum(Quantidade.Producao.Com.Ajuste)),
+                  summarise('teor' = teor_medido),
                 key = Ano.Base.Ral,
-                value = soma
+                value = teor
               )
             
             return(x)
@@ -995,9 +995,9 @@ producaoBENEFICIADA_groupBY_MUNICIPIO <-
                                              #grepl(producaoBENEFICIADA$produto.beneficiado, pattern = produto, ignore.case = TRUE) == TRUE &
                                              grepl(producaoBENEFICIADA$Nome.Usina, pattern = Nome.Usina, ignore.case = TRUE) == TRUE,], everything()) %>%
                   group_by(Ano.Base.Ral, Municipio.Usina) %>%
-                  summarise(soma = sum(Contido.Substancia)/sum(Quantidade.Producao.Com.Ajuste)),
+                  summarise('teor' = teor_medido),
                 key = Ano.Base.Ral,
-                value = soma
+                value = teor
               )
             
             return(x)
@@ -1177,9 +1177,9 @@ producaoBENEFICIADA_groupBY_SUBSTANCIA.AMB <-
                                              #grepl(producaoBENEFICIADA$produto.beneficiado, pattern = produto, ignore.case = TRUE) == TRUE &
                                              grepl(producaoBENEFICIADA$Nome.Usina, pattern = Nome.Usina, ignore.case = TRUE) == TRUE,], everything()) %>%
                   group_by(Ano.Base.Ral, Substancia.AMB) %>%
-                  summarise(soma = sum(Contido.Substancia)/sum(Quantidade.Producao.Com.Ajuste)),
+                  summarise('teor' = teor_medido),
                 key = Ano.Base.Ral,
-                value = soma
+                value = teor
               )
             
             return(x)
@@ -1270,9 +1270,9 @@ producaoBENEFICIADA_groupBY_TITULAR <-
                                              #grepl(producaoBENEFICIADA$produto.beneficiado, pattern = produto, ignore.case = TRUE) == TRUE &
                                              grepl(producaoBENEFICIADA$Nome.Usina, pattern = Nome.Usina, ignore.case = TRUE) == TRUE,], everything()) %>%
                   group_by(Ano.Base.Ral, CPF.CNPJ.Titular) %>%
-                  summarise(soma = sum(Contido.Substancia)/sum(Quantidade.Producao.Com.Ajuste)),
+                  summarise('teor' = teor_medido),
                 key = Ano.Base.Ral,
-                value = soma
+                value = teor
               )
             
             return(x)

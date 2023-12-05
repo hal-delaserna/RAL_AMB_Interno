@@ -197,9 +197,9 @@ reserva_GERAL <-
                                      grepl(reserva_AMB$Processo, pattern = Processo, ignore.case = TRUE) == TRUE &
                                      grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina, ignore.case = TRUE) == TRUE, ], everything()) %>%
                   group_by(Ano.Base.Ral) %>%
-                  summarise(soma = sum(Contido.Medido)/sum(Massa.Medida)),
+                  summarise('teor' = teor_medido),
                 key = Ano.Base.Ral,
-                value = soma
+                value = teor
               )
             
             return(x)
@@ -322,9 +322,9 @@ reserva_groupBY_MINA <-
                                      grepl(reserva_AMB$Processo, pattern = Processo, ignore.case = TRUE) == TRUE &
                                      grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina, ignore.case = TRUE) == TRUE, ], everything()) %>%
                   group_by(Ano.Base.Ral, Nome.Mina) %>%
-                  summarise(soma = sum(Contido.Medido)/sum(Massa.Medida)),
+                  summarise('teor' = teor_medido),
                 key = Ano.Base.Ral,
-                value = soma
+                value = teor
               )
             
             return(x)
@@ -442,9 +442,9 @@ reserva_groupBY_MUNICIPIO <-
                                        grepl(reserva_AMB$Processo, pattern = Processo, ignore.case = TRUE) == TRUE &
                                        grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina, ignore.case = TRUE) == TRUE, ], everything()) %>%
                     group_by(Ano.Base.Ral, Municipio.Mina) %>%
-                    summarise(soma = sum(Contido.Medido)/sum(Massa.Medida)),
+                    summarise('teor' = teor_medido),
                   key = Ano.Base.Ral,
-                  value = soma
+                  value = teor
                 )
               
               return(x)
@@ -568,9 +568,9 @@ reserva_groupBY_PROCESSO <-
                                        grepl(reserva_AMB$Processo, pattern = Processo, ignore.case = TRUE) == TRUE &
                                        grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina, ignore.case = TRUE) == TRUE, ], everything()) %>%
                     group_by(Ano.Base.Ral, Processo) %>%
-                    summarise(soma = sum(Contido.Medido)/sum(Massa.Medida)),
+                    summarise('teor' = teor_medido),
                   key = Ano.Base.Ral,
-                  value = soma
+                  value = teor
                 )
               
               return(x)
@@ -694,9 +694,9 @@ reserva_groupBY_SUBSTANCIA.AMB <-
                                        grepl(reserva_AMB$Processo, pattern = Processo, ignore.case = TRUE) == TRUE &
                                        grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina, ignore.case = TRUE) == TRUE, ], everything()) %>%
                   group_by(Ano.Base.Ral, Substancia.AMB) %>%
-                    summarise(soma = sum(Contido.Medido)/sum(Massa.Medida)),
+                    summarise('teor' = teor_medido),
                   key = Ano.Base.Ral,
-                  value = soma
+                  value = teor
                 )
               
               return(x)
@@ -821,9 +821,9 @@ reserva_groupBY_TITULAR <-
                                        grepl(reserva_AMB$Processo, pattern = Processo, ignore.case = TRUE) == TRUE &
                                        grepl(reserva_AMB$Nome.Mina, pattern = Nome.Mina, ignore.case = TRUE) == TRUE, ], everything()) %>%
                     group_by(Ano.Base.Ral, CPF.CNPJ.Titular) %>%
-                    summarise(soma = sum(Contido.Medido)/sum(Massa.Medida)),
+                    summarise('teor' = teor_medido),
                   key = Ano.Base.Ral,
-                  value = soma
+                  value = teor
                 )
               
               return(x)

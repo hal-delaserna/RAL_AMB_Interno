@@ -48,14 +48,17 @@ reserva_AMB$Municipio.Mina <-
        replacement = "sao luis do paraitinga")
 
 
-# Teor Reserva Medida
+#____________________________________ Teor Reserva Medida **************************
 
 reserva_AMB$teor_medido <- NA
 Substancias_teor <- c("Ferro","Barita","Prata (Primaria)","Pirocloro","Niquel","Cobre","Diamante (Secundario)","Fosfato","Cassiterita (Primaria)","Ouro (Primario)","Uranio","Ilmenita","Monazita","Rutilo","Zirconita (Secundaria)","Diamante (Primario)","Cassiterita (Secundaria)","Bauxita Refrataria","Manganes","Terras-Raras","Ouro (Secundario)","Potassio","Bauxita Metalurgica","Tungstenio","Gemas (Primaria)","Gemas (Secundaria)","Anatasio","Chumbo","Cromo","Vermiculita e Perlita","Zinco","Grafita","Fluorita","Tantalo (Columbita-Tantalita)-Secundario","Cobalto","Agatas Calcedonia etc..","Zirconita (Primaria)","Molibdenio","Turmalina Industrial","Crisotila","Vanadio","Petalita","Espodumenio","Berilio","Enxofre","Tantalo (Columbita-Tantalita)-Primario","Lepidolita","Zirconio (Oxidos)","Djalmaita","Niobio (Columbita-Tantalita)-Primaria","Geodos de Ametista","Criolita","Niobio (Columbita-Tantalita)-Secundaria","Cadmio","Prata (Secundaria)","Corindon","Paladio","Platina","Bismuto","Nao Informado")
 
 reserva_AMB$teor_medido <- 
-  ifelse(reserva_AMB$Substancia.AMB %in% Substancias_teor, 
-         round(100*(reserva_AMB$Contido.Medido/reserva_AMB$Massa.Medida)), NA)
+  ifelse(reserva_AMB$Substancia.AMB %in% Substancias_teor,
+         ifelse(reserva_AMB$Unidade.do.Contido == "kg",
+                round(100*(((reserva_AMB$Contido.Medido)/1000)/reserva_AMB$Massa.Medida)),
+                round(100*((reserva_AMB$Contido.Medido)/reserva_AMB$Massa.Medida))),
+         NA)
 
 #_____acrescentando percentil de reserva ----
 reserva_AMB$id_subs.ano <-
@@ -131,10 +134,40 @@ producaoBRUTA$Nome.Mina <-
 producaoBRUTA$teor_medido <- NA
 Substancias_teor <- c("Ferro","Barita","Prata (Primaria)","Pirocloro","Niquel","Cobre","Diamante (Secundario)","Fosfato","Cassiterita (Primaria)","Ouro (Primario)","Uranio","Ilmenita","Monazita","Rutilo","Zirconita (Secundaria)","Diamante (Primario)","Cassiterita (Secundaria)","Bauxita Refrataria","Manganes","Terras-Raras","Ouro (Secundario)","Potassio","Bauxita Metalurgica","Tungstenio","Gemas (Primaria)","Gemas (Secundaria)","Anatasio","Chumbo","Cromo","Vermiculita e Perlita","Zinco","Grafita","Fluorita","Tantalo (Columbita-Tantalita)-Secundario","Cobalto","Agatas Calcedonia etc..","Zirconita (Primaria)","Molibdenio","Turmalina Industrial","Crisotila","Vanadio","Petalita","Espodumenio","Berilio","Enxofre","Tantalo (Columbita-Tantalita)-Primario","Lepidolita","Zirconio (Oxidos)","Djalmaita","Niobio (Columbita-Tantalita)-Primaria","Geodos de Ametista","Criolita","Niobio (Columbita-Tantalita)-Secundaria","Cadmio","Prata (Secundaria)","Corindon","Paladio","Platina","Bismuto","Nao Informado")
 
-producaoBRUTA$teor_medido <- 
-  ifelse(producaoBRUTA$Substancia.AMB %in% Substancias_teor, 
-         round(100*(producaoBRUTA$Contido.Substancia/producaoBRUTA$Quantidade.Producao.Com.Ajuste)), NA)
 
+producaoBRUTA$teor_medido <- 
+  ifelse(producaoBRUTA$Substancia.AMB %in% Substancias_teor,
+         ifelse(producaoBRUTA$Unidade.de.Medida.Contido == "kg",
+                round(100*(((producaoBRUTA$Contido.Substancia)/1000)/producaoBRUTA$Quantidade.Producao.Com.Ajuste)),
+                round(100*((producaoBRUTA$Contido.Substancia)/producaoBRUTA$Quantidade.Producao.Com.Ajuste))),
+         NA)
+
+
+
+producaoBRUTA$teor_medido <-
+  ifelse(
+    producaoBRUTA$Substancia.AMB %in% Substancias_teor,
+    ifelse(
+      producaoBRUTA$Unidade.de.Medida.Contido == "kg" &
+        producaoBRUTA$Unidade.Medida.Minerio == 't',
+      round(
+        100 * (((producaoBRUTA$Contido.Substancia) / 1000) / producaoBRUTA$Quantidade.Producao.Com.Ajuste
+        )
+      ),
+      ifelse(
+        producaoBRUTA$Unidade.de.Medida.Contido == "g" &
+          producaoBRUTA$Unidade.Medida.Minerio == 'kg',
+        round(
+          100 * (((producaoBRUTA$Contido.Substancia) / 1000) / producaoBRUTA$Quantidade.Producao.Com.Ajuste
+          )
+        ),
+        round(
+          100 * ((producaoBRUTA$Contido.Substancia) / producaoBRUTA$Quantidade.Producao.Com.Ajuste
+          )
+        )
+      )
+    ),
+    NA)
 
 
 #_____acrescentando percentil de produção ----
@@ -215,9 +248,34 @@ producaoBENEFICIADA$id_cpfcnpj.municipio <-
 producaoBENEFICIADA$teor_medido <- NA
 Substancias_teor <- c("Ferro","Barita","Prata (Primaria)","Pirocloro","Niquel","Cobre","Diamante (Secundario)","Fosfato","Cassiterita (Primaria)","Ouro (Primario)","Uranio","Ilmenita","Monazita","Rutilo","Zirconita (Secundaria)","Diamante (Primario)","Cassiterita (Secundaria)","Bauxita Refrataria","Manganes","Terras-Raras","Ouro (Secundario)","Potassio","Bauxita Metalurgica","Tungstenio","Gemas (Primaria)","Gemas (Secundaria)","Anatasio","Chumbo","Cromo","Vermiculita e Perlita","Zinco","Grafita","Fluorita","Tantalo (Columbita-Tantalita)-Secundario","Cobalto","Agatas Calcedonia etc..","Zirconita (Primaria)","Molibdenio","Turmalina Industrial","Crisotila","Vanadio","Petalita","Espodumenio","Berilio","Enxofre","Tantalo (Columbita-Tantalita)-Primario","Lepidolita","Zirconio (Oxidos)","Djalmaita","Niobio (Columbita-Tantalita)-Primaria","Geodos de Ametista","Criolita","Niobio (Columbita-Tantalita)-Secundaria","Cadmio","Prata (Secundaria)","Corindon","Paladio","Platina","Bismuto","Nao Informado")
 
-producaoBENEFICIADA$teor_medido <- 
-  ifelse(producaoBENEFICIADA$Substancia.AMB %in% Substancias_teor, 
-         round(100*(producaoBENEFICIADA$Contido.Substancia/producaoBENEFICIADA$Quantidade.Producao.Com.Ajuste)), NA)
+
+
+producaoBENEFICIADA$teor_medido <-
+  ifelse(
+    producaoBENEFICIADA$Substancia.AMB %in% Substancias_teor,
+    ifelse(
+      producaoBENEFICIADA$Unidade.de.Medida.Contido == "kg" &
+        producaoBENEFICIADA$Unidade.Medida.Produto.Beneficiado == 't',
+      round(
+        100 * (((producaoBENEFICIADA$Contido.Substancia) / 1000) / producaoBENEFICIADA$Quantidade.Producao.Com.Ajuste
+        )
+      ),
+      ifelse(
+        producaoBENEFICIADA$Unidade.de.Medida.Contido == "g" &
+          producaoBENEFICIADA$Unidade.Medida.Produto.Beneficiado == 'kg',
+        round(
+          100 * (((producaoBENEFICIADA$Contido.Substancia) / 1000) / producaoBENEFICIADA$Quantidade.Producao.Com.Ajuste
+          )
+        ),
+        round(
+          100 * ((producaoBENEFICIADA$Contido.Substancia) / producaoBENEFICIADA$Quantidade.Producao.Com.Ajuste
+          )
+        )
+      )
+    ),
+    NA
+  )
+
 
 
 #_____acrescentando percentil de produção ----
